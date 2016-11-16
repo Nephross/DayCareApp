@@ -1,8 +1,0 @@
-language: csharp
-solution: DayCareApp.sln
-install:
-  - nuget restore DayCareApp.sln
-  - nuget install NUnit.Runners -Version 3.5.0 -OutputDirectory testrunner
-script:
-  - xbuild DayCareApp.sln /p:TargetFrameworkVersion="v4.5.2" /p:Configuration=Debug
-  - mono ./testrunner/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe ./DayCareApp.Tests/bin/Debug/DayCareApp.Tests.dll
