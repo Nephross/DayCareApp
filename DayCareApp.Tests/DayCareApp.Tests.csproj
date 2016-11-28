@@ -103,7 +103,7 @@
       <Name>DayCareApp.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\DayCareApp.Web\DayCareApp.Web.csproj">
-      <Project>{01C0509C-544D-4DA4-A10A-B0FFF7DF1798}</Project>
+      <Project>{40274ca1-0e86-49f5-8cf8-7f84a14b5650}</Project>
       <Name>DayCareApp.Web</Name>
     </ProjectReference>
   </ItemGroup>
