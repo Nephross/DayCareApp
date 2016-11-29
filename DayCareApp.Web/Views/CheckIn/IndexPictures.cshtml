@@ -1,0 +1,26 @@
+﻿@model IEnumerable<DayCareApp.Web.Models.Child>
+
+@{
+    ViewBag.Title = "Index";
+    
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    
+    @foreach (var item in Model)
+    {
+        <tr>
+  
+            <td>
+                <a href="@Url.Action("Edit", new { id = item.Id })"><img src=" @item.ImagePath" , alt="Edit" /></a> 
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            </td>
+        </tr>
+    }
+
+</table>
