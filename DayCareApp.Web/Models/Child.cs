@@ -18,6 +18,7 @@ namespace DayCareApp.Web.Models
         public int Age { get; set; }
         public bool CurrentlyCheckedIn { get; set; }
         public string ImagePath { get; set; }
+        
 
         
 

@@ -2,14 +2,28 @@
 
 @{
     ViewBag.Title = "Details";
+    var imagePath = "";
+    imagePath = Model.ImagePath;
+    
 }
+
 
 <h2>Details</h2>
 
+      
+
+
+   
+       
 <div>
+   
+    
     <h4>Child</h4>
     <hr />
+    <img src="@imagePath" alt="Sample Photo" width="300" height="300" vspace ="10"/>
     <dl class="dl-horizontal">
+        
+
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>

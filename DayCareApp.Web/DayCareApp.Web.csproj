@@ -159,6 +159,9 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Images\Bart.png" />
+    <Content Include="Images\Millhouse.png" />
+    <Content Include="Images\Ralph.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -199,7 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CoreApp\" />
-    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

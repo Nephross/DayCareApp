@@ -26,6 +26,16 @@ namespace DayCareApp.Web.Controllers.Web
             return View(child);
         }
 
+        public ActionResult IndexPictures()
+        {
+            var model =
+             from r in _children
+             orderby r.Institution
+             select r;
+
+            return View(model);
+        }
+
         // GET: Reviews/Create
         public ActionResult Create()
         {
@@ -113,29 +123,33 @@ namespace DayCareApp.Web.Controllers.Web
             new Child
             {
                 Id = 1,
-                Name = "Frank",
+                Name = "Bart",
                 Institution = "Børnehave1",
                 Parents = "Frank senior",
                 Country = "Denmark",
+                ImagePath = @"\Images\Bart.png" ,
                 Age = 7,
+              
             },
              new Child
             {
                 Id = 2,
-                Name = "Steve",
+                Name = "Millhouse",
                  Institution = "Børnehave1",
                 Parents = "Steve Senior",
                 Country = "Denmark",
+                ImagePath = @"\Images\Millhouse.png" ,
                 Age = 10,
             },
 
               new Child
             {
                 Id = 3,
-                Name = "Johnny",
+                Name = "Ralph",
                  Institution = "Børnehave1",
                 Parents = "Johnny Senior",
                 Country = "Denmark",
+                ImagePath = @"\Images\Ralph.png" ,
                 Age = 5,
             }
         };

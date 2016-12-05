@@ -26,5 +26,6 @@ namespace DayCareApp.Web.Controllers
 
             return View();
         }
+        
     }
 }
