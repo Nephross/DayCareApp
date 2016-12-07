@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Placeholder\Class1.cs" />
+    <Compile Include="Placeholder\DBdataGetter.cs" />
+    <Compile Include="Placeholder\DBinitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
