@@ -34,7 +34,7 @@ namespace DayCareApp.Web.Entities
         public int ArrivalEmployeeId { get; set; }
 
         public Employee DepartureEmployee { get; set; }
-        public int DepartureEmployee { get; set; }
+        public int DepartureEmployeeId { get; set; }
 
         public DateTime CheckInTime { get; set; }
 

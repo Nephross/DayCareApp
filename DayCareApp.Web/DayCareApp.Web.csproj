@@ -183,6 +183,8 @@
     <Compile Include="Controllers\Web\ChildController.cs" />
     <Compile Include="Controllers\Web\InstitutionAdminController.cs" />
     <Compile Include="Controllers\Web\ParentController.cs" />
+    <Compile Include="DataContext\DayCareAppDB.cs" />
+    <Compile Include="DataContext\Migrations\Configuration.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\DayRegistration.cs" />
     <Compile Include="Entities\Department.cs" />
@@ -279,7 +281,7 @@
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\NavBar\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\API\" />

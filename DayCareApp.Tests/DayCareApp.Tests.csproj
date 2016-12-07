@@ -98,10 +98,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DayCareApp.Entities\DayCareApp.Entities.csproj">
-      <Project>{ef3c0c10-4c47-414d-8d39-77c5a31dd7cf}</Project>
-      <Name>DayCareApp.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DayCareApp.Web\DayCareApp.Web.csproj">
       <Project>{40274ca1-0e86-49f5-8cf8-7f84a14b5650}</Project>
       <Name>DayCareApp.Web</Name>
