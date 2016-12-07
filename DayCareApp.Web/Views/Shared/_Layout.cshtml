@@ -40,7 +40,7 @@
                         if (User.IsInRole("Employee"))
                         {
                             <li>@Html.ActionLink("Check In", "Index", "CheckIn")</li>
-                            <li>@Html.ActionLink("Registrer Barn", "Register", "Child")</li>
+                            <li>@Html.ActionLink("Registrer Barn", "Create", "Child")</li>
                             <li>@Html.ActionLink("Registrer Forældre", "Register", "Parent")</li>
                         }
                         if (User.IsInRole("Parent"))

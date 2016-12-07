@@ -56,5 +56,7 @@ namespace DayCareApp.Web.Entities
         [EmailAddress]
         public string Email { get; set; }
 
+        public virtual ICollection<Department> Departments { get; set; }
+
     }
 }

@@ -13,6 +13,7 @@ namespace DayCareApp.Web.Entities
         
         [Required]
         public Child Child { get; set; }
+        public int ChildId { get; set; }
 
         public string Other { get; set; }
 
@@ -20,15 +21,20 @@ namespace DayCareApp.Web.Entities
         
         [Required]
         public Parent ExpectedPickupParent { get; set; }
+        public int ExpectedPickupParentId { get; set; }
 
         [Required]
         public Parent DeliveryParent { get; set; }
+        public int DeliveryParentId { get; set; }
 
         public Parent PickUpParent { get; set; }
+        public int PickUpParentId { get; set; }
 
         public Employee ArrivalEmployee { get; set; }
+        public int ArrivalEmployeeId { get; set; }
 
         public Employee DepartureEmployee { get; set; }
+        public int DepartureEmployee { get; set; }
 
         public DateTime CheckInTime { get; set; }
 

@@ -16,12 +16,16 @@ namespace DayCareApp.Web.Entities
 
         [Required]
         public Parent Parent1 { get; set; }
+        public int Parent1Id { get; set; }
 
         public Parent Parent2 { get; set; }
+        public int Parent2Id { get; set; }
 
         public Institution Institution { get; set; }
+        public int InstitutionId { get; set; }
 
         public Department Department { get; set; }
+        public int DepartmentId { get; set; }
 
         [Required]
         public string Country { get; set; }

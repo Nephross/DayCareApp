@@ -18,5 +18,6 @@ namespace DayCareApp.Web.Entities
 
         [Required]
         public Institution Institution { get; set; }
+        public int InstitutionId { get; set; }
     }
 }

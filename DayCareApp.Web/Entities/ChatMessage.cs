@@ -17,6 +17,7 @@ namespace DayCareApp.Web.Entities
         public string ApplicationUserId { get; set; }
 
         public DayRegistration DayRegistration { get; set; }
+        public int DayRegistrationId { get; set; }
 
         public DateTime TimeStamp { get; set; }
     }

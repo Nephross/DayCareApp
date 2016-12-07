@@ -16,6 +16,7 @@ namespace DayCareApp.Web.Entities
         [Required]
         [Display(Name = "Institution")]
         public Institution Institution { get; set; }
+        public int InstitutionId { get; set; }
         
         [Required]
         [Display(Name = "Fornavn")]
