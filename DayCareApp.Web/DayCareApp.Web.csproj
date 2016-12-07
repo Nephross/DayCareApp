@@ -178,12 +178,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Web\AdminController.cs" />
     <Compile Include="Controllers\Web\CheckInController.cs" />
+    <Compile Include="Controllers\Web\ChildController.cs" />
+    <Compile Include="Controllers\Web\InstitutionAdminController.cs" />
+    <Compile Include="Controllers\Web\ParentController.cs" />
+    <Compile Include="Entities\ChatMessage.cs" />
+    <Compile Include="Entities\DayRegistration.cs" />
+    <Compile Include="Entities\Department.cs" />
+    <Compile Include="Entities\Institution.cs" />
+    <Compile Include="Entities\InstitutionAdmin.cs" />
+    <Compile Include="Entities\Parent.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Child.cs" />
-    <Compile Include="Models\EmployeeModel.cs" />
+    <Compile Include="Entities\Child.cs" />
+    <Compile Include="Entities\Employee.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -269,13 +279,16 @@
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\NavBar\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\API\" />
-    <Folder Include="CoreApp\" />
-    <Folder Include="Entities\" />
     <Folder Include="Images\" />
+    <Folder Include="Views\Admin\" />
+    <Folder Include="Views\Child\" />
+    <Folder Include="Views\Employee\" />
+    <Folder Include="Views\InstitutionAdmin\" />
+    <Folder Include="Views\Parent\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

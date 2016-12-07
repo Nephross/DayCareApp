@@ -23,9 +23,37 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Check In", "Index", "CheckIn")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li>
+                                @Html.ActionLink("Administrer", "Index", "Admin", routeValues: null, htmlAttributes: new { title = "Manage" })
+                            </li>
+                        }
+                        if (User.IsInRole("InstitutionAdmin"))
+                        {
+                            <li>
+                                @Html.ActionLink("Administrer", "Index", "InstitutionAdmin", routeValues: null, htmlAttributes: new { title = "Manage" })
+                            </li>
+                        }
+                        if (User.IsInRole("Employee"))
+                        {
+                            <li>@Html.ActionLink("Check In", "Index", "CheckIn")</li>
+                            <li>@Html.ActionLink("Registrer Barn", "Register", "Child")</li>
+                            <li>@Html.ActionLink("Registrer Forældre", "Register", "Parent")</li>
+                        }
+                        if (User.IsInRole("Parent"))
+                        {
+                            <li>@Html.ActionLink("Administrer", "Index", "Parent")</li>
+                        }
+
+                    }
+                    else
+                    {
+
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -34,6 +62,8 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
+        </div>
+    <div class="container">
         <footer>
             <p>&copy; @DateTime.Now.Year - KEA Project - Peter Dalgaard Jensen, Phi Kelly Molel, Teis Andersson </p>
         </footer>

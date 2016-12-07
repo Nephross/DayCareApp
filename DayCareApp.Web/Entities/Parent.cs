@@ -25,17 +25,17 @@ namespace DayCareApp.Web.Entities
         [Display(Name = "Efternavn")]
         public string LastName { get; set; }
 
-        [Required]
+       
         [Display(Name = "Adresse")]
         public string Address { get; set; }
 
-        [Required]
+        
         [Display(Name = "Postnummer")]
         [MinLength(4, ErrorMessage = "The {0} musth have a {1} digits")]
         [MaxLength(4, ErrorMessage = "The {0} musth have a {1} digits")]
         public string AreaCode { get; set; }
 
-        [Required]
+        
         [Display(Name = "By")]
         public string City { get; set; }
         

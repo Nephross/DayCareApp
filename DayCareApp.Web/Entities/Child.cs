@@ -21,6 +21,8 @@ namespace DayCareApp.Web.Entities
 
         public Institution Institution { get; set; }
 
+        public Department Department { get; set; }
+
         [Required]
         public string Country { get; set; }
 

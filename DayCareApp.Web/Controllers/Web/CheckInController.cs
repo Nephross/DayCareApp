@@ -1,4 +1,5 @@
-﻿using DayCareApp.Web.Models;
+﻿using DayCareApp.Web.Entities;
+using DayCareApp.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: Reviews/Details/5
         public ActionResult Details(int id)
         {
-            var child = _children.Single(r => r.Id == id);
+            var child = _children.Single(r => r.ChildId == id);
             return View(child);
         }
 
@@ -51,7 +52,7 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: Reviews/Edit/5
         public ActionResult Edit(int id)
         {
-            var child = _children.Single(r => r.Id == id);
+            var child = _children.Single(r => r.ChildId == id);
             return View(child);
         }
 
@@ -59,7 +60,7 @@ namespace DayCareApp.Web.Controllers.Web
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            var child = _children.Single(r => r.Id == id);
+            var child = _children.Single(r => r.ChildId == id);
             if (TryUpdateModel(child))
             {
                 //save to db here
@@ -110,34 +111,6 @@ namespace DayCareApp.Web.Controllers.Web
 
         static List<Child> _children = new List<Child>
         {
-            new Child
-            {
-                Id = 1,
-                Name = "Frank",
-                Institution = "Børnehave1",
-                Parents = "Frank senior",
-                Country = "Denmark",
-                Age = 7,
-            },
-             new Child
-            {
-                Id = 2,
-                Name = "Steve",
-                 Institution = "Børnehave1",
-                Parents = "Steve Senior",
-                Country = "Denmark",
-                Age = 10,
-            },
-
-              new Child
-            {
-                Id = 3,
-                Name = "Johnny",
-                 Institution = "Børnehave1",
-                Parents = "Johnny Senior",
-                Country = "Denmark",
-                Age = 5,
-            }
         };
 
     }
