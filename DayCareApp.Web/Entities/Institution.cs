@@ -14,6 +14,9 @@ namespace DayCareApp.Web.Entities
 
         public string InstitutionName { get; set; }
 
+        public InstitutionAdmin InstitutionAdmin { get; set; }
+        public int InstitutionAdminId { get; set; }
+
 
         //Institution leaders name
         [Required]
