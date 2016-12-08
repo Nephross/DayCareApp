@@ -31,19 +31,19 @@
                                 @Html.ActionLink("Administrer", "Index", "Admin", routeValues: null, htmlAttributes: new { title = "Manage" })
                             </li>
                         }
-                        if (User.IsInRole("InstitutionAdmin"))
+                        else if (User.IsInRole("InstitutionAdmin"))
                         {
                             <li>
                                 @Html.ActionLink("Administrer", "Index", "InstitutionAdmin", routeValues: null, htmlAttributes: new { title = "Manage" })
                             </li>
                         }
-                        if (User.IsInRole("Employee"))
+                        else if (User.IsInRole("Employee"))
                         {
                             <li>@Html.ActionLink("Check In", "Index", "CheckIn")</li>
                             <li>@Html.ActionLink("Registrer Barn", "Create", "Child")</li>
                             <li>@Html.ActionLink("Registrer Forældre", "Register", "Parent")</li>
                         }
-                        if (User.IsInRole("Parent"))
+                        else if (User.IsInRole("Parent"))
                         {
                             <li>@Html.ActionLink("Administrer", "Index", "Parent")</li>
                         }

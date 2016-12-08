@@ -188,6 +188,10 @@
     <Compile Include="DataContext\Migrations\201612081114357_InitialCreate.Designer.cs">
       <DependentUpon>201612081114357_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContext\Migrations\201612081208292_update 1.cs" />
+    <Compile Include="DataContext\Migrations\201612081208292_update 1.Designer.cs">
+      <DependentUpon>201612081208292_update 1.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContext\Migrations\Configuration.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\DayRegistration.cs" />
@@ -306,6 +310,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DataContext\Migrations\201612081114357_InitialCreate.resx">
       <DependentUpon>201612081114357_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContext\Migrations\201612081208292_update 1.resx">
+      <DependentUpon>201612081208292_update 1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
