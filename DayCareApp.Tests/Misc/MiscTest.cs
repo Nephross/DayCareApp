@@ -13,7 +13,7 @@ namespace DayCareApp.Tests.Misc
     public class MiscTest
     {
                
-        [Test]
+     //   [Test]
         public void TestRepoConnection()
         {
             // Arrange
@@ -26,7 +26,7 @@ namespace DayCareApp.Tests.Misc
             Assert.AreEqual(42, result, "TestConnection failed, as it did not return 42 from db.");
             }
 
-       // [Test]
+        [Test]
         public void TestConnection()
         {
             // Arrange
@@ -35,7 +35,7 @@ namespace DayCareApp.Tests.Misc
             // Act
 
             using (var connection = new QC.SqlConnection(
-                   "Server=tcp:keaprojectsdb.database.windows.net,1433;Initial Catalog=dayCareApp_DB;Integrated Security = false;Persist Security Info=False;User ID=dayCareAppAdmin;Password=gihrdiw34klng346GW32W12gBWgwsvcjjuiwA4r9ug34;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+                   "Server=tcp:keaprojectdb.database.windows.net,1433;Initial Catalog=dayCareAppDB;Persist Security Info=False;User ID=dayCareAppAdmin;Password=gihrdiw34klng346GW32W12gBWgwsvcjjuiwA4r9ug34;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
                    ))
             {
                 try

@@ -184,6 +184,10 @@
     <Compile Include="Controllers\Web\InstitutionAdminController.cs" />
     <Compile Include="Controllers\Web\ParentController.cs" />
     <Compile Include="DataContext\DayCareAppDB.cs" />
+    <Compile Include="DataContext\Migrations\201612081114357_InitialCreate.cs" />
+    <Compile Include="DataContext\Migrations\201612081114357_InitialCreate.Designer.cs">
+      <DependentUpon>201612081114357_InitialCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContext\Migrations\Configuration.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\DayRegistration.cs" />
@@ -298,6 +302,11 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataContext\Migrations\201612081114357_InitialCreate.resx">
+      <DependentUpon>201612081114357_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
