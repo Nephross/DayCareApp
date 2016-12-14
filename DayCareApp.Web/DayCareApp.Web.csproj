@@ -182,6 +182,8 @@
     <Compile Include="Controllers\Web\CheckInController.cs" />
     <Compile Include="Controllers\Web\ChildController.cs" />
     <Compile Include="Controllers\Web\InstitutionAdminController.cs" />
+    <Compile Include="Controllers\Web\InstitutionAdminsController.cs" />
+    <Compile Include="Controllers\Web\InstitutionsController.cs" />
     <Compile Include="Controllers\Web\ParentController.cs" />
     <Compile Include="DataContext\DayCareAppDB.cs" />
     <Compile Include="DataContext\Migrations\201612081114357_InitialCreate.cs" />
@@ -208,9 +210,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\EntityViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\InstitutionAdminRepository.cs" />
+    <Compile Include="Repository\InstitutionRepository.cs" />
     <Compile Include="Repository\TestRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -231,6 +236,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -269,6 +275,18 @@
     <Content Include="Views\CheckIn\Edit.cshtml" />
     <Content Include="Views\CheckIn\Delete.cshtml" />
     <Content Include="Views\CheckIn\IndexPictures.cshtml" />
+    <Content Include="Views\Institutions\Create.cshtml" />
+    <Content Include="Views\Institutions\Delete.cshtml" />
+    <Content Include="Views\Institutions\Details.cshtml" />
+    <Content Include="Views\Institutions\Edit.cshtml" />
+    <Content Include="Views\Institutions\Index.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\InstitutionAdmins\Create.cshtml" />
+    <Content Include="Views\InstitutionAdmins\Delete.cshtml" />
+    <Content Include="Views\InstitutionAdmins\Details.cshtml" />
+    <Content Include="Views\InstitutionAdmins\Edit.cshtml" />
+    <Content Include="Views\InstitutionAdmins\Index.cshtml" />
+    <Content Include="Views\InstitutionAdmin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -295,10 +313,8 @@
   <ItemGroup>
     <Folder Include="Controllers\API\" />
     <Folder Include="Images\" />
-    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Child\" />
     <Folder Include="Views\Employee\" />
-    <Folder Include="Views\InstitutionAdmin\" />
     <Folder Include="Views\Parent\" />
   </ItemGroup>
   <ItemGroup>
