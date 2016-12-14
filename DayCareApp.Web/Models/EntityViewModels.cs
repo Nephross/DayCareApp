@@ -22,4 +22,15 @@ namespace DayCareApp.Web.Models
         public InstitutionAdmin institutionAdmin { get; set; }
         public SelectList InstitutionList { get; set; }
     }
+
+    public class DepartmentViewModel
+    {
+        public DepartmentViewModel()
+        {
+            Department = new Department();
+        }
+
+        public Department Department { get; set; }
+        public SelectList InstitutionList { get; set; }
+    }
 }

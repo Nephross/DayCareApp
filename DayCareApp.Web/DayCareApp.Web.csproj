@@ -178,10 +178,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\InstitutionManagerController.cs" />
     <Compile Include="Controllers\Web\AdminController.cs" />
     <Compile Include="Controllers\Web\CheckInController.cs" />
     <Compile Include="Controllers\Web\ChildController.cs" />
-    <Compile Include="Controllers\Web\InstitutionAdminController.cs" />
+    <Compile Include="Controllers\Web\DepartmentsController.cs" />
     <Compile Include="Controllers\Web\InstitutionAdminsController.cs" />
     <Compile Include="Controllers\Web\InstitutionsController.cs" />
     <Compile Include="Controllers\Web\ParentController.cs" />
@@ -193,6 +194,14 @@
     <Compile Include="DataContext\Migrations\201612081208292_update 1.cs" />
     <Compile Include="DataContext\Migrations\201612081208292_update 1.Designer.cs">
       <DependentUpon>201612081208292_update 1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Migrations\201612141551357_update 2.cs" />
+    <Compile Include="DataContext\Migrations\201612141551357_update 2.Designer.cs">
+      <DependentUpon>201612141551357_update 2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContext\Migrations\201612141631435_update 3.cs" />
+    <Compile Include="DataContext\Migrations\201612141631435_update 3.Designer.cs">
+      <DependentUpon>201612141631435_update 3.cs</DependentUpon>
     </Compile>
     <Compile Include="DataContext\Migrations\Configuration.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
@@ -214,6 +223,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\DepartmentRepository.cs" />
+    <Compile Include="Repository\EmployeeRepository.cs" />
     <Compile Include="Repository\InstitutionAdminRepository.cs" />
     <Compile Include="Repository\InstitutionRepository.cs" />
     <Compile Include="Repository\TestRepository.cs" />
@@ -286,7 +297,12 @@
     <Content Include="Views\InstitutionAdmins\Details.cshtml" />
     <Content Include="Views\InstitutionAdmins\Edit.cshtml" />
     <Content Include="Views\InstitutionAdmins\Index.cshtml" />
-    <Content Include="Views\InstitutionAdmin\Index.cshtml" />
+    <Content Include="Views\InstitutionManager\Index.cshtml" />
+    <Content Include="Views\Departments\Create.cshtml" />
+    <Content Include="Views\Departments\Delete.cshtml" />
+    <Content Include="Views\Departments\Details.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
+    <Content Include="Views\Departments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -329,6 +345,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataContext\Migrations\201612081208292_update 1.resx">
       <DependentUpon>201612081208292_update 1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContext\Migrations\201612141551357_update 2.resx">
+      <DependentUpon>201612141551357_update 2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContext\Migrations\201612141631435_update 3.resx">
+      <DependentUpon>201612141631435_update 3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

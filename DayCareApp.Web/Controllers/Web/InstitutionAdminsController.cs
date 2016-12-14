@@ -126,7 +126,8 @@ namespace DayCareApp.Web.Controllers.Web
 
             InstitutionAdminViewModel InstAdminVM = new InstitutionAdminViewModel();
             InstAdminVM.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions.ToList(), "InstitutionId", "InstitutionName", institutionAdmin.InstitutionId);
-            return View(institutionAdmin);
+            InstAdminVM.institutionAdmin = institutionAdmin;
+            return View(InstAdminVM);
         }
 
         // POST: InstitutionAdmins/Edit/5
