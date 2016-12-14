@@ -15,13 +15,13 @@ namespace DayCareApp.Web.Repository
         //Method for getting all DEpartments
         public IQueryable<Employee> AllEmployees()
         {
-            return dbContext.Employees.Include(i => i.Institution).Include(d => d.Department);
+            return dbContext.Employees.Include(i => i.Institution).Include(i => i.Department);
         }
 
         //Getting a specific Department
         public Employee FindEmployee(int? id)
         {
-            return dbContext.Employees.Find(id);
+            return dbContext.Employees.Where(i => i.EmployeeId == id).Include(i => i.Institution).Include(i => i.Department).FirstOrDefault();
         }
 
         //Create or modify Department

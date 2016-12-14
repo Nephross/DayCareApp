@@ -21,14 +21,14 @@ namespace DayCareApp.Web.Repository
         //Getting a specific Department
         public Department FindDepartment(int? id)
         {
-            return dbContext.Departments.Find(id);
+            return dbContext.Departments.Where(i => i.DepartmentId == id).Include(i => i.Institution).FirstOrDefault();
         }
 
         //Create or modify Department
         public void InsertOrUpdateDepartment(Department inputDepartment)
         {
             //Note that when creating an institutionAdmin, the id needs to be set to 0
-            if (inputDepartment.DepartMentId == 0)
+            if (inputDepartment.DepartmentId == 0)
             {
                 dbContext.Departments.Add(inputDepartment);
             }
