@@ -1,7 +1,9 @@
-﻿@model DayCareApp.Web.Models.Child
+﻿@model DayCareApp.Web.Entities.Child
 
 @{
     ViewBag.Title = "Details";
+    var imagePath = "";
+    imagePath = Model.ImagePath;
 }
 
 <h2>Details</h2>
@@ -9,7 +11,24 @@
 <div>
     <h4>Child</h4>
     <hr />
+    <img src="@imagePath" alt="Sample Photo" width="300" height="300" vspace="10" />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Department.DepartmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department.DepartmentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Institution.InstitutionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Institution.InstitutionName)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -19,19 +38,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Parents)
+            @Html.DisplayNameFor(model => model.Parent1Id)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Parents)
+            @Html.DisplayFor(model => model.Parent1Id)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Institution)
+            @Html.DisplayNameFor(model => model.Parent2Id)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Institution)
+            @Html.DisplayFor(model => model.Parent2Id)
         </dd>
 
         <dt>
@@ -43,12 +62,13 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Age)
+            @Html.DisplayNameFor(model => model.Birthdate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Age)
+            @Html.DisplayFor(model => model.Birthdate)
         </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.CurrentlyCheckedIn)
         </dt>
@@ -57,10 +77,25 @@
             @Html.DisplayFor(model => model.CurrentlyCheckedIn)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.SpecialNeeds)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SpecialNeeds)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImagePath)
+        </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ChildId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
