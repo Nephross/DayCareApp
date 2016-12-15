@@ -30,14 +30,14 @@ namespace DayCareApp.Web.Controllers.Web
         public ActionResult Index()
         {
 
-            var model = _childRepository.GetAllChildren();       
+            var model = _childRepository.GetAll();       
             return View(model);
         }
 
         public ActionResult IndexPictures()
         {
 
-            var model = _childRepository.GetAllChildren();
+            var model = _childRepository.GetAll();
             return View(model);
 
         }
@@ -53,7 +53,7 @@ namespace DayCareApp.Web.Controllers.Web
         }
 
         // GET: Reviews/Create
-        public ActionResult Create()
+       /* public ActionResult Create()
         {
             return View();
         }
@@ -85,7 +85,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return View();
             }
-        }
+        }*/
 
         // GET: Reviews/Edit/5
         public ActionResult Edit(int id)
@@ -106,11 +106,11 @@ namespace DayCareApp.Web.Controllers.Web
                     if (child != null)
                     {
                     
-                    child.Name = collection.Get(1);
-                    child.Country = collection.Get(2);
-                    child.Birthdate = Convert.ToDateTime(collection.Get(3));
-                    child.CurrentlyCheckedIn = Convert.ToBoolean(collection.Get(4));
-                    child.SpecialNeeds = collection.Get(4);
+                    child.Name = collection.Get(2);
+                    child.Country = collection.Get(3);
+                    child.Birthdate = Convert.ToDateTime(collection.Get(4));
+                    child.CurrentlyCheckedIn = Convert.ToBoolean(collection.Get(5));
+                    child.SpecialNeeds = collection.Get(6);
                 }
 
                 _unitOfWork.Complete();
