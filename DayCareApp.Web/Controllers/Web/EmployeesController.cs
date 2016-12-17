@@ -129,7 +129,7 @@ namespace DayCareApp.Web.Controllers.Web
             EmployeeViewModel EmpVM = new EmployeeViewModel();
             EmpVM.Employee = employee;
             EmpVM.DepartmentList = new SelectList(_DepartmentRepo.AllDepartments().ToList(), "DepartMentId", "DepartmentName", employee.DepartmentId);
-            EmpVM.InstitutionList = new SelectList(_DepartmentRepo.AllInstitutions, "InstitutionId", "InstitutionName", employee.InstitutionId);
+            EmpVM.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions, "InstitutionId", "InstitutionName", employee.InstitutionId);
             return View(EmpVM);
         }
 
@@ -138,16 +138,16 @@ namespace DayCareApp.Web.Controllers.Web
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EmployeeVievModel model)
+        public ActionResult Edit(EmployeeViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _EmployeeRepo.InsertOrUpdate(model.Employee);
+                _EmployeeRepo.InsertOrUpdateEmployee(model.Employee);
                 _EmployeeRepo.Save();
                 return RedirectToAction("Index");
             }
             model.DepartmentList = new SelectList(_DepartmentRepo.AllDepartments().ToList(), "DepartMentId", "DepartmentName", model.Employee.DepartmentId);
-            model.InstitutionList = new SelectList(_DepartmentRepo.AllInstitutions, "InstitutionId", "InstitutionName", model.Employee.InstitutionId);
+            model.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions, "InstitutionId", "InstitutionName", model.Employee.InstitutionId);
             return View(model);
         }
 
@@ -171,7 +171,7 @@ namespace DayCareApp.Web.Controllers.Web
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _EmployeeRepo.Delete(id);
+            _EmployeeRepo.DeleteEmployee(id);
             _EmployeeRepo.Save();
             return RedirectToAction("Index");
         }
