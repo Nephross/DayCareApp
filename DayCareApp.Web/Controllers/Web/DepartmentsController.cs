@@ -10,18 +10,32 @@ using DayCareApp.Web.DataContext;
 using DayCareApp.Web.Entities;
 using DayCareApp.Web.Repository;
 using DayCareApp.Web.Models;
+using DayCareApp.Web.DataContext.Persistence;
+using DayCareApp.Web.DataContext.Repositories;
 
 namespace DayCareApp.Web.Controllers.Web
 {
     public class DepartmentsController : Controller
     {
-        private DepartmentRepository _DepartmentRepo = new DepartmentRepository();
-        private InstitutionRepository _InstitutionRepo = new InstitutionRepository();
+        public readonly IDepartmentRepository _DepartmentRepository;
+        public readonly IInstitutionRepository _InstitutionRepository;
+        public readonly UnitOfWork _unitOfWork;
+
+        public DepartmentsController()
+        {
+            this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
+        }
+
+        public DepartmentsController(IDepartmentRepository DepartmentRepository, IInstitutionRepository InstitutionRepository,IUnitOfWork unitOfWork)
+        {
+            _DepartmentRepository = unitOfWork.Departments;
+            _InstitutionRepository = unitOfWork.Institutions;
+        }
 
         // GET: Departments
         public ActionResult Index()
         {
-            var departments = _DepartmentRepo.AllDepartments().ToList() ;
+            var departments = _DepartmentRepository.GetAll().ToList() ;
             return View(departments);
         }
 
@@ -32,7 +46,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = _DepartmentRepo.FindDepartment(id);
+            Department department = _DepartmentRepository.Get(id);
             if (department == null)
             {
                 return HttpNotFound();
@@ -44,7 +58,7 @@ namespace DayCareApp.Web.Controllers.Web
         public ActionResult Create()
         {
             DepartmentViewModel DpVM = new DepartmentViewModel();
-            DpVM.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions, "InstitutionId", "InstitutionName");
+            DpVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName");
             return View(DpVM);
         }
 
@@ -57,12 +71,12 @@ namespace DayCareApp.Web.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                _DepartmentRepo.InsertOrUpdateDepartment(model.Department);
-                _DepartmentRepo.Save();
+                _DepartmentRepository.Add(model.Department);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
-            model.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions.ToList(), "InstitutionId", "InstitutionName", model.Department.InstitutionId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Department.InstitutionId);
             return View(model);
         }
 
@@ -73,14 +87,14 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = _DepartmentRepo.FindDepartment(id);
+            Department department = _DepartmentRepository.Get(id);
             if (department == null)
             {
                 return HttpNotFound();
             }
 
             DepartmentViewModel DpVM = new DepartmentViewModel();
-            DpVM.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions, "InstitutionId", "InstitutionName", department.InstitutionId);
+            DpVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", department.InstitutionId);
             DpVM.Department = department;
             return View(DpVM);
         }
@@ -94,12 +108,12 @@ namespace DayCareApp.Web.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                _DepartmentRepo.InsertOrUpdateDepartment(model.Department);
-                _DepartmentRepo.Save();
+                _DepartmentRepository.Edit(model.Department);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
-            model.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions, "InstitutionId", "InstitutionName", model.Department.InstitutionId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Department.InstitutionId);
             return View(model);
         }
 
@@ -110,7 +124,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = _DepartmentRepo.FindDepartment(id);
+            Department department = _DepartmentRepository.Get(id);
             if (department == null)
             {
                 return HttpNotFound();
@@ -123,11 +137,22 @@ namespace DayCareApp.Web.Controllers.Web
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _DepartmentRepo.DeleteDepartment(id);
-            _DepartmentRepo.Save();
+            Department department = _DepartmentRepository.Get(id);
+            
+            _DepartmentRepository.Remove(department);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
         }
 
-       
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _unitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+
     }
 }

@@ -9,6 +9,11 @@ namespace DayCareApp.Web.DataContext.Repositories
     public interface IUnitOfWork
     {
         IChildRepository Children { get; }
+        IParentRepository Parents { get; }
+        IInstitutionRepository Institutions { get; }
+        IInstitutionAdminRepository InstitutionAdmins { get; }
+        IDepartmentRepository Departments { get; }
+        IEmployeeRepository Employees { get; }
        
         int Complete();
     }

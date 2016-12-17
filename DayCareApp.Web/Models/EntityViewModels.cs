@@ -45,4 +45,15 @@ namespace DayCareApp.Web.Models
         public SelectList InstitutionList { get; set; }
         public SelectList DepartmentList { get; set; }
     }
+
+    public class ParentViewModel
+    {
+        public ParentViewModel()
+        {
+            Parent = new Entities.Parent();
+        }
+
+        public Parent Parent { get; set; }
+        public SelectList InstitutionList { get; set; }
+    }
 }

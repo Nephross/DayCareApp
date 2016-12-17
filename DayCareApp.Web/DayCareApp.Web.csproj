@@ -169,7 +169,7 @@
     </Reference>
     <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
       <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
-</Reference>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -187,6 +187,7 @@
     <Compile Include="Controllers\Web\InstitutionAdminsController.cs" />
     <Compile Include="Controllers\Web\InstitutionsController.cs" />
     <Compile Include="Controllers\Web\ParentController.cs" />
+    <Compile Include="Controllers\Web\ParentsController.cs" />
     <Compile Include="DataContext\DayCareAppDB.cs" />
     <Compile Include="DataContext\Migrations\201612081114357_InitialCreate.cs" />
     <Compile Include="DataContext\Migrations\201612081114357_InitialCreate.Designer.cs">
@@ -225,6 +226,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Helpers\FileHandler.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EntityViewModels.cs" />
     <Compile Include="Models\ChildViewModels.cs" />
@@ -274,6 +276,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="UserFiles\DefaultProfileImage.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -318,6 +321,11 @@
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Parents\Create.cshtml" />
+    <Content Include="Views\Parents\Delete.cshtml" />
+    <Content Include="Views\Parents\Details.cshtml" />
+    <Content Include="Views\Parents\Edit.cshtml" />
+    <Content Include="Views\Parents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />

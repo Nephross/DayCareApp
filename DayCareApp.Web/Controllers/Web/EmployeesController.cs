@@ -16,24 +16,33 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using DayCareApp.Web.DataContext.Repositories;
+using DayCareApp.Web.DataContext.Persistence;
 
 namespace DayCareApp.Web.Controllers.Web
 {
     public class EmployeesController : Controller
     {
-        private EmployeeRepository _EmployeeRepo = new EmployeeRepository();
-        private InstitutionRepository _InstitutionRepo = new InstitutionRepository();
-        private DepartmentRepository _DepartmentRepo = new DepartmentRepository();
+        public readonly IEmployeeRepository _EmployeeRepository;
+        public readonly IDepartmentRepository _DepartmentRepository;
+        public readonly IInstitutionRepository _InstitutionRepository;
+        public readonly UnitOfWork _unitOfWork;
         private ApplicationUserManager _userManager;
-
-        public EmployeesController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;
-        }
 
         public EmployeesController()
         {
+            this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
         }
+
+        public EmployeesController(IEmployeeRepository EmployeeRepository, IDepartmentRepository DepartmentRepository, IInstitutionRepository InstitutionRepository, IUnitOfWork unitOfWork, ApplicationUserManager userManager)
+        {
+            _EmployeeRepository = unitOfWork.Employees;
+            _DepartmentRepository = unitOfWork.Departments;
+            _InstitutionRepository = unitOfWork.Institutions;
+            UserManager = userManager;
+        }
+        
+        
 
         public ApplicationUserManager UserManager
         {
@@ -49,7 +58,7 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: Employees
         public ActionResult Index()
         {
-            var employees = _EmployeeRepo.AllEmployees() ;
+            var employees = _EmployeeRepository.GetAll() ;
             return View(employees.ToList());
         }
 
@@ -60,7 +69,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = _EmployeeRepo.FindEmployee(id);
+            Employee employee = _EmployeeRepository.Get(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -72,8 +81,8 @@ namespace DayCareApp.Web.Controllers.Web
         public ActionResult Create()
         {
             RegisterEmployeeViewModel RegEmployeeViewModel = new RegisterEmployeeViewModel();
-            RegEmployeeViewModel.DepartmentList = new SelectList(_DepartmentRepo.AllDepartments().ToList(), "DepartMentId", "DepartmentName");
-            RegEmployeeViewModel.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions, "InstitutionId", "InstitutionName");
+            RegEmployeeViewModel.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartMentId", "DepartmentName");
+            RegEmployeeViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName");
             return View(RegEmployeeViewModel);
         }
 
@@ -93,8 +102,8 @@ namespace DayCareApp.Web.Controllers.Web
                     await UserManager.AddToRoleAsync(user.Id, "Employee");
 
                     model.Employee.ApplicationUserId = user.Id;
-                    _EmployeeRepo.InsertOrUpdateEmployee(model.Employee);
-                    _EmployeeRepo.Save();
+                    _EmployeeRepository.Add(model.Employee);
+                    _unitOfWork.Complete();
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -108,8 +117,8 @@ namespace DayCareApp.Web.Controllers.Web
             }
 
             // If we got this far, something failed, redisplay for
-            model.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions.ToList(), "InstitutionId", "InstitutionName", model.Employee.InstitutionId);
-            model.DepartmentList = new SelectList(_DepartmentRepo.AllDepartments().ToList(), "DepartmentId", "DepartmentName", model.Employee.DepartmentId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Employee.InstitutionId);
+            model.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartmentId", "DepartmentName", model.Employee.DepartmentId);
             return View(model);
             
         }
@@ -121,15 +130,15 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = _EmployeeRepo.FindEmployee(id);
+            Employee employee = _EmployeeRepository.Get(id);
             if (employee == null)
             {
                 return HttpNotFound();
             }
             EmployeeViewModel EmpVM = new EmployeeViewModel();
             EmpVM.Employee = employee;
-            EmpVM.DepartmentList = new SelectList(_DepartmentRepo.AllDepartments().ToList(), "DepartMentId", "DepartmentName", employee.DepartmentId);
-            EmpVM.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions, "InstitutionId", "InstitutionName", employee.InstitutionId);
+            EmpVM.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartMentId", "DepartmentName", employee.DepartmentId);
+            EmpVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", employee.InstitutionId);
             return View(EmpVM);
         }
 
@@ -142,12 +151,12 @@ namespace DayCareApp.Web.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                _EmployeeRepo.InsertOrUpdateEmployee(model.Employee);
-                _EmployeeRepo.Save();
+                _EmployeeRepository.Eidt(model.Employee);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            model.DepartmentList = new SelectList(_DepartmentRepo.AllDepartments().ToList(), "DepartMentId", "DepartmentName", model.Employee.DepartmentId);
-            model.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions, "InstitutionId", "InstitutionName", model.Employee.InstitutionId);
+            model.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartMentId", "DepartmentName", model.Employee.DepartmentId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Employee.InstitutionId);
             return View(model);
         }
 
@@ -158,7 +167,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = _EmployeeRepo.FindEmployee(id);
+            Employee employee = _EmployeeRepository.Get(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -171,9 +180,19 @@ namespace DayCareApp.Web.Controllers.Web
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _EmployeeRepo.DeleteEmployee(id);
-            _EmployeeRepo.Save();
+            Employee employee = _EmployeeRepository.Get(id);
+            _EmployeeRepository.Remove(employee);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _unitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         #region Helpers

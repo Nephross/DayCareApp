@@ -16,23 +16,30 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using DayCareApp.Web.DataContext.Repositories;
+using DayCareApp.Web.DataContext.Persistence;
 
 namespace DayCareApp.Web.Controllers.Web
 {
     public class InstitutionAdminsController : Controller
     {
-        private InstitutionAdminRepository _InstitutionAdminRepo = new InstitutionAdminRepository();
-        private InstitutionRepository _InstitutionRepo = new InstitutionRepository();
+        public readonly IInstitutionAdminRepository _InstitutionAdminRepository;
+        public readonly IInstitutionRepository _InstitutionRepository;
+        public readonly UnitOfWork _unitOfWork;
         private ApplicationUserManager _userManager;
-
-        public InstitutionAdminsController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;
-        }
 
         public InstitutionAdminsController()
         {
+            this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
         }
+
+        public InstitutionAdminsController(IInstitutionAdminRepository InstitutionAdminRepository, IInstitutionRepository InstitutionRepository, IUnitOfWork unitOfWork, ApplicationUserManager userManager)
+        {
+            _InstitutionAdminRepository = unitOfWork.InstitutionAdmins;
+            _InstitutionRepository = unitOfWork.Institutions;
+            UserManager = userManager;
+        }
+               
 
         public ApplicationUserManager UserManager
         {
@@ -45,10 +52,11 @@ namespace DayCareApp.Web.Controllers.Web
                 _userManager = value;
             }
         }
+
         // GET: InstitutionAdmins
         public ActionResult Index()
         {
-            var institutionAdmins = _InstitutionAdminRepo.AllInstitutionAdmins();
+            var institutionAdmins = _InstitutionAdminRepository.GetAll().ToList();
             return View(institutionAdmins.ToList());
         }
 
@@ -59,7 +67,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InstitutionAdmin institutionAdmin = _InstitutionAdminRepo.FindInstitutionAdmin(id);
+            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.Get(id);
             if (institutionAdmin == null)
             {
                 return HttpNotFound();
@@ -71,7 +79,7 @@ namespace DayCareApp.Web.Controllers.Web
         public ActionResult Create()
         {
             RegisterInstitutionAdminViewModel RegInstAdminVM = new RegisterInstitutionAdminViewModel();
-            RegInstAdminVM.Institutions = new SelectList(_InstitutionRepo.AllInstitutions.ToList(), "InstitutionId", "InstitutionName");
+            RegInstAdminVM.Institutions = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName");
             return View(RegInstAdminVM);
         }
 
@@ -92,8 +100,8 @@ namespace DayCareApp.Web.Controllers.Web
                     await UserManager.AddToRoleAsync(user.Id, "InstitutionAdmin");
 
                     model.InstitutionAdmin.ApplicationUserId = user.Id;
-                    _InstitutionAdminRepo.InsertOrUpdateInstitutionAdmin(model.InstitutionAdmin);
-                    _InstitutionAdminRepo.Save();
+                    _InstitutionAdminRepository.Add(model.InstitutionAdmin);
+                    _unitOfWork.Complete();
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -107,7 +115,7 @@ namespace DayCareApp.Web.Controllers.Web
             }
 
             // If we got this far, something failed, redisplay for
-            model.Institutions = new SelectList(_InstitutionRepo.AllInstitutions.ToList(), "InstitutionId", "InstitutionName", model.InstitutionAdmin.InstitutionId);
+            model.Institutions = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.InstitutionAdmin.InstitutionId);
             return View(model);
         }
 
@@ -118,14 +126,14 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InstitutionAdmin institutionAdmin = _InstitutionAdminRepo.FindInstitutionAdmin(id);
+            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.Get(id);
             if (institutionAdmin == null)
             {
                 return HttpNotFound();
             }
 
             InstitutionAdminViewModel InstAdminVM = new InstitutionAdminViewModel();
-            InstAdminVM.InstitutionList = new SelectList(_InstitutionRepo.AllInstitutions.ToList(), "InstitutionId", "InstitutionName", institutionAdmin.InstitutionId);
+            InstAdminVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", institutionAdmin.InstitutionId);
             InstAdminVM.institutionAdmin = institutionAdmin;
             return View(InstAdminVM);
         }
@@ -139,11 +147,11 @@ namespace DayCareApp.Web.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                _InstitutionAdminRepo.InsertOrUpdateInstitutionAdmin(model.institutionAdmin);
-                _InstitutionAdminRepo.Save();
+                _InstitutionAdminRepository.Edit(model.institutionAdmin);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            model.InstitutionList= new SelectList(_InstitutionRepo.AllInstitutions.ToList(), "InstitutionId", "InstitutionName", model.institutionAdmin.InstitutionId);
+            model.InstitutionList= new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.institutionAdmin.InstitutionId);
             return View(model);
         }
 
@@ -154,7 +162,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InstitutionAdmin institutionAdmin = _InstitutionAdminRepo.FindInstitutionAdmin(id);
+            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.Get(id);
             if (institutionAdmin == null)
             {
                 return HttpNotFound();
@@ -167,10 +175,19 @@ namespace DayCareApp.Web.Controllers.Web
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _InstitutionAdminRepo.DeleteInstitutionAdmin(id);
-            
-            _InstitutionAdminRepo.Save();
+            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.Get(id);
+            _InstitutionAdminRepository.Remove(institutionAdmin);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _unitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
         #region Helpers
