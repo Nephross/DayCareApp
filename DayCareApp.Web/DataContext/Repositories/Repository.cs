@@ -48,6 +48,11 @@ namespace DayCareApp.Web.DataContext.Repositories
             Context.Set<TEntity>().AddRange(entities);
         }
 
+        public void Edit(TEntity entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+        }
+
         public void Remove(TEntity entity)
         {
             Context.Set<TEntity>().Remove(entity);

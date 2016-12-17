@@ -126,9 +126,11 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return HttpNotFound();
             }
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartMentId", "DepartmentName", employee.DepartmentId);
-            ViewBag.InstitutionId = new SelectList(db.Institutions, "InstitutionId", "InstitutionName", employee.InstitutionId);
-            return View(employee);
+            EmployeeViewModel EmpVM = new EmployeeViewModel();
+            EmpVM.Employee = employee;
+            EmpVM.DepartmentList = new SelectList(_DepartmentRepo.AllDepartments().ToList(), "DepartMentId", "DepartmentName", employee.DepartmentId);
+            EmpVM.InstitutionList = new SelectList(_DepartmentRepo.AllInstitutions, "InstitutionId", "InstitutionName", employee.InstitutionId);
+            return View(EmpVM);
         }
 
         // POST: Employees/Edit/5
@@ -136,17 +138,17 @@ namespace DayCareApp.Web.Controllers.Web
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,ApplicationUserId,Name,DepartmentId,InstitutionId")] Employee employee)
+        public ActionResult Edit(EmployeeVievModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(employee).State = EntityState.Modified;
-                db.SaveChanges();
+                _EmployeeRepo.InsertOrUpdate(model.Employee);
+                _EmployeeRepo.Save();
                 return RedirectToAction("Index");
             }
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartMentId", "DepartmentName", employee.DepartmentId);
-            ViewBag.InstitutionId = new SelectList(db.Institutions, "InstitutionId", "InstitutionName", employee.InstitutionId);
-            return View(employee);
+            model.DepartmentList = new SelectList(_DepartmentRepo.AllDepartments().ToList(), "DepartMentId", "DepartmentName", model.Employee.DepartmentId);
+            model.InstitutionList = new SelectList(_DepartmentRepo.AllInstitutions, "InstitutionId", "InstitutionName", model.Employee.InstitutionId);
+            return View(model);
         }
 
         // GET: Employees/Delete/5
@@ -156,7 +158,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
+            Employee employee = _EmployeeRepo.FindEmployee(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -169,9 +171,8 @@ namespace DayCareApp.Web.Controllers.Web
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Employee employee = db.Employees.Find(id);
-            db.Employees.Remove(employee);
-            db.SaveChanges();
+            _EmployeeRepo.Delete(id);
+            _EmployeeRepo.Save();
             return RedirectToAction("Index");
         }
 
