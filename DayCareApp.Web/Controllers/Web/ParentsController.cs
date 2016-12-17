@@ -9,18 +9,49 @@ using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
 using DayCareApp.Web.Entities;
 using DayCareApp.Web.Repository;
+using DayCareApp.Web.DataContext.Repositories;
+using DayCareApp.Web.DataContext.Persistence;
+using Microsoft.AspNet.Identity.Owin;
+using DayCareApp.Web.Models;
 
 namespace DayCareApp.Web.Controllers.Web
 {
     public class ParentsController : Controller
     {
-        private InstitutionRepository _InstitutionRepo = new InstitutionRepository();
-        private ParentRepository _ParentRepo = new ParentRepository();
+        public readonly IParentRepository _ParentRepository;
+        public readonly IInstitutionRepository _InstitutionRepository;
+        public readonly UnitOfWork _unitOfWork;
+        private ApplicationUserManager _userManager;
+
+        public ParentsController()
+        {
+            this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
+        }
+
+        public ParentsController(IParentRepository ParentRepository, IInstitutionRepository InstitutionRepository, IUnitOfWork unitOfWork, ApplicationUserManager userManager)
+        {
+            _ParentRepository = unitOfWork.Parents;
+            _InstitutionRepository = unitOfWork.Institutions;
+            UserManager = userManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
 
         // GET: Parents
         public ActionResult Index()
         {
-            var parents = db.Parents.Include(p => p.Institution);
+            var parents = _ParentRepository.GetAll();
             return View(parents.ToList());
         }
 
@@ -31,7 +62,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Parent parent = db.Parents.Find(id);
+            Parent parent = _ParentRepository.Get(id);
             if (parent == null)
             {
                 return HttpNotFound();
@@ -42,8 +73,9 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: Parents/Create
         public ActionResult Create()
         {
-            ViewBag.InstitutionId = new SelectList(db.Institutions, "InstitutionId", "InstitutionName");
-            return View();
+            RegisterParentViewModel ParentVM = new RegisterParentViewModel();
+            ParentVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName");
+            return View(ParentVM);
         }
 
         // POST: Parents/Create
@@ -127,7 +159,7 @@ namespace DayCareApp.Web.Controllers.Web
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

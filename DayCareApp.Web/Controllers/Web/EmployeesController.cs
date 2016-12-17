@@ -151,7 +151,7 @@ namespace DayCareApp.Web.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                _EmployeeRepository.Eidt(model.Employee);
+                _EmployeeRepository.Edit(model.Employee);
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
