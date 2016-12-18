@@ -21,7 +21,7 @@ namespace DayCareApp.Web.DataContext
         public DbSet<Parent> Parents { get; set; }
 
         public DayCareAppDB()
-            : base("RemoteConnection") //Change this later!!!
+            : base("RemoteConnection") 
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
@@ -30,6 +30,9 @@ namespace DayCareApp.Web.DataContext
         {
             return new DayCareAppDB();
         }
+
+
+
 
     }
 }

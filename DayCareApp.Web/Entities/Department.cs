@@ -10,10 +10,13 @@ namespace DayCareApp.Web.Entities
     {
 
         [Key]
-        public int DepartMentId { get; set; }
+        public int DepartmentId { get; set; }
 
         [Required]
         public string DepartmentName { get; set; }
+
+        public Institution Institution { get; set; }
+        public int InstitutionId { get; set; }
 
     }
 }

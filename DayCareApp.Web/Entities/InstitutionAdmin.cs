@@ -9,7 +9,7 @@ namespace DayCareApp.Web.Entities
     public class InstitutionAdmin
     {
         [Key]
-        public int ÍnstitutionAdminId { get; set; }
+        public int InstitutionAdminId { get; set; }
 
         public string ApplicationUserId { get; set; }
 

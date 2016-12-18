@@ -16,7 +16,7 @@ namespace DayCareApp.Web.DataContext.Repositories
             Context = context;
         }
 
-        public TEntity Get(int id)
+        public TEntity Get(int? id)
         {
             // Here we are working with a DbContext, not PlutoContext. So we don’t have DbSets
             return Context.Set<TEntity>().Find(id);
@@ -46,6 +46,11 @@ namespace DayCareApp.Web.DataContext.Repositories
         public void AddRange(IEnumerable<TEntity> entities)
         {
             Context.Set<TEntity>().AddRange(entities);
+        }
+
+        public void Edit(TEntity entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Remove(TEntity entity)

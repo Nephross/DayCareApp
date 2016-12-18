@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace DayCareApp.Web.Controllers.Web
+namespace DayCareApp.Web.Controllers
 {
-    public class InstitutionAdminController : Controller
+    public class InstitutionManagerController : Controller
     {
-        // GET: InstitutionAdmin
+        // GET: InstitutionManager
         public ActionResult Index()
         {
             return View();

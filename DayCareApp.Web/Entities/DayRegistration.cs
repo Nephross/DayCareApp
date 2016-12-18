@@ -24,6 +24,10 @@ namespace DayCareApp.Web.Entities
         public int ExpectedPickupParentId { get; set; }
 
         [Required]
+        public DateTime ExpectedPickupTime { get; set; }
+        
+
+        [Required]
         public Parent DeliveryParent { get; set; }
         public int DeliveryParentId { get; set; }
 

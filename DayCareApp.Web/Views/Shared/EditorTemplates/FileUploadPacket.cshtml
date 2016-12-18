@@ -1,0 +1,20 @@
+﻿@model DayCareApp.Web.Helpers.FileUploadPacket
+
+
+<div class="form-group">
+    <label for="profileImage" class="control-label col-md-2">Vælg et profil billede <br /> skal være af typen .jpg</label>
+    <div class="col-md-10">
+
+
+        <div style="position:relative;">
+            <a class='btn btn-default' href='javascript:;'>
+                Choose File...
+                <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' id="FileUploadPacket.UpFile" name="FileUploadPacket.UpFile" size="40" onchange='$("#upload-file-info1").html($(this).val());'>
+            </a>
+            &nbsp;
+            <span class='label label-default' id="upload-file-info1"></span>
+        </div>
+
+
+    </div>
+</div>
