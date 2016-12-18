@@ -1,4 +1,5 @@
 ﻿using DayCareApp.Web.Entities;
+using DayCareApp.Web.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -158,6 +159,7 @@ namespace DayCareApp.Web.Models
 
         public Parent Parent { get; set; }
         public SelectList InstitutionList { get; set; }
+        public FileUploadPacket FileUploadPacket { get; set; }
 
         public RegisterParentViewModel()
         {

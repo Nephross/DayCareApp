@@ -178,7 +178,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\InstitutionManagerController.cs" />
+    <Compile Include="Controllers\Web\InstitutionManagerController.cs" />
     <Compile Include="Controllers\Web\AdminController.cs" />
     <Compile Include="Controllers\Web\CheckInController.cs" />
     <Compile Include="Controllers\Web\ChildController.cs" />
@@ -186,7 +186,6 @@
     <Compile Include="Controllers\Web\EmployeesController.cs" />
     <Compile Include="Controllers\Web\InstitutionAdminsController.cs" />
     <Compile Include="Controllers\Web\InstitutionsController.cs" />
-    <Compile Include="Controllers\Web\ParentController.cs" />
     <Compile Include="Controllers\Web\ParentsController.cs" />
     <Compile Include="DataContext\DayCareAppDB.cs" />
     <Compile Include="DataContext\Migrations\201612081114357_InitialCreate.cs" />
@@ -207,9 +206,16 @@
     </Compile>
     <Compile Include="DataContext\Migrations\Configuration.cs" />
     <Compile Include="DataContext\Persistence\ChildRepository.cs" />
+    <Compile Include="DataContext\Persistence\ParentRepository.cs" />
+    <Compile Include="DataContext\Repositories\IEmployeeRepository.cs" />
+    <Compile Include="DataContext\Repositories\IInstitutionAdminRepository.cs" />
+    <Compile Include="DataContext\Repositories\IParentRepository.cs" />
     <Compile Include="DataContext\Persistence\UnitOfWork.cs" />
     <Compile Include="DataContext\Repositories\IChildRepository.cs" />
+    <Compile Include="DataContext\Repositories\IDepartmentRepository.cs" />
+    <Compile Include="DataContext\Repositories\IInstitutionRepository.cs" />
     <Compile Include="DataContext\Repositories\IRepository.cs" />
+    <Compile Include="DataContext\Repositories\ITestRepository.cs" />
     <Compile Include="DataContext\Repositories\IUnitOfWork.cs" />
     <Compile Include="DataContext\Repositories\Repository.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
@@ -227,17 +233,19 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Helpers\FileHandler.cs" />
+    <Compile Include="Helpers\FileUploadPacket.cs" />
+    <Compile Include="Helpers\RequireHTTPS.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EntityViewModels.cs" />
     <Compile Include="Models\ChildViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\DepartmentRepository.cs" />
-    <Compile Include="Repository\EmployeeRepository.cs" />
-    <Compile Include="Repository\InstitutionAdminRepository.cs" />
-    <Compile Include="Repository\InstitutionRepository.cs" />
-    <Compile Include="Repository\TestRepository.cs" />
+    <Compile Include="DataContext\Persistence\DepartmentRepository.cs" />
+    <Compile Include="DataContext\Persistence\EmployeeRepository.cs" />
+    <Compile Include="DataContext\Persistence\InstitutionAdminRepository.cs" />
+    <Compile Include="DataContext\Persistence\InstitutionRepository.cs" />
+    <Compile Include="DataContext\Persistence\TestRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +334,7 @@
     <Content Include="Views\Parents\Details.cshtml" />
     <Content Include="Views\Parents\Edit.cshtml" />
     <Content Include="Views\Parents\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\FileUploadPacket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />

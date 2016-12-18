@@ -1,4 +1,5 @@
 ﻿using DayCareApp.Web.Entities;
+using DayCareApp.Web.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,10 +51,12 @@ namespace DayCareApp.Web.Models
     {
         public ParentViewModel()
         {
-            Parent = new Entities.Parent();
+            Parent = new Parent();
         }
 
         public Parent Parent { get; set; }
+        public FileUploadPacket FileUploadPacket { get; set; }
         public SelectList InstitutionList { get; set; }
     }
+
 }

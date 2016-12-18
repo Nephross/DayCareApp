@@ -13,6 +13,9 @@ using DayCareApp.Web.DataContext.Repositories;
 using DayCareApp.Web.DataContext.Persistence;
 using Microsoft.AspNet.Identity.Owin;
 using DayCareApp.Web.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using DayCareApp.Web.Helpers;
 
 namespace DayCareApp.Web.Controllers.Web
 {
@@ -83,17 +86,44 @@ namespace DayCareApp.Web.Controllers.Web
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ParentId,ApplicationUserId,InstitutionId,FirstName,LastName,Address,AreaCode,City,MobilePhone,Email,ImagePath")] Parent parent)
+        public async Task<ActionResult> Create(RegisterParentViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Parents.Add(parent);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(user.Id, "Parent");
+
+                    model.Parent.ApplicationUserId = user.Id;
+                    model.Parent.Email = user.Email;
+
+                    FileHandler fileHandler = new FileHandler();
+                    string serverPath = Server == null ? "" : Server.MapPath("~");
+                    try
+                    {
+                        model.Parent.ImagePath = fileHandler.SaveImage(model.FileUploadPacket, serverPath);
+                    }
+                    catch { }
+
+                    _ParentRepository.Add(model.Parent);
+                    _unitOfWork.Complete();
+
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Parents");
+                }
+                AddErrors(result);
             }
 
-            ViewBag.InstitutionId = new SelectList(db.Institutions, "InstitutionId", "InstitutionName", parent.InstitutionId);
-            return View(parent);
+            // If we got this far, something failed, redisplay for
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Parent.ParentId);
+            return View(model);
         }
 
         // GET: Parents/Edit/5
@@ -103,12 +133,14 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Parent parent = db.Parents.Find(id);
+            Parent parent = _ParentRepository.Get(id);
             if (parent == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.InstitutionId = new SelectList(db.Institutions, "InstitutionId", "InstitutionName", parent.InstitutionId);
+            ParentViewModel ParentViewModel = new ParentViewModel();
+            ParentViewModel.Parent = parent;
+            ParentViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", parent.ParentId);
             return View(parent);
         }
 
@@ -117,16 +149,30 @@ namespace DayCareApp.Web.Controllers.Web
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ParentId,ApplicationUserId,InstitutionId,FirstName,LastName,Address,AreaCode,City,MobilePhone,Email,ImagePath")] Parent parent)
+        public ActionResult Edit(ParentViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(parent).State = EntityState.Modified;
-                db.SaveChanges();
+                FileHandler fileHandler = new FileHandler();
+                if (model.FileUploadPacket != null)
+                {
+                    string serverPath = Server == null ? "" : Server.MapPath("~");
+                    try
+                    {
+                        //Deleting the current profile picture.
+                        fileHandler.deleteImage(serverPath, model.Parent.ImagePath);
+                        //Saving the new profile picture.
+                        model.Parent.ImagePath = fileHandler.SaveImage(model.FileUploadPacket, serverPath);
+                    }
+                    catch { }
+                }
+                _ParentRepository.Edit(model.Parent);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            ViewBag.InstitutionId = new SelectList(db.Institutions, "InstitutionId", "InstitutionName", parent.InstitutionId);
-            return View(parent);
+
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Parent.ParentId);
+            return View(model);
         }
 
         // GET: Parents/Delete/5
@@ -136,7 +182,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Parent parent = db.Parents.Find(id);
+            Parent parent = _ParentRepository.Get(id);
             if (parent == null)
             {
                 return HttpNotFound();
@@ -149,9 +195,21 @@ namespace DayCareApp.Web.Controllers.Web
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Parent parent = db.Parents.Find(id);
-            db.Parents.Remove(parent);
-            db.SaveChanges();
+            Parent parent = _ParentRepository.Get(id);
+            FileHandler fileHandler = new FileHandler();
+            
+            string serverPath = Server == null ? "" : Server.MapPath("~");
+            try
+            {
+                //Deleting the current profile picture.
+                fileHandler.deleteImage(serverPath, parent.ImagePath);
+                //Saving the new profile picture.
+                   
+            }
+            catch { }
+          
+            _ParentRepository.Remove(parent);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
         }
 
@@ -162,6 +220,15 @@ namespace DayCareApp.Web.Controllers.Web
                 _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
         }
     }
 }

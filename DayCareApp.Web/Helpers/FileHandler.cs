@@ -10,31 +10,41 @@ namespace DayCareApp.Web.Helpers
 {
     public class FileHandler
     {
-        public string SaveImage(HttpPostedFileBase inputImage, string userId, string serverPath)
+        string serverPath;
+        
+        public string SaveImage(FileUploadPacket uploadFile, string inputServerPath)
         {
-            if (inputImage == null) return "empty";
+            string profileImagePath = "empty";
+            serverPath = inputServerPath;
 
+            if (uploadFile == null)
+            {
+                profileImagePath = SaveDefaultImage();
+            }
+            else
+            {                
+                string filePath = SaveImage(uploadFile.UpFile.InputStream, 400);
 
-            string filePath = getFilePath(userId, serverPath);
-            string targetPath = serverPath + filePath;
-            SaveImage(inputImage.InputStream, targetPath, 400);
-
-            return filePath + ".jpg";
+                profileImagePath = filePath + ".jpg";
+            }
+                      
+            return profileImagePath;
         }
 
-        public string SaveDefaultImage(string userId, string serverPath)
+        private string SaveDefaultImage()
         {
-            byte[] defaultImage = System.IO.File.ReadAllBytes(serverPath + "\\UserFiles\\DefaultProfileImage.jpg");
+            byte[] defaultImage = File.ReadAllBytes(serverPath + "\\UserFiles\\DefaultProfileImage.jpg");
             Stream inputStream = new MemoryStream(defaultImage);
-            string filePath = getFilePath(userId, serverPath);
-            string targetPath = serverPath + filePath;
-            SaveImage(inputStream, targetPath, 400);
+            string filePath = SaveImage(inputStream, 400);
 
             return filePath + ".jpg";
         }
 
-        private void SaveImage(Stream imageBuffer, string savePath, int maxSideSize)
+        private string SaveImage(Stream imageBuffer, int maxSideSize)
         {
+            string filePath = getFilePath();
+            string targetPath = getTargetPath(filePath);
+
             int newWidth;
             int newHeight;
             Image image = Image.FromStream(imageBuffer);
@@ -53,29 +63,45 @@ namespace DayCareApp.Web.Helpers
                 newWidth = oldWidth;
                 newHeight = oldHeight;
             }
+
             Bitmap newImage = new Bitmap(image, newWidth, newHeight);
-            newImage.Save(savePath + ".jpg", ImageFormat.Jpeg);
+
+            newImage.Save(targetPath + ".jpg", ImageFormat.Jpeg);
             image.Dispose();
             newImage.Dispose();
+
+            return filePath;
         }
 
         
-
-        private string getFilePath(string userId, string serverPath)
+        //Generates a unique filepath.
+        private string getFilePath()
         {
-            string baseFolder = "\\UserFiles\\";
-            string userFolder = "\\" + userId + "\\";
-            string targetFolder = serverPath + baseFolder + userFolder;
+            string fileFolder = "\\UserFiles\\ProfilePictures\\";
+            string targetFolder = serverPath + fileFolder;
 
             if (!Directory.Exists(targetFolder))
             {
                 Directory.CreateDirectory(targetFolder);
             }
             Guid fileName = Guid.NewGuid();
-            string fileFolder = baseFolder + userFolder;
-
+          
             return fileFolder + fileName.ToString();
+        }
 
+        private string getTargetPath(string filePath)
+        {
+            return serverPath + filePath;
+        }
+
+        public void deleteImage(string inputServerpath, string imagePath)
+        {
+            serverPath = inputServerpath;
+
+            if (System.IO.File.Exists(getTargetPath(imagePath)))
+            {
+                System.IO.File.Delete(getTargetPath(imagePath));
+            }
         }
 
     }
