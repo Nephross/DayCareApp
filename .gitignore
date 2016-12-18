@@ -178,3 +178,5 @@ package
 images
 MockAssemblyResult.xml
 PortabilityAnalysis*.html
+/DayCareApp.WebTests2/Properties
+/DayCareApp.WebTests2
