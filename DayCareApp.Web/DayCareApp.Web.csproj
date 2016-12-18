@@ -215,7 +215,6 @@
     <Compile Include="DataContext\Repositories\IDepartmentRepository.cs" />
     <Compile Include="DataContext\Repositories\IInstitutionRepository.cs" />
     <Compile Include="DataContext\Repositories\IRepository.cs" />
-    <Compile Include="DataContext\Repositories\ITestRepository.cs" />
     <Compile Include="DataContext\Repositories\IUnitOfWork.cs" />
     <Compile Include="DataContext\Repositories\Repository.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
@@ -245,7 +244,6 @@
     <Compile Include="DataContext\Persistence\EmployeeRepository.cs" />
     <Compile Include="DataContext\Persistence\InstitutionAdminRepository.cs" />
     <Compile Include="DataContext\Persistence\InstitutionRepository.cs" />
-    <Compile Include="DataContext\Persistence\TestRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -285,7 +283,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="UserFiles\DefaultProfileImage.jpg" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

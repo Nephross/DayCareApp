@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
 using DayCareApp.Web.Entities;
-using DayCareApp.Web.Repository;
 using DayCareApp.Web.Models;
 using System.Globalization;
 using System.Security.Claims;
