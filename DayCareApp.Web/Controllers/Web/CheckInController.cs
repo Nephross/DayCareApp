@@ -16,6 +16,7 @@ namespace DayCareApp.Web.Controllers.Web
     public class CheckInController : Controller
     {
         public readonly IChildRepository _childRepository;
+        public readonly IEmployeeRepository _employeeRepository;
         public readonly UnitOfWork _unitOfWork;
 
         public CheckInController()
@@ -23,18 +24,19 @@ namespace DayCareApp.Web.Controllers.Web
             this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
         }
 
-        public CheckInController(IChildRepository childRepository, IUnitOfWork unitOfWork)
+        public CheckInController(IChildRepository childRepository,IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork)
         {
             _childRepository = unitOfWork.Children;
+            _employeeRepository = unitOfWork.Employees;
         }
 
         public ActionResult Index()
         {
             if (User.IsInRole("Employee"))
             {
-                var userId = User.Identity.GetUserId()
+                var userId = User.Identity.GetUserId();
 
-                    int institutionId = _EmployeeRepository.Find(x => x.ApllicationUserId == userId).InstitutionId;
+                    int institutionId = _employeeRepository.SingleOrDefault(x => x.ApplicationUserId == userId).InstitutionId;
                 var model = _childRepository.GetAll();
                 var modelEmpl =
                     from r in model
@@ -49,9 +51,9 @@ namespace DayCareApp.Web.Controllers.Web
                 var model = _childRepository.GetAll();
                 return View(model);
             }
-             
-            return red()
-            
+
+            return View();
+
         }
 
         public ActionResult IndexPictures()
