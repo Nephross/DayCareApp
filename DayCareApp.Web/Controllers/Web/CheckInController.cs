@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
 using DayCareApp.Web.DataContext.Persistence;
 using DayCareApp.Web.DataContext.Repositories;
+using Microsoft.AspNet.Identity;
 
 namespace DayCareApp.Web.Controllers.Web
 {
@@ -29,9 +30,28 @@ namespace DayCareApp.Web.Controllers.Web
 
         public ActionResult Index()
         {
+            if (User.IsInRole("Employee"))
+            {
+                var userId = User.Identity.GetUserId()
 
-            var model = _childRepository.GetAll();       
-            return View(model);
+                    int institutionId = _EmployeeRepository.Find(x => x.ApllicationUserId == userId).InstitutionId;
+                var model = _childRepository.GetAll();
+                var modelEmpl =
+                    from r in model
+                    where r.InstitutionId == institutionId 
+                
+                    select r;
+
+                return View(modelEmpl);
+            }
+            if (User.IsInRole("Admin"))
+            {
+                var model = _childRepository.GetAll();
+                return View(model);
+            }
+             
+            return red()
+            
         }
 
         public ActionResult IndexPictures()
@@ -45,7 +65,7 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: Reviews/Details/5
         public ActionResult Details(int id)
         {
-
+            
                  Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
                 
                 return View(child);
@@ -53,7 +73,7 @@ namespace DayCareApp.Web.Controllers.Web
         }
 
         // GET: Reviews/Create
-       /* public ActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -85,7 +105,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return View();
             }
-        }*/
+        }
 
         // GET: Reviews/Edit/5
         public ActionResult Edit(int id)
@@ -98,14 +118,12 @@ namespace DayCareApp.Web.Controllers.Web
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-
-                using (DayCareAppDB context = new DayCareAppDB())
+            if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("InstitutionAdmin"))
+            {
+                Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
+                if (child != null)
                 {
 
-                Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
-                    if (child != null)
-                    {
-                    
                     child.Name = collection.Get(2);
                     child.Country = collection.Get(3);
                     child.Birthdate = Convert.ToDateTime(collection.Get(4));
@@ -116,8 +134,8 @@ namespace DayCareApp.Web.Controllers.Web
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
 
-                 }
-            
+            }
+                
 
             //add view for not saved action
             return View("Index");
