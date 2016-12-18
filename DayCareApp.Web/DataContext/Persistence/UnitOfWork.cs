@@ -41,5 +41,10 @@ namespace DayCareApp.Web.DataContext.Persistence
         {
             _context.Dispose();
         }
+
+        public DayCareAppDB getContext()
+        {
+            return _context;
+        }
     }
 }

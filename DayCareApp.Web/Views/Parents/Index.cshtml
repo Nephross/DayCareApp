@@ -14,9 +14,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Institution.InstitutionName)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
-        </th>
+       
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
@@ -38,9 +36,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </th>
+        
         <th></th>
     </tr>
 
@@ -49,9 +45,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Institution.InstitutionName)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUserId)
-        </td>
+      
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
         </td>
@@ -73,9 +67,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImagePath)
-        </td>
+     
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ParentId }) |
             @Html.ActionLink("Details", "Details", new { id=item.ParentId }) |

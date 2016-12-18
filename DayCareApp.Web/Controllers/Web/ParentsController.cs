@@ -193,21 +193,52 @@ namespace DayCareApp.Web.Controllers.Web
         // POST: Parents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Parent parent = _ParentRepository.Get(id);
             FileHandler fileHandler = new FileHandler();
-            
+
             string serverPath = Server == null ? "" : Server.MapPath("~");
             try
             {
                 //Deleting the current profile picture.
                 fileHandler.deleteImage(serverPath, parent.ImagePath);
                 //Saving the new profile picture.
-                   
+
             }
             catch { }
-          
+
+            if (ModelState.IsValid)
+            {
+                if (parent.ApplicationUserId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                var user = await _userManager.FindByIdAsync(parent.ApplicationUserId);
+                var logins = user.Logins;
+                var rolesForUser = await _userManager.GetRolesAsync(parent.ApplicationUserId);
+
+                using (var transaction = _unitOfWork.getContext().Database.BeginTransaction())
+                {
+                    foreach (var login in logins.ToList())
+                    {
+                        await _userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                    }
+
+                    if (rolesForUser.Count() > 0)
+                    {
+                        foreach (var item in rolesForUser.ToList())
+                        {
+                            // item should be the name of the role
+                            var result = await _userManager.RemoveFromRoleAsync(user.Id, item);
+                        }
+                    }
+
+                    await _userManager.DeleteAsync(user);
+                    transaction.Commit();
+                }
+            }
             _ParentRepository.Remove(parent);
             _unitOfWork.Complete();
             return RedirectToAction("Index");
