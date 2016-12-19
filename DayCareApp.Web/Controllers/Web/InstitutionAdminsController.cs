@@ -168,7 +168,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.Get(id);
+            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.SingleOrDefault(i => i.InstitutionAdminId.Equals(id), i => i.Institution);
             if (institutionAdmin == null)
             {
                 return HttpNotFound();
@@ -208,11 +208,11 @@ namespace DayCareApp.Web.Controllers.Web
                         foreach (var item in rolesForUser.ToList())
                         {
                             // item should be the name of the role
-                            var result = await _userManager.RemoveFromRoleAsync(user.Id, item);
+                            var result = await userManager.RemoveFromRoleAsync(user.Id, item);
                         }
                     }
 
-                    await _userManager.DeleteAsync(user);
+                    await userManager.DeleteAsync(user);
                     transaction.Commit();
                 }
             }

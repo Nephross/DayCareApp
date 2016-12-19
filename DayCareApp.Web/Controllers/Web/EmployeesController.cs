@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DayCareApp.Web.DataContext.Repositories;
 using DayCareApp.Web.DataContext.Persistence;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DayCareApp.Web.Controllers.Web
 {
@@ -71,7 +72,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = _EmployeeRepository.Get(id);
+            Employee employee = _EmployeeRepository.SingleOrDefault(i => i.EmployeeId.Equals(id), i => i.Institution, i => i.Department);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -101,7 +102,9 @@ namespace DayCareApp.Web.Controllers.Web
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, "Employee");
+                    var userStore = new UserStore<ApplicationUser>(new DayCareAppDB());
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+                    await userManager.AddToRoleAsync(user.Id, "Employee");
 
                     model.Employee.ApplicationUserId = user.Id;
                     _EmployeeRepository.Add(model.Employee);
