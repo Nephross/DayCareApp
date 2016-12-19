@@ -11,6 +11,7 @@ using DayCareApp.Web.Entities;
 using DayCareApp.Web.Models;
 using DayCareApp.Web.DataContext.Persistence;
 using DayCareApp.Web.DataContext.Repositories;
+using Microsoft.AspNet.Identity;
 
 namespace DayCareApp.Web.Controllers.Web
 {
@@ -18,6 +19,7 @@ namespace DayCareApp.Web.Controllers.Web
     {
         public readonly IDepartmentRepository _DepartmentRepository;
         public readonly IInstitutionRepository _InstitutionRepository;
+        public readonly IInstitutionAdminRepository _InstitutionAdminRepository;
         public readonly UnitOfWork _unitOfWork;
 
         public DepartmentsController()
@@ -25,6 +27,7 @@ namespace DayCareApp.Web.Controllers.Web
             this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
             _DepartmentRepository = this._unitOfWork.Departments;
             _InstitutionRepository = this._unitOfWork.Institutions;
+            _InstitutionAdminRepository = this._unitOfWork.InstitutionAdmins;
         }
 
         public DepartmentsController(IDepartmentRepository DepartmentRepository, IInstitutionRepository InstitutionRepository,IUnitOfWork unitOfWork)
@@ -36,7 +39,11 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: Departments
         public ActionResult Index()
         {
-            var departments = _DepartmentRepository.GetAll().ToList() ;
+            //var userId = User.Identity.GetUserId();
+           // var InstitutionId = _InstitutionAdminRepository.SingleOrDefault(x => x.ApplicationUserId == userId).Institution.InstitutionId;
+
+            //var departments = _DepartmentRepository.Find(d => d.InstitutionId == InstitutionId).ToList() ;
+            var departments = _DepartmentRepository.GetAll().ToList();
             return View(departments);
         }
 

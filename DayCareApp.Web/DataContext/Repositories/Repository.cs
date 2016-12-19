@@ -22,20 +22,61 @@ namespace DayCareApp.Web.DataContext.Repositories
             return Context.Set<TEntity>().Find(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] navigationProperties)
         {
-         
-            return Context.Set<TEntity>().ToList();
+            List<TEntity> list;
+            using (Context)
+            {
+                IQueryable<TEntity> dbQuery = Context.Set<TEntity>();
+
+                //Apply eager loading
+                foreach (Expression<Func<TEntity, object>> navigationProperty in navigationProperties)
+                    dbQuery = dbQuery.Include<TEntity, object>(navigationProperty);
+
+                list = dbQuery.AsNoTracking().ToList<TEntity>();
+            }
+            return list;
+
+
+            //return Context.Set<TEntity>().ToList();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> Find(Func<TEntity, bool> where, params Expression<Func<TEntity, object>>[] navigationProperties)
         {
-            return Context.Set<TEntity>().Where(predicate);
+
+            List<TEntity> list;
+            using (Context)
+            {
+                IQueryable<TEntity> dbQuery = Context.Set<TEntity>();
+
+                //Apply eager loading
+                foreach (Expression<Func<TEntity, object>> navigationProperty in navigationProperties)
+                    dbQuery = dbQuery.Include<TEntity, object>(navigationProperty);
+
+                list = dbQuery.AsNoTracking().Where(where).ToList<TEntity>();
+            }
+            return list;
+            //return Context.Set<TEntity>().Where(predicate);
         }
 
-        public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
+        public TEntity SingleOrDefault(Func<TEntity, bool> where,params Expression<Func<TEntity, object>>[] navigationProperties)
         {
-            return Context.Set<TEntity>().SingleOrDefault(predicate);
+            TEntity item = null;
+            using (Context)
+            {
+                IQueryable<TEntity> dbQuery = Context.Set<TEntity>();
+
+                //Apply eager loading
+                foreach (Expression<Func<TEntity, object>> navigationProperty in navigationProperties)
+                    dbQuery = dbQuery.Include<TEntity, object>(navigationProperty);
+
+                item = dbQuery
+                    .AsNoTracking() //Don't track any changes for the selected item
+                    .FirstOrDefault(where); //Apply where clause
+            }
+            return item;
+
+            //return Context.Set<TEntity>().SingleOrDefault(predicate);
         }
 
         public void Add(TEntity entity)
