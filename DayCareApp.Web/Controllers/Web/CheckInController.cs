@@ -85,7 +85,7 @@ namespace DayCareApp.Web.Controllers.Web
                 return View(child);
 
         }
-
+        /*
         // GET: Reviews/Create
         public ActionResult Create()
         {
@@ -120,7 +120,7 @@ namespace DayCareApp.Web.Controllers.Web
                 return View();
             }
         }
-
+        */
         // GET: Reviews/Edit/5
         public ActionResult Edit(int id)
         {

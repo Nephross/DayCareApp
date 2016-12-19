@@ -63,6 +63,7 @@ namespace DayCareApp.Web.Controllers.Web.Tests
         [Test()]
         public void IndexPicturesTest()
         {
+            
             Assert.Fail();
         }
 
