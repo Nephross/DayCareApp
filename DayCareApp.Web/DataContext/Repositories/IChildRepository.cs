@@ -11,5 +11,7 @@ namespace DayCareApp.Web.DataContext.Repositories
     {
        
         IEnumerable<Child> GetAllChildren();
+
+       
     }
 }

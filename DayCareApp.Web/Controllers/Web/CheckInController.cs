@@ -32,6 +32,8 @@ namespace DayCareApp.Web.Controllers.Web
 
         public ActionResult Index()
         {
+
+          
             if (User.IsInRole("Employee"))
             {
                 var userId = User.Identity.GetUserId();
@@ -143,27 +145,10 @@ namespace DayCareApp.Web.Controllers.Web
             return View("Index");
         }
 
-        // GET: Reviews/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+     
 
-        // POST: Reviews/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
+      
 
 
     }
