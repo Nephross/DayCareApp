@@ -3,6 +3,7 @@ using DayCareApp.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,31 +20,37 @@ namespace DayCareApp.Web.Controllers.Web
         public readonly IEmployeeRepository _employeeRepository;
         public readonly UnitOfWork _unitOfWork;
         public readonly IInstitutionRepository _institutionRepository;
+        public readonly IParentRepository _parentReposity;
+        public readonly IDepartmentRepository _departmentReposity;
 
         public CheckInController()
         {
             this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
+            _childRepository = this._unitOfWork.Children;
+            _parentReposity = this._unitOfWork.Parents;
+            _institutionRepository = this._unitOfWork.Institutions;
+            _departmentReposity = this._unitOfWork.Departments;
         }
 
-        public CheckInController(IChildRepository childRepository,IEmployeeRepository employeeRepository, IInstitutionRepository institutionRepository, IUnitOfWork unitOfWork)
+        public CheckInController(IUnitOfWork unitOfWork)
         {
             _childRepository = unitOfWork.Children;
             _employeeRepository = unitOfWork.Employees;
             _institutionRepository = unitOfWork.Institutions;
+            _parentReposity = unitOfWork.Parents;
+            _departmentReposity = unitOfWork.Departments;
         }
 
         public ActionResult Index()
         {
            
-            Console.WriteLine("THE NAME IS :  " + _institutionRepository.Get(1).FirstName);
-
             if (User.IsInRole("Employee"))
             {
                 var userId = User.Identity.GetUserId();
 
                     int institutionId = _employeeRepository.SingleOrDefault(x => x.ApplicationUserId == userId).InstitutionId;
-                var model = _childRepository.GetAll();
-                var modelEmpl =
+                    var model = _childRepository.GetAll();
+                    var modelEmpl =
                     from r in model
                     where r.InstitutionId == institutionId 
                 
@@ -53,7 +60,7 @@ namespace DayCareApp.Web.Controllers.Web
             }
             if (User.IsInRole("Admin"))
             {
-                var model = _childRepository.GetAll();
+                var model = _childRepository.GetAll().ToList();
                 return View(model);
             }
 

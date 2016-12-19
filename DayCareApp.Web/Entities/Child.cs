@@ -14,7 +14,7 @@ namespace DayCareApp.Web.Entities
         [Required]
         public string Name { get; set; }
 
-        
+        [Required]
         public Parent Parent1 { get; set; }
         public int Parent1Id { get; set; }
 
