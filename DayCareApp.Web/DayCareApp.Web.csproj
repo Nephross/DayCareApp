@@ -193,6 +193,10 @@
     <Compile Include="DataContext\Migrations\201612191241374_Initial create.Designer.cs">
       <DependentUpon>201612191241374_Initial create.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataContext\Migrations\201612192001565_Update 1.cs" />
+    <Compile Include="DataContext\Migrations\201612192001565_Update 1.Designer.cs">
+      <DependentUpon>201612192001565_Update 1.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataContext\Migrations\Configuration.cs" />
     <Compile Include="DataContext\Persistence\ChildRepository.cs" />
     <Compile Include="DataContext\Persistence\ParentRepository.cs" />
@@ -366,6 +370,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DataContext\Migrations\201612191241374_Initial create.resx">
       <DependentUpon>201612191241374_Initial create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContext\Migrations\201612192001565_Update 1.resx">
+      <DependentUpon>201612192001565_Update 1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

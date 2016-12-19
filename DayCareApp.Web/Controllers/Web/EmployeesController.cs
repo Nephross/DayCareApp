@@ -60,8 +60,8 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: Employees
         public ActionResult Index()
         {
-            var employees = _EmployeeRepository.GetAll() ;
-            return View(employees.ToList());
+            var employees = _EmployeeRepository.GetAll(e => e.Department, e => e.Institution).ToList() ;
+            return View(employees);
         }
 
         // GET: Employees/Details/5
@@ -83,7 +83,7 @@ namespace DayCareApp.Web.Controllers.Web
         public ActionResult Create()
         {
             RegisterEmployeeViewModel RegEmployeeViewModel = new RegisterEmployeeViewModel();
-            RegEmployeeViewModel.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartMentId", "DepartmentName");
+            RegEmployeeViewModel.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartmentId", "DepartmentName");
             RegEmployeeViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName");
             return View(RegEmployeeViewModel);
         }
@@ -139,7 +139,7 @@ namespace DayCareApp.Web.Controllers.Web
             }
             EmployeeViewModel EmpVM = new EmployeeViewModel();
             EmpVM.Employee = employee;
-            EmpVM.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartMentId", "DepartmentName", employee.DepartmentId);
+            EmpVM.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartmentId", "DepartmentName", employee.DepartmentId);
             EmpVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", employee.InstitutionId);
             return View(EmpVM);
         }
@@ -157,7 +157,7 @@ namespace DayCareApp.Web.Controllers.Web
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            model.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartMentId", "DepartmentName", model.Employee.DepartmentId);
+            model.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartmentId", "DepartmentName", model.Employee.DepartmentId);
             model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Employee.InstitutionId);
             return View(model);
         }

@@ -11,7 +11,7 @@ namespace DayCareApp.Web.Entities
         [Key]
         public int DayRegistrationId { get; set; }
         
-        [Required]
+        
         public Child Child { get; set; }
         public int ChildId { get; set; }
 
@@ -19,7 +19,7 @@ namespace DayCareApp.Web.Entities
 
         public bool ChangedDiaper { get; set; }
         
-        [Required]
+        
         public Parent ExpectedPickupParent { get; set; }
         public int ExpectedPickupParentId { get; set; }
 
@@ -27,7 +27,7 @@ namespace DayCareApp.Web.Entities
         public DateTime ExpectedPickupTime { get; set; }
         
 
-        [Required]
+        
         public Parent DeliveryParent { get; set; }
         public int DeliveryParentId { get; set; }
 

@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DayCareApp.Web.DataContext.Repositories;
 using DayCareApp.Web.DataContext.Persistence;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DayCareApp.Web.Controllers.Web
 {
@@ -56,7 +57,7 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: InstitutionAdmins
         public ActionResult Index()
         {
-            var institutionAdmins = _InstitutionAdminRepository.GetAll().ToList();
+            var institutionAdmins = _InstitutionAdminRepository.GetAll(i => i.Institution).ToList();
             return View(institutionAdmins.ToList());
         }
 
@@ -67,7 +68,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.Get(id);
+            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.SingleOrDefault(i => i.InstitutionAdminId.Equals(id), i => i.Institution);
             if (institutionAdmin == null)
             {
                 return HttpNotFound();
@@ -76,10 +77,11 @@ namespace DayCareApp.Web.Controllers.Web
         }
 
         // GET: InstitutionAdmins/Create
+        [AllowAnonymous]
         public ActionResult Create()
         {
             RegisterInstitutionAdminViewModel RegInstAdminVM = new RegisterInstitutionAdminViewModel();
-            RegInstAdminVM.Institutions = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName");
+            RegInstAdminVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName");
             return View(RegInstAdminVM);
         }
 
@@ -87,6 +89,7 @@ namespace DayCareApp.Web.Controllers.Web
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RegisterInstitutionAdminViewModel model)
         {
@@ -97,6 +100,9 @@ namespace DayCareApp.Web.Controllers.Web
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+                    var userStore = new UserStore<ApplicationUser>(new DayCareAppDB());
+                    var userManager = new UserManager<ApplicationUser>(userStore);
                     await UserManager.AddToRoleAsync(user.Id, "InstitutionAdmin");
 
                     model.InstitutionAdmin.ApplicationUserId = user.Id;
@@ -115,7 +121,7 @@ namespace DayCareApp.Web.Controllers.Web
             }
 
             // If we got this far, something failed, redisplay for
-            model.Institutions = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.InstitutionAdmin.InstitutionId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.InstitutionAdmin.InstitutionId);
             return View(model);
         }
 
@@ -126,7 +132,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.Get(id);
+            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.SingleOrDefault(i => i.InstitutionAdminId.Equals(id), i => i.Institution);
             if (institutionAdmin == null)
             {
                 return HttpNotFound();
@@ -183,16 +189,18 @@ namespace DayCareApp.Web.Controllers.Web
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+                var userStore = new UserStore<ApplicationUser>(new DayCareAppDB());
+                var userManager = new UserManager<ApplicationUser>(userStore);
 
-                var user = await _userManager.FindByIdAsync(institutionAdmin.ApplicationUserId);
+                var user = await userManager.FindByIdAsync(institutionAdmin.ApplicationUserId);
                 var logins = user.Logins;
-                var rolesForUser = await _userManager.GetRolesAsync(institutionAdmin.ApplicationUserId);
+                var rolesForUser = await UserManager.GetRolesAsync(institutionAdmin.ApplicationUserId);
 
-                using (var transaction = _unitOfWork.getContext().Database.BeginTransaction())
+                using (var transaction = DayCareAppDB.Create().Database.BeginTransaction())
                 {
                     foreach (var login in logins.ToList())
                     {
-                        await _userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                        await userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
                     }
 
                     if (rolesForUser.Count() > 0)

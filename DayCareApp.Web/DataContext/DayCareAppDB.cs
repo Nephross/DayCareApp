@@ -23,7 +23,7 @@ namespace DayCareApp.Web.DataContext
         public DayCareAppDB()
             : base("RemoteConnection") 
         {
-            this.Configuration.LazyLoadingEnabled = true;
+            this.Configuration.LazyLoadingEnabled = false;
         }
 
         public static DayCareAppDB Create()

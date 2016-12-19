@@ -25,8 +25,8 @@ namespace DayCareApp.Web.DataContext.Repositories
         public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] navigationProperties)
         {
             List<TEntity> list;
-            using (Context)
-            {
+            
+            
                 IQueryable<TEntity> dbQuery = Context.Set<TEntity>();
 
                 //Apply eager loading
@@ -34,7 +34,7 @@ namespace DayCareApp.Web.DataContext.Repositories
                     dbQuery = dbQuery.Include<TEntity, object>(navigationProperty);
 
                 list = dbQuery.AsNoTracking().ToList<TEntity>();
-            }
+            
             return list;
 
 
@@ -45,8 +45,7 @@ namespace DayCareApp.Web.DataContext.Repositories
         {
 
             List<TEntity> list;
-            using (Context)
-            {
+            
                 IQueryable<TEntity> dbQuery = Context.Set<TEntity>();
 
                 //Apply eager loading
@@ -54,7 +53,7 @@ namespace DayCareApp.Web.DataContext.Repositories
                     dbQuery = dbQuery.Include<TEntity, object>(navigationProperty);
 
                 list = dbQuery.AsNoTracking().Where(where).ToList<TEntity>();
-            }
+            
             return list;
             //return Context.Set<TEntity>().Where(predicate);
         }
@@ -62,8 +61,7 @@ namespace DayCareApp.Web.DataContext.Repositories
         public TEntity SingleOrDefault(Func<TEntity, bool> where,params Expression<Func<TEntity, object>>[] navigationProperties)
         {
             TEntity item = null;
-            using (Context)
-            {
+            
                 IQueryable<TEntity> dbQuery = Context.Set<TEntity>();
 
                 //Apply eager loading
@@ -73,7 +71,7 @@ namespace DayCareApp.Web.DataContext.Repositories
                 item = dbQuery
                     .AsNoTracking() //Don't track any changes for the selected item
                     .FirstOrDefault(where); //Apply where clause
-            }
+            
             return item;
 
             //return Context.Set<TEntity>().SingleOrDefault(predicate);
