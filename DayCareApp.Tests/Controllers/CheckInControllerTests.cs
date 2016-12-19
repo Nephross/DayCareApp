@@ -64,7 +64,7 @@ namespace DayCareApp.Web.Controllers.Web.Tests
            
                 
             
-            institutionController._InstitutionRepository.Add(i);
+            Console.WriteLine("THE NAME IS :  " + institutionController._InstitutionRepository.Get(1).FirstName);
             var p1 = new Parent();
             {
                 p1.ParentId = 1;

@@ -18,22 +18,25 @@ namespace DayCareApp.Web.Controllers.Web
         public readonly IChildRepository _childRepository;
         public readonly IEmployeeRepository _employeeRepository;
         public readonly UnitOfWork _unitOfWork;
+        public readonly IInstitutionRepository _institutionRepository;
 
         public CheckInController()
         {
             this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
         }
 
-        public CheckInController(IChildRepository childRepository,IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork)
+        public CheckInController(IChildRepository childRepository,IEmployeeRepository employeeRepository, IInstitutionRepository institutionRepository, IUnitOfWork unitOfWork)
         {
             _childRepository = unitOfWork.Children;
             _employeeRepository = unitOfWork.Employees;
+            _institutionRepository = unitOfWork.Institutions;
         }
 
         public ActionResult Index()
         {
+           
+            Console.WriteLine("THE NAME IS :  " + _institutionRepository.Get(1).FirstName);
 
-          
             if (User.IsInRole("Employee"))
             {
                 var userId = User.Identity.GetUserId();
