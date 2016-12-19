@@ -84,8 +84,9 @@ namespace DayCareApp.Web.Controllers.Web
         public ActionResult Create()
         {
             RegisterEmployeeViewModel RegEmployeeViewModel = new RegisterEmployeeViewModel();
-            RegEmployeeViewModel.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartmentId", "DepartmentName");
             RegEmployeeViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName");
+            RegEmployeeViewModel.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartmentId", "DepartmentName");
+            
             return View(RegEmployeeViewModel);
         }
 
