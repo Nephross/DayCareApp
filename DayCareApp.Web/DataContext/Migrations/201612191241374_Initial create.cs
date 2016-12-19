@@ -3,7 +3,7 @@ namespace DayCareApp.Web.DataContext.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Initialcreate : DbMigration
     {
         public override void Up()
         {
@@ -64,11 +64,25 @@ namespace DayCareApp.Web.DataContext.Migrations
                         EmployeeId = c.Int(nullable: false, identity: true),
                         ApplicationUserId = c.String(),
                         Name = c.String(nullable: false),
-                        Department = c.String(nullable: false),
+                        DepartmentId = c.Int(nullable: false),
                         InstitutionId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.EmployeeId)
+                .ForeignKey("dbo.Departments", t => t.DepartmentId, cascadeDelete: false)
                 .ForeignKey("dbo.Institutions", t => t.InstitutionId, cascadeDelete: false)
+                .Index(t => t.DepartmentId)
+                .Index(t => t.InstitutionId);
+            
+            CreateTable(
+                "dbo.Departments",
+                c => new
+                    {
+                        DepartmentId = c.Int(nullable: false, identity: true),
+                        DepartmentName = c.String(nullable: false),
+                        InstitutionId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.DepartmentId)
+                .ForeignKey("dbo.Institutions", t => t.InstitutionId, cascadeDelete: true)
                 .Index(t => t.InstitutionId);
             
             CreateTable(
@@ -87,18 +101,6 @@ namespace DayCareApp.Web.DataContext.Migrations
                         Email = c.String(),
                     })
                 .PrimaryKey(t => t.InstitutionId);
-            
-            CreateTable(
-                "dbo.Departments",
-                c => new
-                    {
-                        DepartMentId = c.Int(nullable: false, identity: true),
-                        DepartmentName = c.String(nullable: false),
-                        Institution_InstitutionId = c.Int(),
-                    })
-                .PrimaryKey(t => t.DepartMentId)
-                .ForeignKey("dbo.Institutions", t => t.Institution_InstitutionId)
-                .Index(t => t.Institution_InstitutionId);
             
             CreateTable(
                 "dbo.Children",
@@ -161,7 +163,7 @@ namespace DayCareApp.Web.DataContext.Migrations
                         InstitutionId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.InstitutionAdminId)
-                .ForeignKey("dbo.Institutions", t => t.InstitutionId, cascadeDelete: true)
+                .ForeignKey("dbo.Institutions", t => t.InstitutionId, cascadeDelete: false)
                 .Index(t => t.InstitutionId);
             
             CreateTable(
@@ -255,7 +257,8 @@ namespace DayCareApp.Web.DataContext.Migrations
             DropForeignKey("dbo.ChatMessages", "DayRegistrationId", "dbo.DayRegistrations");
             DropForeignKey("dbo.DayRegistrations", "ArrivalEmployee_EmployeeId", "dbo.Employees");
             DropForeignKey("dbo.Employees", "InstitutionId", "dbo.Institutions");
-            DropForeignKey("dbo.Departments", "Institution_InstitutionId", "dbo.Institutions");
+            DropForeignKey("dbo.Employees", "DepartmentId", "dbo.Departments");
+            DropForeignKey("dbo.Departments", "InstitutionId", "dbo.Institutions");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -269,8 +272,9 @@ namespace DayCareApp.Web.DataContext.Migrations
             DropIndex("dbo.Children", new[] { "Parent_ParentId" });
             DropIndex("dbo.Children", new[] { "DepartmentId" });
             DropIndex("dbo.Children", new[] { "InstitutionId" });
-            DropIndex("dbo.Departments", new[] { "Institution_InstitutionId" });
+            DropIndex("dbo.Departments", new[] { "InstitutionId" });
             DropIndex("dbo.Employees", new[] { "InstitutionId" });
+            DropIndex("dbo.Employees", new[] { "DepartmentId" });
             DropIndex("dbo.DayRegistrations", new[] { "PickUpParent_ParentId" });
             DropIndex("dbo.DayRegistrations", new[] { "ExpectedPickupParent_ParentId" });
             DropIndex("dbo.DayRegistrations", new[] { "DepartureEmployee_EmployeeId" });
@@ -286,8 +290,8 @@ namespace DayCareApp.Web.DataContext.Migrations
             DropTable("dbo.InstitutionAdmins");
             DropTable("dbo.Parents");
             DropTable("dbo.Children");
-            DropTable("dbo.Departments");
             DropTable("dbo.Institutions");
+            DropTable("dbo.Departments");
             DropTable("dbo.Employees");
             DropTable("dbo.DayRegistrations");
             DropTable("dbo.ChatMessages");

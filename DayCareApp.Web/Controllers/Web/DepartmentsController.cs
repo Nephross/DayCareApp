@@ -23,6 +23,8 @@ namespace DayCareApp.Web.Controllers.Web
         public DepartmentsController()
         {
             this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
+            _DepartmentRepository = this._unitOfWork.Departments;
+            _InstitutionRepository = this._unitOfWork.Institutions;
         }
 
         public DepartmentsController(IDepartmentRepository DepartmentRepository, IInstitutionRepository InstitutionRepository,IUnitOfWork unitOfWork)

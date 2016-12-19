@@ -186,23 +186,12 @@
     <Compile Include="Controllers\Web\EmployeesController.cs" />
     <Compile Include="Controllers\Web\InstitutionAdminsController.cs" />
     <Compile Include="Controllers\Web\InstitutionsController.cs" />
+    <Compile Include="Controllers\Web\ParentProfileController.cs" />
     <Compile Include="Controllers\Web\ParentsController.cs" />
     <Compile Include="DataContext\DayCareAppDB.cs" />
-    <Compile Include="DataContext\Migrations\201612081114357_InitialCreate.cs" />
-    <Compile Include="DataContext\Migrations\201612081114357_InitialCreate.Designer.cs">
-      <DependentUpon>201612081114357_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\Migrations\201612081208292_update 1.cs" />
-    <Compile Include="DataContext\Migrations\201612081208292_update 1.Designer.cs">
-      <DependentUpon>201612081208292_update 1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\Migrations\201612141551357_update 2.cs" />
-    <Compile Include="DataContext\Migrations\201612141551357_update 2.Designer.cs">
-      <DependentUpon>201612141551357_update 2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\Migrations\201612141631435_update 3.cs" />
-    <Compile Include="DataContext\Migrations\201612141631435_update 3.Designer.cs">
-      <DependentUpon>201612141631435_update 3.cs</DependentUpon>
+    <Compile Include="DataContext\Migrations\201612191241374_Initial create.cs" />
+    <Compile Include="DataContext\Migrations\201612191241374_Initial create.Designer.cs">
+      <DependentUpon>201612191241374_Initial create.cs</DependentUpon>
     </Compile>
     <Compile Include="DataContext\Migrations\Configuration.cs" />
     <Compile Include="DataContext\Persistence\ChildRepository.cs" />
@@ -360,6 +349,7 @@
     <Folder Include="Controllers\API\" />
     <Folder Include="Images\" />
     <Folder Include="Views\Child\" />
+    <Folder Include="Views\ParentProfile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -368,22 +358,15 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataContext\Migrations\201612081114357_InitialCreate.resx">
-      <DependentUpon>201612081114357_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContext\Migrations\201612081208292_update 1.resx">
-      <DependentUpon>201612081208292_update 1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContext\Migrations\201612141551357_update 2.resx">
-      <DependentUpon>201612141551357_update 2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContext\Migrations\201612141631435_update 3.resx">
-      <DependentUpon>201612141631435_update 3.cs</DependentUpon>
-    </EmbeddedResource>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DataContext\Migrations\201612191241374_Initial create.resx">
+      <DependentUpon>201612191241374_Initial create.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

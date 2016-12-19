@@ -22,9 +22,10 @@ namespace DayCareApp.Web.Controllers.Web
         public InstitutionsController()
         {
             this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
+            _InstitutionRepository = this._unitOfWork.Institutions;
         }
 
-        public InstitutionsController(IInstitutionRepository InstitutionRepository, IUnitOfWork unitOfWork)
+        public InstitutionsController(IUnitOfWork unitOfWork)
         {
             _InstitutionRepository = unitOfWork.Institutions;
         }

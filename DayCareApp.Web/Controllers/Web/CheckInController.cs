@@ -46,9 +46,9 @@ namespace DayCareApp.Web.Controllers.Web
         public ActionResult Details(int id)
         {
 
-                 Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
+            Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
                 
-                return View(child);
+            return View(child);
 
         }
 
