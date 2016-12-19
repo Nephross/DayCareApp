@@ -3,41 +3,75 @@ using DayCareApp.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
 using DayCareApp.Web.DataContext.Persistence;
 using DayCareApp.Web.DataContext.Repositories;
+using Microsoft.AspNet.Identity;
 
 namespace DayCareApp.Web.Controllers.Web
 {
     public class CheckInController : Controller
     {
         public readonly IChildRepository _childRepository;
+        public readonly IEmployeeRepository _employeeRepository;
         public readonly UnitOfWork _unitOfWork;
+        public readonly IInstitutionRepository _institutionRepository;
+        public readonly IParentRepository _parentReposity;
+        public readonly IDepartmentRepository _departmentReposity;
 
         public CheckInController()
         {
             this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
+            _childRepository = this._unitOfWork.Children;
+            _parentReposity = this._unitOfWork.Parents;
+            _institutionRepository = this._unitOfWork.Institutions;
+            _departmentReposity = this._unitOfWork.Departments;
         }
 
-        public CheckInController(IChildRepository childRepository, IUnitOfWork unitOfWork)
+        public CheckInController(IUnitOfWork unitOfWork)
         {
             _childRepository = unitOfWork.Children;
+            _employeeRepository = unitOfWork.Employees;
+            _institutionRepository = unitOfWork.Institutions;
+            _parentReposity = unitOfWork.Parents;
+            _departmentReposity = unitOfWork.Departments;
         }
 
         public ActionResult Index()
         {
+           
+            if (User.IsInRole("Employee"))
+            {
+                var userId = User.Identity.GetUserId();
 
-            var model = _childRepository.GetAllChildren();       
-            return View(model);
+                    int institutionId = _employeeRepository.SingleOrDefault(x => x.ApplicationUserId == userId).InstitutionId;
+                    var model = _childRepository.GetAll();
+                    var modelEmpl =
+                    from r in model
+                    where r.InstitutionId == institutionId 
+                
+                    select r;
+
+                return View(modelEmpl);
+            }
+            if (User.IsInRole("Admin"))
+            {
+                var model = _childRepository.GetAll().ToList();
+                return View(model);
+            }
+
+            return View();
+
         }
 
         public ActionResult IndexPictures()
         {
 
-            var model = _childRepository.GetAllChildren();
+            var model = _childRepository.GetAll();
             return View(model);
 
         }
@@ -45,13 +79,13 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: Reviews/Details/5
         public ActionResult Details(int id)
         {
-
-            Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
+            
+                 Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
                 
-            return View(child);
+                return View(child);
 
         }
-
+        /*
         // GET: Reviews/Create
         public ActionResult Create()
         {
@@ -86,7 +120,7 @@ namespace DayCareApp.Web.Controllers.Web
                 return View();
             }
         }
-
+        */
         // GET: Reviews/Edit/5
         public ActionResult Edit(int id)
         {
@@ -98,52 +132,33 @@ namespace DayCareApp.Web.Controllers.Web
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-
-                using (DayCareAppDB context = new DayCareAppDB())
+            if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("InstitutionAdmin"))
+            {
+                Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
+                if (child != null)
                 {
 
-                Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
-                    if (child != null)
-                    {
-                    
-                    child.Name = collection.Get(1);
-                    child.Country = collection.Get(2);
-                    child.Birthdate = Convert.ToDateTime(collection.Get(3));
-                    child.CurrentlyCheckedIn = Convert.ToBoolean(collection.Get(4));
-                    child.SpecialNeeds = collection.Get(4);
+                    child.Name = collection.Get(2);
+                    child.Country = collection.Get(3);
+                    child.Birthdate = Convert.ToDateTime(collection.Get(4));
+                    child.CurrentlyCheckedIn = Convert.ToBoolean(collection.Get(5));
+                    child.SpecialNeeds = collection.Get(6);
                 }
 
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
 
-                 }
-            
+            }
+                
 
             //add view for not saved action
             return View("Index");
         }
 
-        // GET: Reviews/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+     
 
-        // POST: Reviews/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
+      
 
 
     }

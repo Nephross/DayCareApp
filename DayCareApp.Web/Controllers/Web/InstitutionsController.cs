@@ -16,8 +16,8 @@ namespace DayCareApp.Web.Controllers.Web
     public class InstitutionsController : Controller
     {
 
-        public readonly IInstitutionRepository _InstitutionRepository;
-        public readonly UnitOfWork _unitOfWork;
+        public  IInstitutionRepository _InstitutionRepository;
+        public  UnitOfWork _unitOfWork;
 
         public InstitutionsController()
         {
