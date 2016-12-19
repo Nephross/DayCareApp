@@ -43,7 +43,8 @@ namespace DayCareApp.Web.Controllers.Web
            // var InstitutionId = _InstitutionAdminRepository.SingleOrDefault(x => x.ApplicationUserId == userId).Institution.InstitutionId;
 
             //var departments = _DepartmentRepository.Find(d => d.InstitutionId == InstitutionId).ToList() ;
-            var departments = _DepartmentRepository.GetAll().ToList();
+            var departments = _DepartmentRepository.GetAll( d => d.Institution).ToList();
+
             return View(departments);
         }
 
@@ -54,7 +55,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = _DepartmentRepository.Get(id);
+            Department department = _DepartmentRepository.SingleOrDefault(d => d.DepartmentId.Equals(id), d => d.Institution);
             if (department == null)
             {
                 return HttpNotFound();
