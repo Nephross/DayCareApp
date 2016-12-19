@@ -300,13 +300,9 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CheckIn\Index.cshtml" />
-    <Content Include="Views\CheckIn\IndexPictures.cshtml" />
     <Content Include="Views\CheckIn\Details.cshtml" />
-    <Content Include="Views\CheckIn\Delete.cshtml" />
     <Content Include="Views\CheckIn\Create.cshtml" />
     <Content Include="Views\CheckIn\Edit.cshtml" />
-    <Content Include="Views\CheckIn\Delete.cshtml" />
-    <Content Include="Views\CheckIn\IndexPictures.cshtml" />
     <Content Include="Views\Institutions\Create.cshtml" />
     <Content Include="Views\Institutions\Delete.cshtml" />
     <Content Include="Views\Institutions\Details.cshtml" />
@@ -335,6 +331,8 @@
     <Content Include="Views\Parents\Edit.cshtml" />
     <Content Include="Views\Parents\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\FileUploadPacket.cshtml" />
+    <Content Include="Views\CheckIn\Delete.cshtml" />
+    <Content Include="Views\CheckIn\IndexPictures.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -362,8 +360,6 @@
     <Folder Include="Controllers\API\" />
     <Folder Include="Images\" />
     <Folder Include="Views\Child\" />
-    <Folder Include="Views\Employee\" />
-    <Folder Include="Views\Parent\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
