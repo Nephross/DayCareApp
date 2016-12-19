@@ -57,7 +57,7 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: InstitutionAdmins
         public ActionResult Index()
         {
-            var institutionAdmins = _InstitutionAdminRepository.GetAll().ToList();
+            var institutionAdmins = _InstitutionAdminRepository.GetAll(i => i.Institution).ToList();
             return View(institutionAdmins.ToList());
         }
 
@@ -68,7 +68,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.Get(id);
+            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.SingleOrDefault(i => i.InstitutionAdminId.Equals(id), i => i.Institution);
             if (institutionAdmin == null)
             {
                 return HttpNotFound();
@@ -132,7 +132,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.Get(id);
+            InstitutionAdmin institutionAdmin = _InstitutionAdminRepository.SingleOrDefault(i => i.InstitutionAdminId.Equals(id), i => i.Institution);
             if (institutionAdmin == null)
             {
                 return HttpNotFound();
@@ -189,16 +189,18 @@ namespace DayCareApp.Web.Controllers.Web
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+                var userStore = new UserStore<ApplicationUser>(new DayCareAppDB());
+                var userManager = new UserManager<ApplicationUser>(userStore);
 
-                var user = await _userManager.FindByIdAsync(institutionAdmin.ApplicationUserId);
+                var user = await userManager.FindByIdAsync(institutionAdmin.ApplicationUserId);
                 var logins = user.Logins;
-                var rolesForUser = await _userManager.GetRolesAsync(institutionAdmin.ApplicationUserId);
+                var rolesForUser = await UserManager.GetRolesAsync(institutionAdmin.ApplicationUserId);
 
-                using (var transaction = _unitOfWork.getContext().Database.BeginTransaction())
+                using (var transaction = DayCareAppDB.Create().Database.BeginTransaction())
                 {
                     foreach (var login in logins.ToList())
                     {
-                        await _userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                        await userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
                     }
 
                     if (rolesForUser.Count() > 0)
