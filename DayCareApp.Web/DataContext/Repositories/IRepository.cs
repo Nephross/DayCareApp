@@ -9,9 +9,9 @@ namespace DayCareApp.Web.DataContext.Repositories
     public interface IRepository<TEntity> where TEntity : class
     {
         TEntity Get(int? id);
-        IEnumerable<TEntity> GetAll();
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] navigationProperties);
+        IEnumerable<TEntity> Find(Func<TEntity, bool> where, params Expression<Func<TEntity, object>>[] navigationProperties);
+        TEntity SingleOrDefault(Func<TEntity, bool> where, params Expression<Func<TEntity, object>>[] navigationProperties);
 
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);

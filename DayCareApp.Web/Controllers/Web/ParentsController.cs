@@ -28,6 +28,8 @@ namespace DayCareApp.Web.Controllers.Web
         public ParentsController()
         {
             this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
+            _ParentRepository = this._unitOfWork.Parents;
+            _InstitutionRepository = this._unitOfWork.Institutions;
         }
 
         public ParentsController(IParentRepository ParentRepository, IInstitutionRepository InstitutionRepository, IUnitOfWork unitOfWork, ApplicationUserManager userManager)
@@ -140,7 +142,7 @@ namespace DayCareApp.Web.Controllers.Web
             ParentViewModel ParentViewModel = new ParentViewModel();
             ParentViewModel.Parent = parent;
             ParentViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", parent.ParentId);
-            return View(parent);
+            return View(ParentViewModel);
         }
 
         // POST: Parents/Edit/5

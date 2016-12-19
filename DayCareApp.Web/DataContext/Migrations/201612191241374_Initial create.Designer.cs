@@ -7,13 +7,13 @@ namespace DayCareApp.Web.DataContext.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class Initialcreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initialcreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612081114357_InitialCreate"; }
+            get { return "201612191241374_Initial create"; }
         }
         
         string IMigrationMetadata.Source

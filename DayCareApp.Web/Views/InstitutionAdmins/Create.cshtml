@@ -1,6 +1,4 @@
-﻿using 
-
-@model DayCareApp.Web.Models.RegisterInstitutionAdminViewModel
+﻿@model DayCareApp.Web.Models.RegisterInstitutionAdminViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -8,7 +6,7 @@
 
 <h2>Opret Institutions Leder</h2>
 
-@using (Html.BeginForm("Create", "InstitutionsAdmins", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "InstitutionAdmins", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     
@@ -60,7 +58,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", "InstitutionAdmins")
 </div>
 
 

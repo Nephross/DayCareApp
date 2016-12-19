@@ -30,12 +30,13 @@ namespace DayCareApp.Web.Controllers.Web
         public InstitutionAdminsController()
         {
             this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
+            _InstitutionAdminRepository = this._unitOfWork.InstitutionAdmins;
+            _InstitutionRepository = this._unitOfWork.Institutions;
         }
 
-        public InstitutionAdminsController(IInstitutionAdminRepository InstitutionAdminRepository, IInstitutionRepository InstitutionRepository, IUnitOfWork unitOfWork, ApplicationUserManager userManager)
+        public InstitutionAdminsController(ApplicationUserManager userManager)
         {
-            _InstitutionAdminRepository = unitOfWork.InstitutionAdmins;
-            _InstitutionRepository = unitOfWork.Institutions;
+           
             UserManager = userManager;
         }
                

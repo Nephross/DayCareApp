@@ -59,4 +59,22 @@ namespace DayCareApp.Web.Models
         public SelectList InstitutionList { get; set; }
     }
 
+    public class ChildViewModel
+    {
+        public ChildViewModel()
+        {
+            Child = new Child();
+        }
+
+        public Child Child { get; set; }
+        public FileUploadPacket FileUploadPacket { get; set; }
+        public SelectList InstitutionList { get; set; }
+        public SelectList DepartmentList { get; set; }
+
+    }
+
+    public class DayRegistrationViewModel
+    {
+    }
+
 }

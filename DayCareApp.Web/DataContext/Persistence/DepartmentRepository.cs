@@ -20,6 +20,5 @@ namespace DayCareApp.Web.DataContext.Persistence
         {
             get { return DayCareAppDbContext as DayCareAppDB; }
         }
-
     }
 }
