@@ -13,7 +13,6 @@ namespace DayCareApp.Web.Entities
         public string ApplicationUserId { get; set; }
 
         //Is this needed?
-        [Required]
         [Display(Name = "Institution")]
         public Institution Institution { get; set; }
         public int InstitutionId { get; set; }

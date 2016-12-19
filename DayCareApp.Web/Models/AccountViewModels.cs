@@ -103,7 +103,7 @@ namespace DayCareApp.Web.Models
         public string ConfirmPassword { get; set; }
 
         public InstitutionAdmin InstitutionAdmin { get; set; }
-        public SelectList Institutions { get; set; }
+        public SelectList InstitutionList { get; set; }
 
         public RegisterInstitutionAdminViewModel()
         {

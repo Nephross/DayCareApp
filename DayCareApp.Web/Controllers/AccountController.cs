@@ -9,17 +9,28 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DayCareApp.Web.Models;
+using DayCareApp.Web.DataContext.Repositories;
+using DayCareApp.Web.DataContext.Persistence;
+using DayCareApp.Web.DataContext;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DayCareApp.Web.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        public readonly IInstitutionAdminRepository _InstitutionAdminRepository;
+        public readonly IInstitutionRepository _InstitutionRepository;
+        public readonly UnitOfWork _unitOfWork;
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
         public AccountController()
         {
+            this._unitOfWork = new UnitOfWork(DayCareAppDB.Create());
+            _InstitutionAdminRepository = this._unitOfWork.InstitutionAdmins;
+            _InstitutionRepository = this._unitOfWork.Institutions;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -155,8 +166,8 @@ namespace DayCareApp.Web.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -171,6 +182,9 @@ namespace DayCareApp.Web.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+
+                
 
         //
         // GET: /Account/ConfirmEmail
