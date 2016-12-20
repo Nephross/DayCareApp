@@ -17,10 +17,7 @@ namespace DayCareApp.Web.Entities
         public string Name { get; set; }
 
         //Should this be a seperate entity? an Enum perhaps?
-        
-        public Department Department { get; set; }
-        public int DepartmentId { get; set; }
-
+       
         
         public Institution Institution { get; set; }
         public int InstitutionId { get; set; }
