@@ -44,7 +44,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Employee.DepartmentId, "DepartmentId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("DepartmentId", Model.DepartmentList, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Employee.DepartmentId, Model.DepartmentList, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Employee.DepartmentId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Employee.InstitutionId, "InstitutionId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("InstitutionId", Model.InstitutionList, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Employee.InstitutionId, Model.InstitutionList, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Employee.InstitutionId, "", new { @class = "text-danger" })
             </div>
         </div>

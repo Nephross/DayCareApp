@@ -194,16 +194,18 @@ namespace DayCareApp.Web.Controllers.Web
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+                var userStore = new UserStore<ApplicationUser>(new DayCareAppDB());
+                var userManager = new UserManager<ApplicationUser>(userStore);
 
-                var user = await _userManager.FindByIdAsync(employee.ApplicationUserId);
+                var user = await userManager.FindByIdAsync(employee.ApplicationUserId);
                 var logins = user.Logins;
-                var rolesForUser = await _userManager.GetRolesAsync(employee.ApplicationUserId);
+                var rolesForUser = await UserManager.GetRolesAsync(employee.ApplicationUserId);
 
-                using (var transaction = _unitOfWork.getContext().Database.BeginTransaction())
+                using (var transaction = DayCareAppDB.Create().Database.BeginTransaction())
                 {
                     foreach (var login in logins.ToList())
                     {
-                        await _userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                        await userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
                     }
 
                     if (rolesForUser.Count() > 0)
@@ -211,11 +213,11 @@ namespace DayCareApp.Web.Controllers.Web
                         foreach (var item in rolesForUser.ToList())
                         {
                             // item should be the name of the role
-                            var result = await _userManager.RemoveFromRoleAsync(user.Id, item);
+                            var result = await userManager.RemoveFromRoleAsync(user.Id, item);
                         }
                     }
 
-                    await _userManager.DeleteAsync(user);
+                    await userManager.DeleteAsync(user);
                     transaction.Commit();
                 }
             }
