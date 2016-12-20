@@ -15,6 +15,7 @@ using DayCareApp.Web.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using DayCareApp.Web.Helpers;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DayCareApp.Web.Controllers.Web
 {
@@ -55,8 +56,8 @@ namespace DayCareApp.Web.Controllers.Web
         // GET: Parents
         public ActionResult Index()
         {
-            var parents = _ParentRepository.GetAll();
-            return View(parents.ToList());
+            var parents = _ParentRepository.GetAll(e => e.Institution).ToList();
+            return View(parents);
         }
 
         // GET: Parents/Details/5
@@ -66,7 +67,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Parent parent = _ParentRepository.Get(id);
+            Parent parent = _ParentRepository.SingleOrDefault(p => p.ParentId.Equals(id), p => p.Institution);
             if (parent == null)
             {
                 return HttpNotFound();
@@ -95,6 +96,8 @@ namespace DayCareApp.Web.Controllers.Web
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var userStore = new UserStore<ApplicationUser>(new DayCareAppDB());
+                    var userManager = new UserManager<ApplicationUser>(userStore);
                     await UserManager.AddToRoleAsync(user.Id, "Parent");
 
                     model.Parent.ApplicationUserId = user.Id;
@@ -123,7 +126,7 @@ namespace DayCareApp.Web.Controllers.Web
             }
 
             // If we got this far, something failed, redisplay for
-            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Parent.ParentId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Parent.InstitutionId);
             return View(model);
         }
 
@@ -134,14 +137,14 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Parent parent = _ParentRepository.Get(id);
+            Parent parent = _ParentRepository.SingleOrDefault(p => p.ParentId.Equals(id), p => p.Institution);
             if (parent == null)
             {
                 return HttpNotFound();
             }
             ParentViewModel ParentViewModel = new ParentViewModel();
             ParentViewModel.Parent = parent;
-            ParentViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", parent.ParentId);
+            ParentViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", parent.InstitutionId);
             return View(ParentViewModel);
         }
 
@@ -172,7 +175,7 @@ namespace DayCareApp.Web.Controllers.Web
                 return RedirectToAction("Index");
             }
 
-            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Parent.ParentId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Parent.InstitutionId);
             return View(model);
         }
 
@@ -183,7 +186,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Parent parent = _ParentRepository.Get(id);
+            Parent parent = _ParentRepository.SingleOrDefault(p => p.ParentId.Equals(id), p => p.Institution);
             if (parent == null)
             {
                 return HttpNotFound();
@@ -200,14 +203,8 @@ namespace DayCareApp.Web.Controllers.Web
             FileHandler fileHandler = new FileHandler();
 
             string serverPath = Server == null ? "" : Server.MapPath("~");
-            try
-            {
-                //Deleting the current profile picture.
-                fileHandler.deleteImage(serverPath, parent.ImagePath);
-                //Saving the new profile picture.
-
-            }
-            catch { }
+            
+            
 
             if (ModelState.IsValid)
             {
@@ -215,16 +212,18 @@ namespace DayCareApp.Web.Controllers.Web
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+                var userStore = new UserStore<ApplicationUser>(new DayCareAppDB());
+                var userManager = new UserManager<ApplicationUser>(userStore);
 
-                var user = await _userManager.FindByIdAsync(parent.ApplicationUserId);
+                var user = await userManager.FindByIdAsync(parent.ApplicationUserId);
                 var logins = user.Logins;
-                var rolesForUser = await _userManager.GetRolesAsync(parent.ApplicationUserId);
+                var rolesForUser = await UserManager.GetRolesAsync(parent.ApplicationUserId);
 
-                using (var transaction = _unitOfWork.getContext().Database.BeginTransaction())
+                using (var transaction = DayCareAppDB.Create().Database.BeginTransaction())
                 {
                     foreach (var login in logins.ToList())
                     {
-                        await _userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                        await userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
                     }
 
                     if (rolesForUser.Count() > 0)
@@ -232,16 +231,27 @@ namespace DayCareApp.Web.Controllers.Web
                         foreach (var item in rolesForUser.ToList())
                         {
                             // item should be the name of the role
-                            var result = await _userManager.RemoveFromRoleAsync(user.Id, item);
+                            var result = await userManager.RemoveFromRoleAsync(user.Id, item);
                         }
                     }
 
-                    await _userManager.DeleteAsync(user);
+                    await userManager.DeleteAsync(user);
                     transaction.Commit();
                 }
+                if(parent.ImagePath != null)
+                try
+                {
+                    //Deleting the current profile picture.
+                    fileHandler.deleteImage(serverPath, parent.ImagePath);
+                    //Saving the new profile picture.
+
+                }
+                catch { }
+
+                _ParentRepository.Remove(parent);
+                _unitOfWork.Complete();
             }
-            _ParentRepository.Remove(parent);
-            _unitOfWork.Complete();
+            
             return RedirectToAction("Index");
         }
 

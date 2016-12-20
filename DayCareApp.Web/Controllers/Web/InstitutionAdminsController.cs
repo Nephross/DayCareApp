@@ -215,10 +215,11 @@ namespace DayCareApp.Web.Controllers.Web
                     await userManager.DeleteAsync(user);
                     transaction.Commit();
                 }
+                _InstitutionAdminRepository.Remove(institutionAdmin);
+                _unitOfWork.Complete();
             }
 
-            _InstitutionAdminRepository.Remove(institutionAdmin);
-            _unitOfWork.Complete();
+            
             return RedirectToAction("Index");
         }
 

@@ -136,7 +136,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = _EmployeeRepository.Get(id);
+            Employee employee = _EmployeeRepository.SingleOrDefault(p => p.EmployeeId.Equals(id), p => p.Institution);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -220,10 +220,11 @@ namespace DayCareApp.Web.Controllers.Web
                     await userManager.DeleteAsync(user);
                     transaction.Commit();
                 }
+                _EmployeeRepository.Remove(employee);
+                _unitOfWork.Complete();
             }
 
-            _EmployeeRepository.Remove(employee);
-            _unitOfWork.Complete();
+           
             return RedirectToAction("Index");
         }
 
