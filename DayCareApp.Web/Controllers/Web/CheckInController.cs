@@ -30,6 +30,7 @@ namespace DayCareApp.Web.Controllers.Web
             _parentReposity = this._unitOfWork.Parents;
             _institutionRepository = this._unitOfWork.Institutions;
             _departmentReposity = this._unitOfWork.Departments;
+            _employeeRepository = this._unitOfWork.Employees;
         }
 
         public CheckInController(IUnitOfWork unitOfWork)
@@ -47,13 +48,14 @@ namespace DayCareApp.Web.Controllers.Web
             if (User.IsInRole("Employee"))
             {
                 var userId = User.Identity.GetUserId();
-
-                    int institutionId = _employeeRepository.SingleOrDefault(x => x.ApplicationUserId == userId).InstitutionId;
+               
+                Employee employee = _employeeRepository.SingleOrDefault(x => x.ApplicationUserId.Equals(userId) );
+                    
                     var model = _childRepository.GetAll();
                     var modelEmpl =
                     from r in model
-                    where r.InstitutionId == institutionId 
-                
+                    where r.InstitutionId == employee.InstitutionId
+
                     select r;
 
                 return View(modelEmpl);
