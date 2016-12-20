@@ -34,7 +34,7 @@
                         else if (User.IsInRole("InstitutionAdmin"))
                         {
                             <li>
-                                @Html.ActionLink("Administrer", "Index", "InstitutionAdmin", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                @Html.ActionLink("Administrer", "Index", "InstitutionManager", routeValues: null, htmlAttributes: new { title = "Manage" })
                             </li>
                         }
                         else if (User.IsInRole("Employee"))
