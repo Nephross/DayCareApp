@@ -131,6 +131,7 @@ namespace DayCareApp.Web.Models
 
         public Employee Employee { get; set; }
         public SelectList InstitutionList { get; set; }
+        public SelectList DepartmentList { get; set; }
 
         public RegisterEmployeeViewModel()
         {
