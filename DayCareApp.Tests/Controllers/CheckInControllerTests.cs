@@ -7,11 +7,13 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
 using DayCareApp.Web.DataContext.Persistence;
 using DayCareApp.Web.DataContext.Repositories;
 using DayCareApp.Web.Entities;
+using DayCareApp.Web.Models;
 using Moq;
 
 namespace DayCareApp.Web.Controllers.Web.Tests
@@ -34,29 +36,37 @@ namespace DayCareApp.Web.Controllers.Web.Tests
         }
 
         [Test()]
-        public void IndexTest_Admin_Should_Return_Non_Null_View()
+        public void IndexTest_Check_Login()
         {
-
             // Arrange:
             var checkInController = new CheckInController();
-    
-            Mock<ControllerContext> controllerContextMock = new Mock<ControllerContext>();
-            controllerContextMock.Setup(
-                x => x.HttpContext.User.IsInRole(It.Is<string>(s => s.Equals("Admin")))
-                ).Returns(true);
+            var userMock = new Mock<IPrincipal>();
+            userMock.Setup(p => p.IsInRole("InstitutionAdmin")).Returns(true);
+            
+            var contextMock = new Mock<HttpContextBase>();
+            contextMock.SetupGet(ctx => ctx.User)
+                       .Returns(userMock.Object);
+
+            var controllerContextMock = new Mock<ControllerContext>();
+            controllerContextMock.SetupGet(con => con.HttpContext)
+                                 .Returns(contextMock.Object);
+
             checkInController.ControllerContext = controllerContextMock.Object;
-     
-       
+
             // Act:
-            ActionResult index = checkInController.Index();
+            var result = checkInController.Index();
 
             // Assert:
-            Assert.IsNotNull(index);
-           
-            controllerContextMock.Verify(
-                x => x.HttpContext.User.IsInRole(It.Is<string>(s => s.Equals("Admin"))),
-                Times.Exactly(1),
-                "Must check if user is in role 'Admin'");
+            userMock.Verify(p => p.IsInRole("InstitutionAdmin"));
+            Assert.AreEqual(((ViewResult)result).ViewName, "Index");
+
+
+
+
+
+
+
+            
 
         }
 

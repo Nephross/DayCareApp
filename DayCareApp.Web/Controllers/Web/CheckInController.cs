@@ -65,8 +65,12 @@ namespace DayCareApp.Web.Controllers.Web
                 var model = _childRepository.GetAll().ToList();
                 return View(model);
             }
+           
+                ;
+                return View();
+           
 
-            return View();
+            
 
         }
 

@@ -330,6 +330,7 @@
     <Content Include="Views\Shared\EditorTemplates\FileUploadPacket.cshtml" />
     <Content Include="Views\CheckIn\Delete.cshtml" />
     <Content Include="Views\CheckIn\IndexPictures.cshtml" />
+    <Content Include="Views\CheckIn\IndexBlank.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
