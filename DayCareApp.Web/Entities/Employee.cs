@@ -12,24 +12,31 @@ namespace DayCareApp.Web.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Departments
+    public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Departments()
+        public Employee()
         {
-            this.Childs = new HashSet<Childs>();
-            this.Employees = new HashSet<Employees>();
+            this.DayRegistration = new HashSet<DayRegistration>();
+            this.DayRegistration1 = new HashSet<DayRegistration>();
         }
     
-        public int DepartmentId { get; set; }
-        public string DepartmentName { get; set; }
-        public int PhoneNumber { get; set; }
+        public int EmployeeId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public Nullable<int> PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string ApplicationUserId { get; set; }
+        public int FK_DepartmentId { get; set; }
         public int FK_InstitutionId { get; set; }
+        public int FK_AddressId { get; set; }
     
+        public virtual Addresses Addresses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Childs> Childs { get; set; }
-        public virtual Institutions Institutions { get; set; }
+        public virtual ICollection<DayRegistration> DayRegistration { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employees> Employees { get; set; }
+        public virtual ICollection<DayRegistration> DayRegistration1 { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual Institution Institution { get; set; }
     }
 }

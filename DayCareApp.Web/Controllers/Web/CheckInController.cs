@@ -52,11 +52,11 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 var userId = User.Identity.GetUserId();
 
-                    int institutionId = _employeeRepository.SingleOrDefault(x => x.ApplicationUserId == userId).InstitutionId;
+                    int institutionId = _employeeRepository.SingleOrDefault(x => x.ApplicationUserId == userId).FK_InstitutionId;
                     var model = _childRepository.GetAll();
                     var modelEmpl =
                     from r in model
-                    where r.InstitutionId == institutionId 
+                    where r.FK_InstitutionId == institutionId 
                 
                     select r;
 
@@ -95,36 +95,34 @@ namespace DayCareApp.Web.Controllers.Web
         {
             if (User.IsInRole("Employee"))
             {
-                Child child = _childRepository.SingleOrDefault((r => r.childId == id));
+                Child child = _childRepository.SingleOrDefault(r => r.ChildId == id);
                 return View(child);
             }
 
             return View();
         }
-
+/*
         [HttpPost]
         public ActionResult CreateDayRegistration(int id, FormCollection collection)
         {
             if (User.IsInRole("Employee"))
             {
-                Child child = _childRepository.SingleOrDefault(r => r.childId == id);
-                Parent parent = _parentReposity.SingleOrDefault(r => r.parentChildId == child.parentChildId);
+                Child child = _childRepository.SingleOrDefault(r => r.ChildId == id);
+                Parent parent = child.Parent.First(); 
 
                 DayRegistration dayRegistration = new DayRegistration();
-                dayRegistration.dayRegId = _dayRegistrationRepository.GetAll().Count() +1 ;
-                dayRegistration.checkInTime = collection.Get(3);
+                dayRegistration.DayRegistrationId = _dayRegistrationRepository.GetAll().Count() +1 ;
+                dayRegistration.CheckInTime = collection.Get(3);
 
-                dayRegistration.checkOutTime = collection.Get(4);
-                dayRegistration.expectedCheckOutTime = collection.Get(5);
-                dayRegistration.phoneNumber = parent.phoneNumber;
-                dayRegistration.email = parent.email;
-                dayRegistration.childId = child.childId;
-                dayRegistration.institutionId = child.institutionId;
-                dayRegistration.expectectCheckOutParent = collection.Get(6);
-                dayRegistration.checkInParentId = parent.parentChildId;
-                dayRegistration.checkInEmployeeId = 0;
-                dayRegistration.checkOutParentId =  0;
-                dayRegistration.checkOutEmployeeId = 0; 
+                dayRegistration.CheckOutTime = collection.Get(4);
+                dayRegistration.ExpectedCheckOutTime = collection.Get(5);  
+                dayRegistration.Child = child;
+                dayRegistration.FK_InstitutionId = child.Institution.InstitutionId;
+                dayRegistration.FK_ExpectedCheckOutParentId = collection.Get(6);
+                dayRegistration.FK_CheckInParentId = collection.Get(7);
+                dayRegistration.FK_CheckInEmployeeId = 0;
+                dayRegistration.FK_CheckOutParentId =  0;
+                dayRegistration.FK_CheckOutEmployeeId = 0; 
               
 
                 return View(child);
@@ -134,10 +132,10 @@ namespace DayCareApp.Web.Controllers.Web
             return View();
         }
 
-
+    */
         public ActionResult Edit(int id)
         {
-            Child child = _childRepository.SingleOrDefault((r => r.childId == id));
+            Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
             return View(child);
         }
 
@@ -151,11 +149,11 @@ namespace DayCareApp.Web.Controllers.Web
                 if (child != null)
                 {
 
-                    child.Name = collection.Get(2);
-                    child.Country = collection.Get(3);
-                    child.Birthdate = Convert.ToDateTime(collection.Get(4));
-                    child.CurrentlyCheckedIn = Convert.ToBoolean(collection.Get(5));
-                    child.SpecialNeeds = collection.Get(6);
+                    child.FirstName = collection.Get(2);
+                     
+                    child.Birthday = Convert.ToDateTime(collection.Get(4));
+               
+                  
                 }
 
                 _unitOfWork.Complete();
@@ -167,7 +165,7 @@ namespace DayCareApp.Web.Controllers.Web
             //add view for not saved action
             return View("Index");
         }
-
+        /*
         public ActionResult EditDayRegistration(int id)
         {
             DayRegistration dayReg = _dayRegistrationRepository.SingleOrDefault((r => r.dayRegId == id));
@@ -207,7 +205,7 @@ namespace DayCareApp.Web.Controllers.Web
 
 
 
-
+    */
 
 
 

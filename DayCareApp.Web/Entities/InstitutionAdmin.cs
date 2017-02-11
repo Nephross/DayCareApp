@@ -12,18 +12,18 @@ namespace DayCareApp.Web.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class InstitutionAdmins
+    public partial class InstitutionAdmin
     {
         public int InstitutionAdminId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Nullable<int> PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string FK_ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
         public int FK_InstitutionId { get; set; }
         public int FK_AddressId { get; set; }
     
         public virtual Addresses Addresses { get; set; }
-        public virtual Institutions Institutions { get; set; }
+        public virtual Institution Institution { get; set; }
     }
 }

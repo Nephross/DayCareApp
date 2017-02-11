@@ -85,7 +85,7 @@ namespace DayCareApp.Web.Controllers.Web
                 return RedirectToAction("Index");
             }
 
-            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Department.InstitutionId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Department.Institution.InstitutionId);
             return View(model);
         }
 
@@ -103,7 +103,7 @@ namespace DayCareApp.Web.Controllers.Web
             }
 
             DepartmentViewModel DpVM = new DepartmentViewModel();
-            DpVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", department.InstitutionId);
+            DpVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", department.Institution.InstitutionId);
             DpVM.Department = department;
             return View(DpVM);
         }
@@ -122,7 +122,7 @@ namespace DayCareApp.Web.Controllers.Web
                 return RedirectToAction("Index");
             }
 
-            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Department.InstitutionId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Department.Institution.InstitutionId);
             return View(model);
         }
 

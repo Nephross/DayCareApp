@@ -12,35 +12,29 @@ namespace DayCareApp.Web.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Parents
+    public partial class Child
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Parents()
+        public Child()
         {
-            this.DayRegistrations = new HashSet<DayRegistrations>();
-            this.DayRegistrations1 = new HashSet<DayRegistrations>();
-            this.DayRegistrations2 = new HashSet<DayRegistrations>();
-            this.Childs = new HashSet<Childs>();
+            this.DayRegistration = new HashSet<DayRegistration>();
+            this.Parent = new HashSet<Parent>();
         }
     
-        public int ParentId { get; set; }
+        public int ChildId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Nullable<int> PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string FK_ApplicationUserId { get; set; }
+        public Nullable<System.DateTime> Birthday { get; set; }
+        public int FK_DepartmentId { get; set; }
         public int FK_InstitutionId { get; set; }
         public int FK_AddressId { get; set; }
     
         public virtual Addresses Addresses { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual Institution Institution { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DayRegistrations> DayRegistrations { get; set; }
+        public virtual ICollection<DayRegistration> DayRegistration { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DayRegistrations> DayRegistrations1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DayRegistrations> DayRegistrations2 { get; set; }
-        public virtual Institutions Institutions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Childs> Childs { get; set; }
+        public virtual ICollection<Parent> Parent { get; set; }
     }
 }

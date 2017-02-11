@@ -107,7 +107,7 @@ namespace DayCareApp.Web.Controllers.Web
                     string serverPath = Server == null ? "" : Server.MapPath("~");
                     try
                     {
-                        model.Parent.ImagePath = fileHandler.SaveImage(model.FileUploadPacket, serverPath);
+                       // model.Parent. = fileHandler.SaveImage(model.FileUploadPacket, serverPath);
                     }
                     catch { }
 
@@ -126,7 +126,7 @@ namespace DayCareApp.Web.Controllers.Web
             }
 
             // If we got this far, something failed, redisplay for
-            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Parent.InstitutionId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Parent.Institution.InstitutionId);
             return View(model);
         }
 
@@ -144,7 +144,7 @@ namespace DayCareApp.Web.Controllers.Web
             }
             ParentViewModel ParentViewModel = new ParentViewModel();
             ParentViewModel.Parent = parent;
-            ParentViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", parent.InstitutionId);
+            ParentViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", parent.Institution.InstitutionId);
             return View(ParentViewModel);
         }
 
@@ -164,9 +164,9 @@ namespace DayCareApp.Web.Controllers.Web
                     try
                     {
                         //Deleting the current profile picture.
-                        fileHandler.deleteImage(serverPath, model.Parent.ImagePath);
+                      //  fileHandler.deleteImage(serverPath, model.Parent.ImagePath);
                         //Saving the new profile picture.
-                        model.Parent.ImagePath = fileHandler.SaveImage(model.FileUploadPacket, serverPath);
+                        //model.Parent.ImagePath = fileHandler.SaveImage(model.FileUploadPacket, serverPath);
                     }
                     catch { }
                 }
@@ -175,7 +175,7 @@ namespace DayCareApp.Web.Controllers.Web
                 return RedirectToAction("Index");
             }
 
-            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Parent.InstitutionId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.Parent.Institution.InstitutionId);
             return View(model);
         }
 
@@ -238,7 +238,7 @@ namespace DayCareApp.Web.Controllers.Web
                     await userManager.DeleteAsync(user);
                     transaction.Commit();
                 }
-                if(parent.ImagePath != null)
+               /* if(parent.ImagePath != null)
                 try
                 {
                     //Deleting the current profile picture.
@@ -246,7 +246,7 @@ namespace DayCareApp.Web.Controllers.Web
                     //Saving the new profile picture.
 
                 }
-                catch { }
+                catch { } */
 
                 _ParentRepository.Remove(parent);
                 _unitOfWork.Complete();

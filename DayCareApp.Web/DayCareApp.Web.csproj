@@ -221,26 +221,26 @@
     <Compile Include="Entities\Addresses.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Admins.cs">
+    <Compile Include="Entities\Admin.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\ChatMessage.cs" />
-    <Compile Include="Entities\Childs.cs">
+    <Compile Include="Entities\Child.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\DayRegistrations.cs">
+    <Compile Include="Entities\DayRegistration.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Departments.cs">
+    <Compile Include="Entities\Department.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Employees.cs">
+    <Compile Include="Entities\Employee.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\InstitutionAdmins.cs">
+    <Compile Include="Entities\Institution.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Institutions.cs">
+    <Compile Include="Entities\InstitutionAdmin.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\ModelClasses.Context.cs">
@@ -258,7 +258,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelClasses.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Parents.cs">
+    <Compile Include="Entities\Parent.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -386,7 +386,6 @@
     <Content Include="Views\Shared\EditorTemplates\FileUploadPacket.cshtml" />
     <Content Include="Views\CheckIn\Delete.cshtml" />
     <Content Include="Views\CheckIn\IndexPictures.cshtml" />
-    <Content Include="Views\CheckIn\CreateDayRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />

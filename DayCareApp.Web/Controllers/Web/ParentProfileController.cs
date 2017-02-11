@@ -74,7 +74,7 @@ namespace DayCareApp.Web.Controllers.Web
         {
             if (ModelState.IsValid)
             {
-                FileHandler fileHandler = new FileHandler();
+               /* FileHandler fileHandler = new FileHandler();
                 if (model.FileUploadPacket != null)
                 {
                     string serverPath = Server == null ? "" : Server.MapPath("~");
@@ -87,6 +87,8 @@ namespace DayCareApp.Web.Controllers.Web
                     }
                     catch { }
                 }
+                */
+
                 _ParentRepository.Edit(model.Parent);
                 _unitOfWork.Complete();
                 return RedirectToAction("ParentProfile");
@@ -102,7 +104,7 @@ namespace DayCareApp.Web.Controllers.Web
         {
             var userId = User.Identity.GetUserId();
             Parent parent = _ParentRepository.SingleOrDefault(p => p.ApplicationUserId == userId);
-            var Children = _ChildRepository.Find(c => c.Parent1 == parent|| c.Parent2 == parent);
+            var Children = _ChildRepository.Find(c => c.Parent == parent);
 
             return View(Children.ToList());
         }
@@ -121,8 +123,8 @@ namespace DayCareApp.Web.Controllers.Web
             }
             ChildViewModel ChildViewModel = new ChildViewModel();
             ChildViewModel.Child = child;
-            ChildViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", child.InstitutionId);
-            ChildViewModel.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartmentId", "DepartmentName", child.DepartmentId);
+            ChildViewModel.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", child.Institution.InstitutionId);
+            ChildViewModel.DepartmentList = new SelectList(_DepartmentRepository.GetAll().ToList(), "DepartmentId", "DepartmentName", child.Department.DepartmentId);
             return View(ChildViewModel); ;
         }
 

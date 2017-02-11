@@ -121,7 +121,7 @@ namespace DayCareApp.Web.Controllers.Web
             }
 
             // If we got this far, something failed, redisplay for
-            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.InstitutionAdmin.InstitutionId);
+            model.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.InstitutionAdmin.Institution.InstitutionId);
             return View(model);
         }
 
@@ -139,7 +139,7 @@ namespace DayCareApp.Web.Controllers.Web
             }
 
             InstitutionAdminViewModel InstAdminVM = new InstitutionAdminViewModel();
-            InstAdminVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", institutionAdmin.InstitutionId);
+            InstAdminVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", institutionAdmin.Institution.InstitutionId);
             InstAdminVM.institutionAdmin = institutionAdmin;
             return View(InstAdminVM);
         }
@@ -157,7 +157,7 @@ namespace DayCareApp.Web.Controllers.Web
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            model.InstitutionList= new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.institutionAdmin.InstitutionId);
+            model.InstitutionList= new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", model.institutionAdmin.Institution.InstitutionId);
             return View(model);
         }
 
