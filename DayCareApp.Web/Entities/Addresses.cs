@@ -12,11 +12,12 @@ namespace DayCareApp.Web.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Institution
+    public partial class Addresses
     {
-        public int institutionId { get; set; }
-        public string institutionName { get; set; }
-        public int phoneNumber { get; set; }
-        public string email { get; set; }
+        public int addressId { get; set; }
+        public string streetName { get; set; }
+        public Nullable<int> postCode { get; set; }
+        public string city { get; set; }
+        public string country { get; set; }
     }
 }

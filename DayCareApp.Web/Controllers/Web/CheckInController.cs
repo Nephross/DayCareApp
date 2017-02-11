@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
 using DayCareApp.Web.DataContext.Persistence;
 using DayCareApp.Web.DataContext.Repositories;
+using DayCareApp.Web.Entities;
 using Microsoft.AspNet.Identity;
 
 namespace DayCareApp.Web.Controllers.Web
@@ -22,6 +23,7 @@ namespace DayCareApp.Web.Controllers.Web
         public readonly IInstitutionRepository _institutionRepository;
         public readonly IParentRepository _parentReposity;
         public readonly IDepartmentRepository _departmentReposity;
+        public readonly IDayRegistrationRepository _dayRegistrationRepository;
 
         public CheckInController()
         {
@@ -30,6 +32,7 @@ namespace DayCareApp.Web.Controllers.Web
             _parentReposity = this._unitOfWork.Parents;
             _institutionRepository = this._unitOfWork.Institutions;
             _departmentReposity = this._unitOfWork.Departments;
+            _dayRegistrationRepository = this._unitOfWork.DayRegistrations;
         }
 
         public CheckInController(IUnitOfWork unitOfWork)
@@ -39,6 +42,7 @@ namespace DayCareApp.Web.Controllers.Web
             _institutionRepository = unitOfWork.Institutions;
             _parentReposity = unitOfWork.Parents;
             _departmentReposity = unitOfWork.Departments;
+            _dayRegistrationRepository = unitOfWork.DayRegistrations;
         }
 
         public ActionResult Index()
@@ -85,46 +89,55 @@ namespace DayCareApp.Web.Controllers.Web
                 return View(child);
 
         }
-        /*
-        // GET: Reviews/Create
-        public ActionResult Create()
+      
+        // GET: Reviews/Edit/5
+        public ActionResult CreateDayRegistration(int id)
         {
+            if (User.IsInRole("Employee"))
+            {
+                Child child = _childRepository.SingleOrDefault((r => r.childId == id));
+                return View(child);
+            }
+
             return View();
         }
 
-        // POST: Reviews/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult CreateDayRegistration(int id, FormCollection collection)
         {
-            try
+            if (User.IsInRole("Employee"))
             {
-               
-                 Child child = new Child();
-                         {
-                             // add for the following attributes
-                             child.ChildId = _childRepository.GetAll().Count() + 1;
-                             child.Name = collection.Get(1);
-                             child.Country = collection.Get(2);
-                             child.Birthdate = Convert.ToDateTime(collection.Get(3));
-                             child.CurrentlyCheckedIn = Convert.ToBoolean(collection.Get(4));
-                             child.SpecialNeeds = collection.Get(4);
+                Child child = _childRepository.SingleOrDefault(r => r.childId == id);
+                Parent parent = _parentReposity.SingleOrDefault(r => r.parentChildId == child.parentChildId);
 
-                }
-                _childRepository.Add(child);
-                _unitOfWork.Complete();
+                DayRegistration dayRegistration = new DayRegistration();
+                dayRegistration.dayRegId = _dayRegistrationRepository.GetAll().Count() +1 ;
+                dayRegistration.checkInTime = collection.Get(3);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+                dayRegistration.checkOutTime = collection.Get(4);
+                dayRegistration.expectedCheckOutTime = collection.Get(5);
+                dayRegistration.phoneNumber = parent.phoneNumber;
+                dayRegistration.email = parent.email;
+                dayRegistration.childId = child.childId;
+                dayRegistration.institutionId = child.institutionId;
+                dayRegistration.expectectCheckOutParent = collection.Get(6);
+                dayRegistration.checkInParentId = parent.parentChildId;
+                dayRegistration.checkInEmployeeId = 0;
+                dayRegistration.checkOutParentId =  0;
+                dayRegistration.checkOutEmployeeId = 0; 
+              
+
+                return View(child);
+
+             }
+
+            return View();
         }
-        */
-        // GET: Reviews/Edit/5
+
+
         public ActionResult Edit(int id)
         {
-            Child child = _childRepository.SingleOrDefault((r => r.ChildId == id));
+            Child child = _childRepository.SingleOrDefault((r => r.childId == id));
             return View(child);
         }
 
@@ -155,10 +168,47 @@ namespace DayCareApp.Web.Controllers.Web
             return View("Index");
         }
 
-     
+        public ActionResult EditDayRegistration(int id)
+        {
+            DayRegistration dayReg = _dayRegistrationRepository.SingleOrDefault((r => r.dayRegId == id));
+            return View(dayReg);
+        }
 
-        
-      
+        // POST: Reviews/Edit/5
+        [HttpPost]
+        public ActionResult EditDayRegistration(int id, FormCollection collection)
+        {
+            if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("InstitutionAdmin"))
+            {
+                DayRegistration dayReg = _dayRegistrationRepository.SingleOrDefault((r => r.dayRegId == id));
+                if (dayReg != null)
+                {
+
+
+                    dayReg.checkInTime = collection.Get(3);
+                    dayReg.checkOutTime = collection.Get(4);
+                    dayReg.expectedCheckOutTime = collection.Get(5);
+                    dayReg.expectectCheckOutParent = collection.Get(6);
+                    dayReg.checkInParentId = parent.parentChildId;
+                    dayReg.checkInEmployeeId = 0;
+                    dayReg.checkOutParentId = 0;
+                    dayReg.checkOutEmployeeId = 0;
+                }
+
+                _unitOfWork.Complete();
+                return RedirectToAction("Index");
+
+            }
+
+
+            //add view for not saved action
+            return View("Index");
+        }
+
+
+
+
+
 
 
     }

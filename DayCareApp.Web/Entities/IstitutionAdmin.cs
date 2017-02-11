@@ -12,20 +12,15 @@ namespace DayCareApp.Web.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class DayRegistration
+    public partial class IstitutionAdmin
     {
-        public int dayRegId { get; set; }
-        public Nullable<System.DateTime> checkInTime { get; set; }
-        public Nullable<System.DateTime> checkOutTime { get; set; }
-        public Nullable<System.DateTime> expectedCheckOutTime { get; set; }
+        public int instAdminId { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
         public Nullable<int> phoneNumber { get; set; }
         public string email { get; set; }
-        public int childId { get; set; }
+        public string ppUserId { get; set; }
         public int institutionId { get; set; }
-        public int expectectCheckOutParent { get; set; }
-        public int checkInParentId { get; set; }
-        public int checkInEmployeeId { get; set; }
-        public int checkOutParentId { get; set; }
-        public int checkOutEmployeeId { get; set; }
+        public int addressId { get; set; }
     }
 }

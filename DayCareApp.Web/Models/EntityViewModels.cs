@@ -75,6 +75,7 @@ namespace DayCareApp.Web.Models
 
     public class DayRegistrationViewModel
     {
+
     }
 
 }

@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dayCareAPPDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Addresses">
+          <Key>
+            <PropertyRef Name="addressId" />
+          </Key>
+          <Property Name="addressId" Type="int" Nullable="false" />
+          <Property Name="streetName" Type="varchar" MaxLength="50" />
+          <Property Name="postCode" Type="int" />
+          <Property Name="city" Type="varchar" MaxLength="30" />
+          <Property Name="country" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Adminstrator">
+          <Key>
+            <PropertyRef Name="adminId" />
+          </Key>
+          <Property Name="adminId" Type="int" Nullable="false" />
+          <Property Name="appUserId" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phoneNumber" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="addressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Child">
+          <Key>
+            <PropertyRef Name="childId" />
+          </Key>
+          <Property Name="childId" Type="int" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="birthday" Type="datetime" />
+          <Property Name="departmentId" Type="int" Nullable="false" />
+          <Property Name="parentChildId" Type="int" Nullable="false" />
+          <Property Name="institutionId" Type="int" Nullable="false" />
+          <Property Name="addressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DayRegistration">
+          <Key>
+            <PropertyRef Name="dayRegId" />
+          </Key>
+          <Property Name="dayRegId" Type="int" Nullable="false" />
+          <Property Name="checkInTime" Type="datetime" />
+          <Property Name="checkOutTime" Type="datetime" />
+          <Property Name="expectedCheckOutTime" Type="datetime" />
+          <Property Name="phoneNumber" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="childId" Type="int" Nullable="false" />
+          <Property Name="institutionId" Type="int" Nullable="false" />
+          <Property Name="expectectCheckOutParent" Type="int" Nullable="false" />
+          <Property Name="checkInParentId" Type="int" Nullable="false" />
+          <Property Name="checkInEmployeeId" Type="int" Nullable="false" />
+          <Property Name="checkOutParentId" Type="int" Nullable="false" />
+          <Property Name="checkOutEmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="departmentId" />
+          </Key>
+          <Property Name="departmentId" Type="int" Nullable="false" />
+          <Property Name="departmentName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="phoneNumber" Type="int" Nullable="false" />
+          <Property Name="institutionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeeId" />
+          </Key>
+          <Property Name="employeeId" Type="int" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="appUserId" Type="int" Nullable="false" />
+          <Property Name="phoneNumber" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="departmaentId" Type="int" Nullable="false" />
+          <Property Name="institutionId" Type="int" Nullable="false" />
+          <Property Name="addressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Institution">
+          <Key>
+            <PropertyRef Name="institutionId" />
+          </Key>
+          <Property Name="institutionId" Type="int" Nullable="false" />
+          <Property Name="institutionName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phoneNumber" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dayCareAPPDB.dbo.IstitutionAdmin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IstitutionAdmin">
+          <Key>
+            <PropertyRef Name="instAdminId" />
+            <PropertyRef Name="firstName" />
+            <PropertyRef Name="lastName" />
+            <PropertyRef Name="ppUserId" />
+            <PropertyRef Name="institutionId" />
+            <PropertyRef Name="addressId" />
+          </Key>
+          <Property Name="instAdminId" Type="int" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phoneNumber" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="ppUserId" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="institutionId" Type="int" Nullable="false" />
+          <Property Name="addressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parent">
+          <Key>
+            <PropertyRef Name="parentId" />
+          </Key>
+          <Property Name="parentId" Type="int" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="birthday" Type="datetime" />
+          <Property Name="phoneNumber" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="appUserId" Type="int" Nullable="false" />
+          <Property Name="parentChildId" Type="int" Nullable="false" />
+          <Property Name="institutionId" Type="int" Nullable="false" />
+          <Property Name="addressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParentChild">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="parentId" Type="int" Nullable="false" />
+          <Property Name="childId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="dayCareAPPDBModelStoreContainer">
+          <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Adminstrator" EntityType="Self.Adminstrator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Child" EntityType="Self.Child" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DayRegistration" EntityType="Self.DayRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Institution" EntityType="Self.Institution" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parent" EntityType="Self.Parent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParentChild" EntityType="Self.ParentChild" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IstitutionAdmin" EntityType="Self.IstitutionAdmin" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [IstitutionAdmin].[instAdminId] AS [instAdminId], 
+    [IstitutionAdmin].[firstName] AS [firstName], 
+    [IstitutionAdmin].[lastName] AS [lastName], 
+    [IstitutionAdmin].[phoneNumber] AS [phoneNumber], 
+    [IstitutionAdmin].[email] AS [email], 
+    [IstitutionAdmin].[ppUserId] AS [ppUserId], 
+    [IstitutionAdmin].[institutionId] AS [institutionId], 
+    [IstitutionAdmin].[addressId] AS [addressId]
+    FROM [dbo].[IstitutionAdmin] AS [IstitutionAdmin]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dayCareAPPDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Addresses">
+          <Key>
+            <PropertyRef Name="addressId" />
+          </Key>
+          <Property Name="addressId" Type="Int32" Nullable="false" />
+          <Property Name="streetName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="postCode" Type="Int32" />
+          <Property Name="city" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Adminstrator">
+          <Key>
+            <PropertyRef Name="adminId" />
+          </Key>
+          <Property Name="adminId" Type="Int32" Nullable="false" />
+          <Property Name="appUserId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phoneNumber" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="addressId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Child">
+          <Key>
+            <PropertyRef Name="childId" />
+          </Key>
+          <Property Name="childId" Type="Int32" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="birthday" Type="DateTime" Precision="3" />
+          <Property Name="departmentId" Type="Int32" Nullable="false" />
+          <Property Name="parentChildId" Type="Int32" Nullable="false" />
+          <Property Name="institutionId" Type="Int32" Nullable="false" />
+          <Property Name="addressId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DayRegistration">
+          <Key>
+            <PropertyRef Name="dayRegId" />
+          </Key>
+          <Property Name="dayRegId" Type="Int32" Nullable="false" />
+          <Property Name="checkInTime" Type="DateTime" Precision="3" />
+          <Property Name="checkOutTime" Type="DateTime" Precision="3" />
+          <Property Name="expectedCheckOutTime" Type="DateTime" Precision="3" />
+          <Property Name="phoneNumber" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="childId" Type="Int32" Nullable="false" />
+          <Property Name="institutionId" Type="Int32" Nullable="false" />
+          <Property Name="expectectCheckOutParent" Type="Int32" Nullable="false" />
+          <Property Name="checkInParentId" Type="Int32" Nullable="false" />
+          <Property Name="checkInEmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="checkOutParentId" Type="Int32" Nullable="false" />
+          <Property Name="checkOutEmployeeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="departmentId" />
+          </Key>
+          <Property Name="departmentId" Type="Int32" Nullable="false" />
+          <Property Name="departmentName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phoneNumber" Type="Int32" Nullable="false" />
+          <Property Name="institutionId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeeId" />
+          </Key>
+          <Property Name="employeeId" Type="Int32" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="appUserId" Type="Int32" Nullable="false" />
+          <Property Name="phoneNumber" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="departmaentId" Type="Int32" Nullable="false" />
+          <Property Name="institutionId" Type="Int32" Nullable="false" />
+          <Property Name="addressId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Institution">
+          <Key>
+            <PropertyRef Name="institutionId" />
+          </Key>
+          <Property Name="institutionId" Type="Int32" Nullable="false" />
+          <Property Name="institutionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phoneNumber" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Parent">
+          <Key>
+            <PropertyRef Name="parentId" />
+          </Key>
+          <Property Name="parentId" Type="Int32" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="birthday" Type="DateTime" Precision="3" />
+          <Property Name="phoneNumber" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="appUserId" Type="Int32" Nullable="false" />
+          <Property Name="parentChildId" Type="Int32" Nullable="false" />
+          <Property Name="institutionId" Type="Int32" Nullable="false" />
+          <Property Name="addressId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParentChild">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="parentId" Type="Int32" Nullable="false" />
+          <Property Name="childId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IstitutionAdmin">
+          <Key>
+            <PropertyRef Name="instAdminId" />
+            <PropertyRef Name="firstName" />
+            <PropertyRef Name="lastName" />
+            <PropertyRef Name="ppUserId" />
+            <PropertyRef Name="institutionId" />
+            <PropertyRef Name="addressId" />
+          </Key>
+          <Property Name="instAdminId" Type="Int32" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phoneNumber" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ppUserId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="institutionId" Type="Int32" Nullable="false" />
+          <Property Name="addressId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="dayCareAPPDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Addresses" />
+          <EntitySet Name="Adminstrator" EntityType="Self.Adminstrator" />
+          <EntitySet Name="Child" EntityType="Self.Child" />
+          <EntitySet Name="DayRegistration" EntityType="Self.DayRegistration" />
+          <EntitySet Name="Department" EntityType="Self.Department" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Institution" EntityType="Self.Institution" />
+          <EntitySet Name="Parent" EntityType="Self.Parent" />
+          <EntitySet Name="ParentChild" EntityType="Self.ParentChild" />
+          <EntitySet Name="IstitutionAdmin" EntityType="Self.IstitutionAdmin" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dayCareAPPDBModelStoreContainer" CdmEntityContainer="dayCareAPPDBEntities1">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel.Addresses">
+              <MappingFragment StoreEntitySet="Addresses">
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+                <ScalarProperty Name="streetName" ColumnName="streetName" />
+                <ScalarProperty Name="postCode" ColumnName="postCode" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Adminstrator">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel.Adminstrator">
+              <MappingFragment StoreEntitySet="Adminstrator">
+                <ScalarProperty Name="adminId" ColumnName="adminId" />
+                <ScalarProperty Name="appUserId" ColumnName="appUserId" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Child">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel.Child">
+              <MappingFragment StoreEntitySet="Child">
+                <ScalarProperty Name="childId" ColumnName="childId" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="departmentId" ColumnName="departmentId" />
+                <ScalarProperty Name="parentChildId" ColumnName="parentChildId" />
+                <ScalarProperty Name="institutionId" ColumnName="institutionId" />
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DayRegistration">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel.DayRegistration">
+              <MappingFragment StoreEntitySet="DayRegistration">
+                <ScalarProperty Name="dayRegId" ColumnName="dayRegId" />
+                <ScalarProperty Name="checkInTime" ColumnName="checkInTime" />
+                <ScalarProperty Name="checkOutTime" ColumnName="checkOutTime" />
+                <ScalarProperty Name="expectedCheckOutTime" ColumnName="expectedCheckOutTime" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="childId" ColumnName="childId" />
+                <ScalarProperty Name="institutionId" ColumnName="institutionId" />
+                <ScalarProperty Name="expectectCheckOutParent" ColumnName="expectectCheckOutParent" />
+                <ScalarProperty Name="checkInParentId" ColumnName="checkInParentId" />
+                <ScalarProperty Name="checkInEmployeeId" ColumnName="checkInEmployeeId" />
+                <ScalarProperty Name="checkOutParentId" ColumnName="checkOutParentId" />
+                <ScalarProperty Name="checkOutEmployeeId" ColumnName="checkOutEmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="departmentId" ColumnName="departmentId" />
+                <ScalarProperty Name="departmentName" ColumnName="departmentName" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="institutionId" ColumnName="institutionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="appUserId" ColumnName="appUserId" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="departmaentId" ColumnName="departmaentId" />
+                <ScalarProperty Name="institutionId" ColumnName="institutionId" />
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Institution">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel.Institution">
+              <MappingFragment StoreEntitySet="Institution">
+                <ScalarProperty Name="institutionId" ColumnName="institutionId" />
+                <ScalarProperty Name="institutionName" ColumnName="institutionName" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parent">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel.Parent">
+              <MappingFragment StoreEntitySet="Parent">
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="appUserId" ColumnName="appUserId" />
+                <ScalarProperty Name="parentChildId" ColumnName="parentChildId" />
+                <ScalarProperty Name="institutionId" ColumnName="institutionId" />
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParentChild">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel.ParentChild">
+              <MappingFragment StoreEntitySet="ParentChild">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="childId" ColumnName="childId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IstitutionAdmin">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel.IstitutionAdmin">
+              <MappingFragment StoreEntitySet="IstitutionAdmin">
+                <ScalarProperty Name="instAdminId" ColumnName="instAdminId" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="ppUserId" ColumnName="ppUserId" />
+                <ScalarProperty Name="institutionId" ColumnName="institutionId" />
+                <ScalarProperty Name="addressId" ColumnName="addressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

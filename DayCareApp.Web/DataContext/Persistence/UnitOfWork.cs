@@ -20,6 +20,7 @@ namespace DayCareApp.Web.DataContext.Persistence
             InstitutionAdmins = new InstitutionAdminRepository(_context);
             Departments = new DepartmentRepository(_context);
             Employees = new EmployeeRepository(_context);
+            DayRegistrations = new DayRegistrationRepository(_context);
            
         }
 
@@ -30,6 +31,7 @@ namespace DayCareApp.Web.DataContext.Persistence
         public IInstitutionAdminRepository InstitutionAdmins { get; private set; }
         public IDepartmentRepository Departments { get; private set; }
         public IEmployeeRepository Employees { get; private set; }
+        public IDayRegistrationRepository DayRegistrations { get; private set; }
 
 
         public int Complete()

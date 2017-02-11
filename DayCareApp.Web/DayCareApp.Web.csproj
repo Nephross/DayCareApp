@@ -60,6 +60,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -203,7 +205,9 @@
     </Compile>
     <Compile Include="DataContext\Migrations\Configuration.cs" />
     <Compile Include="DataContext\Persistence\ChildRepository.cs" />
+    <Compile Include="DataContext\Persistence\DayRegistrationRepository.cs" />
     <Compile Include="DataContext\Persistence\ParentRepository.cs" />
+    <Compile Include="DataContext\Repositories\IDayRegistrationRepository.cs" />
     <Compile Include="DataContext\Repositories\IEmployeeRepository.cs" />
     <Compile Include="DataContext\Repositories\IInstitutionAdminRepository.cs" />
     <Compile Include="DataContext\Repositories\IParentRepository.cs" />
@@ -214,17 +218,55 @@
     <Compile Include="DataContext\Repositories\IRepository.cs" />
     <Compile Include="DataContext\Repositories\IUnitOfWork.cs" />
     <Compile Include="DataContext\Repositories\Repository.cs" />
+    <Compile Include="Entities\Addresses.cs">
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Adminstrator.cs">
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\ChatMessage.cs" />
-    <Compile Include="Entities\DayRegistration.cs" />
-    <Compile Include="Entities\Department.cs" />
-    <Compile Include="Entities\Institution.cs" />
-    <Compile Include="Entities\InstitutionAdmin.cs" />
-    <Compile Include="Entities\Parent.cs" />
+    <Compile Include="Entities\Child.cs">
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DayRegistration.cs">
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Department.cs">
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Employee.cs">
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Institution.cs">
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\IstitutionAdmin.cs">
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ModelClasses.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelClasses.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ModelClasses.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ModelClasses.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelClasses.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Parent.cs">
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ParentChild.cs">
+      <DependentUpon>ModelClasses.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Child.cs" />
-    <Compile Include="Entities\Employee.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -248,6 +290,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Entities\ModelClasses.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelClasses.edmx</DependentUpon>
+      <LastGenOutput>ModelClasses.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\ModelClasses.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelClasses.edmx</DependentUpon>
+      <LastGenOutput>ModelClasses.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="App_Data\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -261,6 +313,13 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="ClassDiagram1.cd" />
+    <EntityDeploy Include="Entities\ModelClasses.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelClasses.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Entities\ModelClasses.edmx.diagram">
+      <DependentUpon>ModelClasses.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -330,6 +389,7 @@
     <Content Include="Views\Shared\EditorTemplates\FileUploadPacket.cshtml" />
     <Content Include="Views\CheckIn\Delete.cshtml" />
     <Content Include="Views\CheckIn\IndexPictures.cshtml" />
+    <Content Include="Views\CheckIn\CreateDayRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />

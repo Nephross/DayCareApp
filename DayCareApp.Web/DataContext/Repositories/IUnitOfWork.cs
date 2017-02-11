@@ -14,6 +14,7 @@ namespace DayCareApp.Web.DataContext.Repositories
         IInstitutionAdminRepository InstitutionAdmins { get; }
         IDepartmentRepository Departments { get; }
         IEmployeeRepository Employees { get; }
+        IDayRegistrationRepository DayRegistrations { get; }
        
         int Complete();
     }
