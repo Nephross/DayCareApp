@@ -9,30 +9,36 @@
 
 namespace DayCareApp.Web.Entities
 {
+    using DataContext;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using System.Linq;
+
     public partial class dayCareAPPDBEntities5 : DbContext
     {
         public dayCareAPPDBEntities5()
             : base("name=dayCareAPPDBEntities5")
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
-        public virtual DbSet<Addresses> Addresses { get; set; }
-        public virtual DbSet<Admin> Admin { get; set; }
-        public virtual DbSet<Child> Child { get; set; }
-        public virtual DbSet<DayRegistration> DayRegistration { get; set; }
-        public virtual DbSet<Department> Department { get; set; }
-        public virtual DbSet<Employee> Employee { get; set; }
-        public virtual DbSet<Institution> Institution { get; set; }
-        public virtual DbSet<InstitutionAdmin> InstitutionAdmin { get; set; }
-        public virtual DbSet<Parent> Parent { get; set; }
+
+        public virtual DbSet<Addresses> AddressSet { get; set; }
+        public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<Child> Children { get; set; }
+        public virtual DbSet<DayRegistration> DayRegistrations { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Institution> Institutions { get; set; }
+        public virtual DbSet<InstitutionAdmin> InstitutionAdmins { get; set; }
+        public virtual DbSet<Parent> Parents { get; set; }
+      
+
+   
     }
 }

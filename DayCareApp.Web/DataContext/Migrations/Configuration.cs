@@ -1,9 +1,11 @@
 namespace DayCareApp.Web.DataContext.Migrations
 {
+    using Entities;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -102,6 +104,73 @@ namespace DayCareApp.Web.DataContext.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            IList<Addresses> adresses = new List<Addresses>();
+            IList<Child> children = new List<Child>();
+            IList<Admin> admins = new List<Admin>();
+            IList<Institution> institutions = new List<Institution>();
+            IList<Department> departments = new List<Department>();
+
+            adresses.Add(new Addresses()
+            {
+                AddressId = context.AdressSet.Count() + 1,
+                StreetName = "RandomStreet",
+                PostCode = 2000,
+                Country = "Denmark"
+
+            });
+            admins.Add(new Admin()
+            {
+                AdminId = context.Admins.Count() + 1,
+                FirstName = "Admin",
+                LastName = "Adminson",
+                PhoneNumber = 20202020,
+                Email = "admin@admin.com",
+                ApplicationUserId = "06327f24-2ea0-443f-b6ad-8354a8cc3c4e",
+                FK_AddressId = context.AdressSet.SingleOrDefault(x => x.AddressId == 1).AddressId
+            });
+
+            institutions.Add(new Institution()
+            {
+                InstitutionId = context.Institutions.Count() + 1,
+                InstitutionName = "RandomInstitution",
+                PhoneNumber = 30303030,
+                Email = "institution@insti.com",
+                FK_AddressId = context.AdressSet.SingleOrDefault(x => x.AddressId == 1).AddressId
+            });
+
+            departments.Add(new Department()
+            {
+                DepartmentId = context.Departments.Count() + 1,
+                DepartmentName = "RandomDepartment",
+                PhoneNumber = 40404040,
+                FK_InstitutionId = context.Institutions.SingleOrDefault(x => x.InstitutionId == 1).InstitutionId
+            });
+
+            children.Add(new Child()
+            {
+                ChildId = context.Children.Count() + 1,
+                FirstName = "Steve",
+                LastName = "Stevenson",
+                Birthday = DateTime.Now,
+                FK_DepartmentId = context.Departments.SingleOrDefault(x => x.DepartmentId == 1).DepartmentId,
+                FK_InstitutionId = context.Institutions.SingleOrDefault(x => x.InstitutionId == 1).InstitutionId,
+                FK_AddressId = context.AdressSet.SingleOrDefault(x => x.AddressId == 1).AddressId
+            });
+
+
+
+            foreach (Addresses adress in adresses)
+                context.AdressSet.Add(adress);
+            foreach (Admin admin in admins)
+                context.Admins.Add(admin);
+            foreach (Institution insti in institutions)
+                context.Institutions.Add(insti);
+            foreach (Department dep in departments)
+                context.Departments.Add(dep);
+            foreach (Child child in children)
+                context.Children.Add(child);
+            base.Seed(context);
         }
     }
 }

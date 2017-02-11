@@ -6,6 +6,7 @@ using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
 using DayCareApp.Web.Entities;
 using DayCareApp.Web.Models;
+using System.Data.Entity.Migrations;
 
 namespace DayCareApp.Web.DataContext
 {
@@ -19,9 +20,11 @@ namespace DayCareApp.Web.DataContext
         public DbSet<Institution> Institutions { get; set; }
         public DbSet<InstitutionAdmin> InstitutionAdmins { get; set; }
         public DbSet<Parent> Parents { get; set; }
+        public DbSet<Addresses> AdressSet { get; set; }
+        public DbSet<Admin> Admins { get; set; }
 
         public DayCareAppDB()
-            : base("RemoteConnection") 
+            : base("RemoteConnection")
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
@@ -31,6 +34,7 @@ namespace DayCareApp.Web.DataContext
             return new DayCareAppDB();
         }
 
+       
 
 
 
