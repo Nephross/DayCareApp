@@ -13,10 +13,10 @@ namespace DayCareApp.Web.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class dayCareAPPDBEntities1 : DbContext
+    public partial class dayCareAPPDBEntities2 : DbContext
     {
-        public dayCareAPPDBEntities1()
-            : base("name=dayCareAPPDBEntities1")
+        public dayCareAPPDBEntities2()
+            : base("name=dayCareAPPDBEntities2")
         {
         }
     
@@ -26,14 +26,13 @@ namespace DayCareApp.Web.Entities
         }
     
         public virtual DbSet<Addresses> Addresses { get; set; }
-        public virtual DbSet<Adminstrator> Adminstrator { get; set; }
-        public virtual DbSet<Child> Child { get; set; }
-        public virtual DbSet<DayRegistration> DayRegistration { get; set; }
-        public virtual DbSet<Department> Department { get; set; }
-        public virtual DbSet<Employee> Employee { get; set; }
-        public virtual DbSet<Institution> Institution { get; set; }
-        public virtual DbSet<Parent> Parent { get; set; }
-        public virtual DbSet<ParentChild> ParentChild { get; set; }
-        public virtual DbSet<IstitutionAdmin> IstitutionAdmin { get; set; }
+        public virtual DbSet<Admins> Admins { get; set; }
+        public virtual DbSet<Childs> Childs { get; set; }
+        public virtual DbSet<DayRegistrations> DayRegistrations { get; set; }
+        public virtual DbSet<Departments> Departments { get; set; }
+        public virtual DbSet<Employees> Employees { get; set; }
+        public virtual DbSet<InstitutionAdmins> InstitutionAdmins { get; set; }
+        public virtual DbSet<Institutions> Institutions { get; set; }
+        public virtual DbSet<Parents> Parents { get; set; }
     }
 }

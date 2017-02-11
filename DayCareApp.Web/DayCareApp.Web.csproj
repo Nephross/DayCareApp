@@ -221,26 +221,26 @@
     <Compile Include="Entities\Addresses.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Adminstrator.cs">
+    <Compile Include="Entities\Admins.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\ChatMessage.cs" />
-    <Compile Include="Entities\Child.cs">
+    <Compile Include="Entities\Childs.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\DayRegistration.cs">
+    <Compile Include="Entities\DayRegistrations.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Department.cs">
+    <Compile Include="Entities\Departments.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Employee.cs">
+    <Compile Include="Entities\Employees.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Institution.cs">
+    <Compile Include="Entities\InstitutionAdmins.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\IstitutionAdmin.cs">
+    <Compile Include="Entities\Institutions.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\ModelClasses.Context.cs">
@@ -258,10 +258,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelClasses.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Parent.cs">
-      <DependentUpon>ModelClasses.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\ParentChild.cs">
+    <Compile Include="Entities\Parents.cs">
       <DependentUpon>ModelClasses.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
