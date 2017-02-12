@@ -11,7 +11,8 @@ namespace DayCareApp.Web.Entities
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Addresses
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,7 +25,8 @@ namespace DayCareApp.Web.Entities
             this.InstitutionAdmin = new HashSet<InstitutionAdmin>();
             this.Parent = new HashSet<Parent>();
         }
-    
+        
+        [Key]
         public int AddressId { get; set; }
         public string StreetName { get; set; }
         public Nullable<int> PostCode { get; set; }

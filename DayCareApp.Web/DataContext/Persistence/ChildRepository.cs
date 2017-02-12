@@ -18,7 +18,7 @@ namespace DayCareApp.Web.DataContext.Persistence
       
         public IEnumerable<Child> GetAllChildren()
         {
-            return DayCareAppDB.Create().Children.OrderByDescending(c => c.FirstName).ToList();
+            return DayCareAppDB.Create().Child.OrderByDescending(c => c.FirstName).ToList();
 
         }
 

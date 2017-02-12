@@ -10,7 +10,6 @@ using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
 using DayCareApp.Web.DataContext.Persistence;
 using DayCareApp.Web.DataContext.Repositories;
-using DayCareApp.Web.Entities;
 using Microsoft.AspNet.Identity;
 
 namespace DayCareApp.Web.Controllers.Web

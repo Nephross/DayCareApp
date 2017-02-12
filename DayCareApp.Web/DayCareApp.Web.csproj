@@ -191,18 +191,6 @@
     <Compile Include="Controllers\Web\ParentProfileController.cs" />
     <Compile Include="Controllers\Web\ParentsController.cs" />
     <Compile Include="DataContext\DayCareAppDB.cs" />
-    <Compile Include="DataContext\Migrations\201612191241374_Initial create.cs" />
-    <Compile Include="DataContext\Migrations\201612191241374_Initial create.Designer.cs">
-      <DependentUpon>201612191241374_Initial create.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\Migrations\201612192001565_Update 1.cs" />
-    <Compile Include="DataContext\Migrations\201612192001565_Update 1.Designer.cs">
-      <DependentUpon>201612192001565_Update 1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataContext\Migrations\201612201029027_Update 2.cs" />
-    <Compile Include="DataContext\Migrations\201612201029027_Update 2.Designer.cs">
-      <DependentUpon>201612201029027_Update 2.cs</DependentUpon>
-    </Compile>
     <Compile Include="DataContext\Migrations\Configuration.cs" />
     <Compile Include="DataContext\Persistence\ChildRepository.cs" />
     <Compile Include="DataContext\Persistence\DayRegistrationRepository.cs" />
@@ -270,7 +258,6 @@
     <Compile Include="Helpers\FileHandler.cs" />
     <Compile Include="Helpers\FileUploadPacket.cs" />
     <Compile Include="Helpers\RequireHTTPS.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\EntityViewModels.cs" />
     <Compile Include="Models\ChildViewModels.cs" />
@@ -427,17 +414,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="DataContext\Migrations\201612191241374_Initial create.resx">
-      <DependentUpon>201612191241374_Initial create.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContext\Migrations\201612192001565_Update 1.resx">
-      <DependentUpon>201612192001565_Update 1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataContext\Migrations\201612201029027_Update 2.resx">
-      <DependentUpon>201612201029027_Update 2.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
