@@ -338,7 +338,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\API\" />
     <Folder Include="Images\" />
     <Folder Include="Views\Child\" />
     <Folder Include="Views\ParentProfile\" />

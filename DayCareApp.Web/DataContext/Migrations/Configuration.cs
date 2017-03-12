@@ -105,71 +105,7 @@ namespace DayCareApp.Web.DataContext.Migrations
             //    );
             //
 
-            IList<Addresses> adresses = new List<Addresses>();
-            IList<Child> children = new List<Child>();
-            IList<Admin> admins = new List<Admin>();
-            IList<Institution> institutions = new List<Institution>();
-            IList<Department> departments = new List<Department>();
-
-            adresses.Add(new Addresses()
-            {
-                AddressId = context.Adresses.Count() + 1,
-                StreetName = "RandomStreet",
-                PostCode = 2000,
-                Country = "Denmark"
-
-            });
-            admins.Add(new Admin()
-            {
-                AdminId = context.Admin.Count() + 1,
-                FirstName = "Admin",
-                LastName = "Adminson",
-                PhoneNumber = 20202020,
-                Email = "admin@admin.com",
-                ApplicationUserId = "06327f24-2ea0-443f-b6ad-8354a8cc3c4e",
-                FK_AddressId = context.Adresses.SingleOrDefault(x => x.AddressId == 1).AddressId
-            });
-
-            institutions.Add(new Institution()
-            {
-                InstitutionId = context.Institution.Count() + 1,
-                InstitutionName = "RandomInstitution",
-                PhoneNumber = 30303030,
-                Email = "institution@insti.com",
-                FK_AddressId = context.Adresses.SingleOrDefault(x => x.AddressId == 1).AddressId
-            });
-
-            departments.Add(new Department()
-            {
-                DepartmentId = context.Department.Count() + 1,
-                DepartmentName = "RandomDepartment",
-                PhoneNumber = 40404040,
-                FK_InstitutionId = context.Institution.SingleOrDefault(x => x.InstitutionId == 1).InstitutionId
-            });
-
-            children.Add(new Child()
-            {
-                ChildId = context.Child.Count() + 1,
-                FirstName = "Steve",
-                LastName = "Stevenson",
-                Birthday = DateTime.Now,
-                FK_DepartmentId = context.Department.SingleOrDefault(x => x.DepartmentId == 1).DepartmentId,
-                FK_InstitutionId = context.Institution.SingleOrDefault(x => x.InstitutionId == 1).InstitutionId,
-                FK_AddressId = context.Adresses.SingleOrDefault(x => x.AddressId == 1).AddressId
-            });
-
-
-
-            foreach (Addresses adress in adresses)
-                context.Adresses.Add(adress);
-            foreach (Admin admin in admins)
-                context.Admin.Add(admin);
-            foreach (Institution insti in institutions)
-                context.Institution.Add(insti);
-            foreach (Department dep in departments)
-                context.Department.Add(dep);
-            foreach (Child child in children)
-                context.Child.Add(child);
+            
             base.Seed(context);
         }
     }
