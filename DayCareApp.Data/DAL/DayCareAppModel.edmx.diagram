@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="64bf11e08da645c0a31da0387d4d369f" Name="Diagram1">
+        <EntityTypeShape EntityType="DayCareAppDbModel.Address" Width="1.5" PointX="0.875" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayCareAppDbModel.Admin" Width="1.5" PointX="3.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayCareAppDbModel.Child" Width="1.5" PointX="8.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayCareAppDbModel.DayRegistration" Width="1.5" PointX="5.125" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayCareAppDbModel.Department" Width="1.5" PointX="6.875" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayCareAppDbModel.Employee" Width="1.5" PointX="9.625" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayCareAppDbModel.InstitutionAdmin" Width="1.5" PointX="0.875" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayCareAppDbModel.Institution" Width="1.5" PointX="3.125" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayCareAppDbModel.Parent" Width="1.5" PointX="5.625" PointY="9.625" IsExpanded="true" />
+        <AssociationConnector Association="DayCareAppDbModel.Admin_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.Child_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.Employee_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.Institution_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.InstitutionAdmin_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.Parent_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.Child_DepartmentId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.Child_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.DayRegistration_ChildId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.DayRegistration_CheckInEmployeeId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.DayRegistration_CheckInParentId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.DayRegistration_CheckOutEmployeeId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.DayRegistration_CheckOutParantId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.DayRegistration_ExpectedParentId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.DayRegistration_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.Department_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.Employee_DepartmentId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.Employee_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.InstitutionAdmin_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.Parent_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="DayCareAppDbModel.ParentChild" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

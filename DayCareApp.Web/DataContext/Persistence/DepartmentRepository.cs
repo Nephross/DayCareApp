@@ -1,6 +1,6 @@
 ﻿using DayCareApp.Web.DataContext;
 using DayCareApp.Web.DataContext.Repositories;
-using DayCareApp.Web.Entities;
+using DayCareApp.Data.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

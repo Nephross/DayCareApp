@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using DayCareApp.Web.Entities;
+using DayCareApp.Data.DAL;
 
 namespace DayCareApp.Web.Models
 {

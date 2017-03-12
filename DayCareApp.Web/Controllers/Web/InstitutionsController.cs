@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
-using DayCareApp.Web.Entities;
+using DayCareApp.Data.DAL;
 using DayCareApp.Web.DataContext.Repositories;
 using DayCareApp.Web.DataContext.Persistence;
 

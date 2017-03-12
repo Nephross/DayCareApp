@@ -1,7 +1,7 @@
 ﻿using DayCareApp.Web.DataContext;
 using DayCareApp.Web.DataContext.Persistence;
 using DayCareApp.Web.DataContext.Repositories;
-using DayCareApp.Web.Entities;
+using DayCareApp.Data.DAL;
 using DayCareApp.Web.Helpers;
 using DayCareApp.Web.Models;
 using Microsoft.AspNet.Identity;
@@ -46,7 +46,7 @@ namespace DayCareApp.Web.Controllers.Web
         public ActionResult ParentProfile()
         {
             ParentViewModel ParentVM = new ParentViewModel();
-            ParentVM.Parent = _ParentRepository.SingleOrDefault(x => x.ApplicationUserId == User.Identity.GetUserId());
+            ParentVM.Parent = _ParentRepository.SingleOrDefault(x => x.FK_ApplicationUserId == User.Identity.GetUserId());
             ParentVM.InstitutionList = new SelectList(_InstitutionRepository.GetAll().ToList(), "InstitutionId", "InstitutionName", ParentVM.Parent.ParentId);
             return View(ParentVM);
         }
@@ -103,8 +103,8 @@ namespace DayCareApp.Web.Controllers.Web
         public ActionResult GetChildren()
         {
             var userId = User.Identity.GetUserId();
-            Parent parent = _ParentRepository.SingleOrDefault(p => p.ApplicationUserId == userId);
-            var Children = _ChildRepository.Find(c => c.Parent == parent);
+            Parent parent = _ParentRepository.SingleOrDefault(p => p.FK_ApplicationUserId == userId);
+            var Children = _ChildRepository.Find(c => c.FK_ParentId == parent.ParentId);
 
             return View(Children.ToList());
         }

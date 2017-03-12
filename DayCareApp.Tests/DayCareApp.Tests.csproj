@@ -123,6 +123,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DayCareApp.Data\DayCareApp.Data.csproj">
+      <Project>{1354c499-e3c6-4f9f-97e3-0afacf8d9918}</Project>
+      <Name>DayCareApp.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DayCareApp.Web\DayCareApp.Web.csproj">
       <Project>{40274ca1-0e86-49f5-8cf8-7f84a14b5650}</Project>
       <Name>DayCareApp.Web</Name>

@@ -7,11 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
-using DayCareApp.Web.Entities;
 using DayCareApp.Web.Models;
 using DayCareApp.Web.DataContext.Persistence;
 using DayCareApp.Web.DataContext.Repositories;
 using Microsoft.AspNet.Identity;
+using DayCareApp.Data.DAL;
 
 namespace DayCareApp.Web.Controllers.Web
 {
@@ -148,7 +148,7 @@ namespace DayCareApp.Web.Controllers.Web
         {
             Department department = _DepartmentRepository.Get(id);
             
-            _DepartmentRepository.Remove(department);
+            _DepartmentRepository.Remove(Department);
             _unitOfWork.Complete();
             return RedirectToAction("Index");
         }

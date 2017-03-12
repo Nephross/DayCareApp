@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DayCareApp.Web.Entities
+namespace DayCareApp.Data.DAL
 {
     using System;
     using System.Collections.Generic;
@@ -17,8 +17,8 @@ namespace DayCareApp.Web.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Child()
         {
-            this.DayRegistration = new HashSet<DayRegistration>();
-            this.Parent = new HashSet<Parent>();
+            this.DayRegistrations = new HashSet<DayRegistration>();
+            this.Parents = new HashSet<Parent>();
         }
     
         public int ChildId { get; set; }
@@ -29,12 +29,12 @@ namespace DayCareApp.Web.Entities
         public int FK_InstitutionId { get; set; }
         public int FK_AddressId { get; set; }
     
-        public virtual Addresses Addresses { get; set; }
+        public virtual Address Address { get; set; }
         public virtual Department Department { get; set; }
         public virtual Institution Institution { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DayRegistration> DayRegistration { get; set; }
+        public virtual ICollection<DayRegistration> DayRegistrations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Parent> Parent { get; set; }
+        public virtual ICollection<Parent> Parents { get; set; }
     }
 }

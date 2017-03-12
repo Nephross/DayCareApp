@@ -1,6 +1,6 @@
 namespace DayCareApp.Web.DataContext.Migrations
 {
-    using Entities;
+    using DayCareApp.Data.DAL;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Models;

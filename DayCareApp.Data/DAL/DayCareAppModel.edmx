@@ -1,0 +1,2105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DayCareAppDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Addresses">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="int" Nullable="false" />
+          <Property Name="StreetName" Type="varchar" MaxLength="50" />
+          <Property Name="PostCode" Type="int" />
+          <Property Name="City" Type="varchar" MaxLength="30" />
+          <Property Name="Country" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="FK_ApplicationUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Childs">
+          <Key>
+            <PropertyRef Name="ChildId" />
+          </Key>
+          <Property Name="ChildId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="FK_DepartmentId" Type="int" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DayRegistrations">
+          <Key>
+            <PropertyRef Name="DayRegistrationId" />
+          </Key>
+          <Property Name="DayRegistrationId" Type="int" Nullable="false" />
+          <Property Name="CheckInTime" Type="datetime" />
+          <Property Name="CheckOutTime" Type="datetime" />
+          <Property Name="ExpectedCheckOutTime" Type="datetime" />
+          <Property Name="FK_ChildId" Type="int" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+          <Property Name="FK_ExpectedCheckOutParentId" Type="int" Nullable="false" />
+          <Property Name="FK_CheckInParentId" Type="int" Nullable="false" />
+          <Property Name="FK_CheckInEmployeeId" Type="int" Nullable="false" />
+          <Property Name="FK_CheckOutParentId" Type="int" />
+          <Property Name="FK_CheckOutEmployeeId" Type="int" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="int" Nullable="false" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="FK_ApplicationUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FK_DepartmentId" Type="int" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InstitutionAdmins">
+          <Key>
+            <PropertyRef Name="InstitutionAdminId" />
+          </Key>
+          <Property Name="InstitutionAdminId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="FK_ApplicationUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Institutions">
+          <Key>
+            <PropertyRef Name="InstitutionId" />
+          </Key>
+          <Property Name="InstitutionId" Type="int" Nullable="false" />
+          <Property Name="InstitutionName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dayCareAPPDB.dbo.ParentChild' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ParentChild">
+          <Key>
+            <PropertyRef Name="FK_ChildId" />
+            <PropertyRef Name="FK_ParentId" />
+          </Key>
+          <Property Name="FK_ChildId" Type="int" Nullable="false" />
+          <Property Name="FK_ParentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parents">
+          <Key>
+            <PropertyRef Name="ParentId" />
+          </Key>
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="FK_ApplicationUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="Admin_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="Admins" Type="Self.Admins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Admins">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Childs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_ChildId_FK">
+          <End Role="Childs" Type="Self.Childs" Multiplicity="1" />
+          <End Role="ParentChild" Type="Self.ParentChild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Childs">
+              <PropertyRef Name="ChildId" />
+            </Principal>
+            <Dependent Role="ParentChild">
+              <PropertyRef Name="FK_ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_DepartmentId_FK">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Childs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Childs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckInEmployeeId_FK">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckInEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckInParentId_FK">
+          <End Role="Parents" Type="Self.Parents" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckInParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckOutEmployeeId_FK">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckOutEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckOutParantId_FK">
+          <End Role="Parents" Type="Self.Parents" Multiplicity="0..1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckOutParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_ChildId_FK">
+          <End Role="Childs" Type="Self.Childs" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Childs">
+              <PropertyRef Name="ChildId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_ExpectedParentId_FK">
+          <End Role="Parents" Type="Self.Parents" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_ExpectedCheckOutParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Department_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="Departments" Type="Self.Departments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Departments">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_DepartmentId_FK">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Institution_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Institutions">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InstitutionAdmin_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="InstitutionAdmins" Type="Self.InstitutionAdmins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="InstitutionAdmins">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InstitutionAdmin_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="InstitutionAdmins" Type="Self.InstitutionAdmins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="InstitutionAdmins">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Parent_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Parent_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ParentChild_ParentId_FK">
+          <End Role="Parents" Type="Self.Parents" Multiplicity="1" />
+          <End Role="ParentChild" Type="Self.ParentChild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="ParentChild">
+              <PropertyRef Name="FK_ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetAddressId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="Input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="Input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="Input_City" Type="varchar" Mode="In" />
+          <Parameter Name="Input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_delete_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_AdminId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_delete_Child" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_ChildId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_delete_DayRegistration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_DayRegistrationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_delete_Department" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_DepartmentId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_delete_Employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_EmployeeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_delete_Institution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_delete_InstitutionAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_InstitutionAdminId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_delete_Parent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_ParentId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Insert_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="input_LastName" Type="varchar" Mode="In" />
+          <Parameter Name="input_AppUserId" Type="varchar" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="int" Mode="In" />
+          <Parameter Name="input_Email" Type="varchar" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insert_Child" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="input_LastName" Type="varchar" Mode="In" />
+          <Parameter Name="input_Birthday" Type="datetime" Mode="In" />
+          <Parameter Name="input_DepartmentId" Type="int" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insert_DayRegistration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_CheckInTime" Type="datetime" Mode="In" />
+          <Parameter Name="input_CheckOutTime" Type="datetime" Mode="In" />
+          <Parameter Name="input_ExpectedCheckOutTime" Type="datetime" Mode="In" />
+          <Parameter Name="input_ChildId" Type="int" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_ExpectedCheckOutParentId" Type="int" Mode="In" />
+          <Parameter Name="input_CheckInParentId" Type="int" Mode="In" />
+          <Parameter Name="input_CheckInEmployeeId" Type="int" Mode="In" />
+          <Parameter Name="input_CheckOutParentId" Type="int" Mode="In" />
+          <Parameter Name="input_CheckOutEmployeeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Insert_Department" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_DepartmentName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="int" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Insert_Employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="input_LastName" Type="varchar" Mode="In" />
+          <Parameter Name="input_AppUserId" Type="varchar" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_DepartmentId" Type="int" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="int" Mode="In" />
+          <Parameter Name="input_Email" Type="varchar" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insert_Institution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_InstitutionName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="int" Mode="In" />
+          <Parameter Name="input_Email" Type="varchar" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insert_InstitutionAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="input_LastName" Type="varchar" Mode="In" />
+          <Parameter Name="input_AppUserId" Type="varchar" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="int" Mode="In" />
+          <Parameter Name="input_Email" Type="varchar" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insert_Parent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="input_LastName" Type="varchar" Mode="In" />
+          <Parameter Name="input_Email" Type="varchar" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="input_AppUserId" Type="int" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Insert_ParentChild" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_ChildId" Type="int" Mode="In" />
+          <Parameter Name="input_ParentId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Address" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_AddressId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_AdminId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Admin_AppuserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_AppUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Child" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_ChildId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Child_InstitutionId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Child_Parent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_ParentId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_DayRegistration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_DayRegistrationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Department" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_DepartmentId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Department_InstitutionId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_EmployeeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Employee_AppUserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_AppUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Institution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Institution_All" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB" />
+        <Function Name="SP_Read_InstitutionAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_InstitutionAdminId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_InstitutionAdmin_All" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB" />
+        <Function Name="SP_Read_InstitutionAdmin_AppUserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_AppUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Parent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_ParentId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Parent_AppUserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_AppUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Parent_ChildId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_ChildId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Read_Parent_InstitutionId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Update_Admin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_AdminId" Type="int" Mode="In" />
+          <Parameter Name="input_FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="input_LastName" Type="varchar" Mode="In" />
+          <Parameter Name="input_AppUserId" Type="varchar" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="int" Mode="In" />
+          <Parameter Name="input_Email" Type="varchar" Mode="In" />
+          <Parameter Name="input_AddressId" Type="int" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Update_Child" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_ChildId" Type="int" Mode="In" />
+          <Parameter Name="input_FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="input_LastName" Type="varchar" Mode="In" />
+          <Parameter Name="input_Birthday" Type="datetime" Mode="In" />
+          <Parameter Name="input_DepartmentId" Type="int" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Update_DayRegistration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_DayRegistrationId" Type="int" Mode="In" />
+          <Parameter Name="input_CheckInTime" Type="datetime" Mode="In" />
+          <Parameter Name="input_CheckOutTime" Type="datetime" Mode="In" />
+          <Parameter Name="input_ExpectedCheckOutTime" Type="datetime" Mode="In" />
+          <Parameter Name="input_ChildId" Type="int" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_ExpectedCheckOutParentId" Type="int" Mode="In" />
+          <Parameter Name="input_CheckInParentId" Type="int" Mode="In" />
+          <Parameter Name="input_CheckInEmployeeId" Type="int" Mode="In" />
+          <Parameter Name="input_CheckOutParentId" Type="int" Mode="In" />
+          <Parameter Name="input_CheckOutEmployeeId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Update_Department" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_DepartmentId" Type="int" Mode="In" />
+          <Parameter Name="input_DepartmentName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="int" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Update_Employee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_EmployeeId" Type="int" Mode="In" />
+          <Parameter Name="input_FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="input_LastName" Type="varchar" Mode="In" />
+          <Parameter Name="input_AppUserId" Type="varchar" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_DepartmentId" Type="int" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="int" Mode="In" />
+          <Parameter Name="input_Email" Type="varchar" Mode="In" />
+          <Parameter Name="input_AddressId" Type="int" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Update_Institution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_InstitutionName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="int" Mode="In" />
+          <Parameter Name="input_Email" Type="varchar" Mode="In" />
+          <Parameter Name="input_AddressId" Type="int" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Update_InstitutionAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_InstitutionAdminId" Type="int" Mode="In" />
+          <Parameter Name="input_FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="input_LastName" Type="varchar" Mode="In" />
+          <Parameter Name="input_AppUserId" Type="varchar" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="int" Mode="In" />
+          <Parameter Name="input_Email" Type="varchar" Mode="In" />
+          <Parameter Name="input_AddressId" Type="int" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Update_Parent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dayCareAPPDB">
+          <Parameter Name="input_ParentId" Type="int" Mode="In" />
+          <Parameter Name="input_FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="input_LastName" Type="varchar" Mode="In" />
+          <Parameter Name="input_Email" Type="varchar" Mode="In" />
+          <Parameter Name="input_PhoneNumber" Type="varchar" Mode="In" />
+          <Parameter Name="input_AppUserId" Type="int" Mode="In" />
+          <Parameter Name="input_InstitutionId" Type="int" Mode="In" />
+          <Parameter Name="input_StreetName" Type="varchar" Mode="In" />
+          <Parameter Name="input_PostCode" Type="int" Mode="In" />
+          <Parameter Name="input_City" Type="varchar" Mode="In" />
+          <Parameter Name="input_Country" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="DayCareAppDbModelStoreContainer">
+          <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Childs" EntityType="Self.Childs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DayRegistrations" EntityType="Self.DayRegistrations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InstitutionAdmins" EntityType="Self.InstitutionAdmins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Institutions" EntityType="Self.Institutions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parents" EntityType="Self.Parents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParentChild" EntityType="Self.ParentChild" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ParentChild].[FK_ChildId] AS [FK_ChildId], 
+    [ParentChild].[FK_ParentId] AS [FK_ParentId]
+    FROM [dbo].[ParentChild] AS [ParentChild]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="Admin_AddressId_FK" Association="Self.Admin_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Admins" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="Child_AddressId_FK" Association="Self.Child_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="Child_ChildId_FK" Association="Self.Child_ChildId_FK">
+            <End Role="Childs" EntitySet="Childs" />
+            <End Role="ParentChild" EntitySet="ParentChild" />
+          </AssociationSet>
+          <AssociationSet Name="Child_DepartmentId_FK" Association="Self.Child_DepartmentId_FK">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="Child_InstitutionId_FK" Association="Self.Child_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckInEmployeeId_FK" Association="Self.DayRegistration_CheckInEmployeeId_FK">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckInParentId_FK" Association="Self.DayRegistration_CheckInParentId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckOutEmployeeId_FK" Association="Self.DayRegistration_CheckOutEmployeeId_FK">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckOutParantId_FK" Association="Self.DayRegistration_CheckOutParantId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_ChildId_FK" Association="Self.DayRegistration_ChildId_FK">
+            <End Role="Childs" EntitySet="Childs" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_ExpectedParentId_FK" Association="Self.DayRegistration_ExpectedParentId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_InstitutionId_FK" Association="Self.DayRegistration_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="Department_InstitutionId_FK" Association="Self.Department_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_AddressId_FK" Association="Self.Employee_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_DepartmentId_FK" Association="Self.Employee_DepartmentId_FK">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_InstitutionId_FK" Association="Self.Employee_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Institution_AddressId_FK" Association="Self.Institution_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Institutions" EntitySet="Institutions" />
+          </AssociationSet>
+          <AssociationSet Name="InstitutionAdmin_AddressId_FK" Association="Self.InstitutionAdmin_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="InstitutionAdmins" EntitySet="InstitutionAdmins" />
+          </AssociationSet>
+          <AssociationSet Name="InstitutionAdmin_InstitutionId_FK" Association="Self.InstitutionAdmin_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="InstitutionAdmins" EntitySet="InstitutionAdmins" />
+          </AssociationSet>
+          <AssociationSet Name="Parent_AddressId_FK" Association="Self.Parent_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="Parent_InstitutionId_FK" Association="Self.Parent_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="ParentChild_ParentId_FK" Association="Self.ParentChild_ParentId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="ParentChild" EntitySet="ParentChild" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DayCareAppDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="Int32" Nullable="false" />
+          <Property Name="StreetName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostCode" Type="Int32" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Admins" Relationship="Self.Admin_AddressId_FK" FromRole="Addresses" ToRole="Admins" />
+          <NavigationProperty Name="Childs" Relationship="Self.Child_AddressId_FK" FromRole="Addresses" ToRole="Childs" />
+          <NavigationProperty Name="Employees" Relationship="Self.Employee_AddressId_FK" FromRole="Addresses" ToRole="Employees" />
+          <NavigationProperty Name="Institutions" Relationship="Self.Institution_AddressId_FK" FromRole="Addresses" ToRole="Institutions" />
+          <NavigationProperty Name="InstitutionAdmins" Relationship="Self.InstitutionAdmin_AddressId_FK" FromRole="Addresses" ToRole="InstitutionAdmins" />
+          <NavigationProperty Name="Parents" Relationship="Self.Parent_AddressId_FK" FromRole="Addresses" ToRole="Parents" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ApplicationUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Admin_AddressId_FK" FromRole="Admins" ToRole="Addresses" />
+        </EntityType>
+        <EntityType Name="Child">
+          <Key>
+            <PropertyRef Name="ChildId" />
+          </Key>
+          <Property Name="ChildId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="FK_DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Child_AddressId_FK" FromRole="Childs" ToRole="Addresses" />
+          <NavigationProperty Name="Department" Relationship="Self.Child_DepartmentId_FK" FromRole="Childs" ToRole="Departments" />
+          <NavigationProperty Name="Institution" Relationship="Self.Child_InstitutionId_FK" FromRole="Childs" ToRole="Institutions" />
+          <NavigationProperty Name="DayRegistrations" Relationship="Self.DayRegistration_ChildId_FK" FromRole="Childs" ToRole="DayRegistrations" />
+          <NavigationProperty Name="Parents" Relationship="Self.ParentChild" FromRole="Childs" ToRole="Parents" />
+        </EntityType>
+        <EntityType Name="DayRegistration">
+          <Key>
+            <PropertyRef Name="DayRegistrationId" />
+          </Key>
+          <Property Name="DayRegistrationId" Type="Int32" Nullable="false" />
+          <Property Name="CheckInTime" Type="DateTime" Precision="3" />
+          <Property Name="CheckOutTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpectedCheckOutTime" Type="DateTime" Precision="3" />
+          <Property Name="FK_ChildId" Type="Int32" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="FK_ExpectedCheckOutParentId" Type="Int32" Nullable="false" />
+          <Property Name="FK_CheckInParentId" Type="Int32" Nullable="false" />
+          <Property Name="FK_CheckInEmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="FK_CheckOutParentId" Type="Int32" />
+          <Property Name="FK_CheckOutEmployeeId" Type="Int32" />
+          <NavigationProperty Name="Child" Relationship="Self.DayRegistration_ChildId_FK" FromRole="DayRegistrations" ToRole="Childs" />
+          <NavigationProperty Name="Employee" Relationship="Self.DayRegistration_CheckInEmployeeId_FK" FromRole="DayRegistrations" ToRole="Employees" />
+          <NavigationProperty Name="Parent" Relationship="Self.DayRegistration_CheckInParentId_FK" FromRole="DayRegistrations" ToRole="Parents" />
+          <NavigationProperty Name="Employee1" Relationship="Self.DayRegistration_CheckOutEmployeeId_FK" FromRole="DayRegistrations" ToRole="Employees" />
+          <NavigationProperty Name="Parent1" Relationship="Self.DayRegistration_CheckOutParantId_FK" FromRole="DayRegistrations" ToRole="Parents" />
+          <NavigationProperty Name="Parent2" Relationship="Self.DayRegistration_ExpectedParentId_FK" FromRole="DayRegistrations" ToRole="Parents" />
+          <NavigationProperty Name="Institution" Relationship="Self.DayRegistration_InstitutionId_FK" FromRole="DayRegistrations" ToRole="Institutions" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Childs" Relationship="Self.Child_DepartmentId_FK" FromRole="Departments" ToRole="Childs" />
+          <NavigationProperty Name="Institution" Relationship="Self.Department_InstitutionId_FK" FromRole="Departments" ToRole="Institutions" />
+          <NavigationProperty Name="Employees" Relationship="Self.Employee_DepartmentId_FK" FromRole="Departments" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ApplicationUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FK_DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Employee_AddressId_FK" FromRole="Employees" ToRole="Addresses" />
+          <NavigationProperty Name="DayRegistrations" Relationship="Self.DayRegistration_CheckInEmployeeId_FK" FromRole="Employees" ToRole="DayRegistrations" />
+          <NavigationProperty Name="DayRegistrations1" Relationship="Self.DayRegistration_CheckOutEmployeeId_FK" FromRole="Employees" ToRole="DayRegistrations" />
+          <NavigationProperty Name="Department" Relationship="Self.Employee_DepartmentId_FK" FromRole="Employees" ToRole="Departments" />
+          <NavigationProperty Name="Institution" Relationship="Self.Employee_InstitutionId_FK" FromRole="Employees" ToRole="Institutions" />
+        </EntityType>
+        <EntityType Name="InstitutionAdmin">
+          <Key>
+            <PropertyRef Name="InstitutionAdminId" />
+          </Key>
+          <Property Name="InstitutionAdminId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ApplicationUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.InstitutionAdmin_AddressId_FK" FromRole="InstitutionAdmins" ToRole="Addresses" />
+          <NavigationProperty Name="Institution" Relationship="Self.InstitutionAdmin_InstitutionId_FK" FromRole="InstitutionAdmins" ToRole="Institutions" />
+        </EntityType>
+        <EntityType Name="Institution">
+          <Key>
+            <PropertyRef Name="InstitutionId" />
+          </Key>
+          <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="InstitutionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Institution_AddressId_FK" FromRole="Institutions" ToRole="Addresses" />
+          <NavigationProperty Name="Childs" Relationship="Self.Child_InstitutionId_FK" FromRole="Institutions" ToRole="Childs" />
+          <NavigationProperty Name="DayRegistrations" Relationship="Self.DayRegistration_InstitutionId_FK" FromRole="Institutions" ToRole="DayRegistrations" />
+          <NavigationProperty Name="Departments" Relationship="Self.Department_InstitutionId_FK" FromRole="Institutions" ToRole="Departments" />
+          <NavigationProperty Name="Employees" Relationship="Self.Employee_InstitutionId_FK" FromRole="Institutions" ToRole="Employees" />
+          <NavigationProperty Name="InstitutionAdmins" Relationship="Self.InstitutionAdmin_InstitutionId_FK" FromRole="Institutions" ToRole="InstitutionAdmins" />
+          <NavigationProperty Name="Parents" Relationship="Self.Parent_InstitutionId_FK" FromRole="Institutions" ToRole="Parents" />
+        </EntityType>
+        <EntityType Name="Parent">
+          <Key>
+            <PropertyRef Name="ParentId" />
+          </Key>
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ApplicationUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Parent_AddressId_FK" FromRole="Parents" ToRole="Addresses" />
+          <NavigationProperty Name="DayRegistrations" Relationship="Self.DayRegistration_CheckInParentId_FK" FromRole="Parents" ToRole="DayRegistrations" />
+          <NavigationProperty Name="DayRegistrations1" Relationship="Self.DayRegistration_CheckOutParantId_FK" FromRole="Parents" ToRole="DayRegistrations" />
+          <NavigationProperty Name="DayRegistrations2" Relationship="Self.DayRegistration_ExpectedParentId_FK" FromRole="Parents" ToRole="DayRegistrations" />
+          <NavigationProperty Name="Institution" Relationship="Self.Parent_InstitutionId_FK" FromRole="Parents" ToRole="Institutions" />
+          <NavigationProperty Name="Childs" Relationship="Self.ParentChild" FromRole="Parents" ToRole="Childs" />
+        </EntityType>
+        <Association Name="Admin_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="Admins" Type="Self.Admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Admins">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Institution_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Institutions">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InstitutionAdmin_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="InstitutionAdmins" Type="Self.InstitutionAdmin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="InstitutionAdmins">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Parent_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_DepartmentId_FK">
+          <End Role="Departments" Type="Self.Department" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_ChildId_FK">
+          <End Role="Childs" Type="Self.Child" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Childs">
+              <PropertyRef Name="ChildId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckInEmployeeId_FK">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckInEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckInParentId_FK">
+          <End Role="Parents" Type="Self.Parent" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckInParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckOutEmployeeId_FK">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckOutEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckOutParantId_FK">
+          <End Role="Parents" Type="Self.Parent" Multiplicity="0..1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckOutParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_ExpectedParentId_FK">
+          <End Role="Parents" Type="Self.Parent" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_ExpectedCheckOutParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Department_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="Departments" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Departments">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_DepartmentId_FK">
+          <End Role="Departments" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InstitutionAdmin_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="InstitutionAdmins" Type="Self.InstitutionAdmin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="InstitutionAdmins">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Parent_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ParentChild">
+          <End Role="Childs" Type="Self.Child" Multiplicity="*" />
+          <End Role="Parents" Type="Self.Parent" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="dayCareAppDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Childs" EntityType="Self.Child" />
+          <EntitySet Name="DayRegistrations" EntityType="Self.DayRegistration" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="InstitutionAdmins" EntityType="Self.InstitutionAdmin" />
+          <EntitySet Name="Institutions" EntityType="Self.Institution" />
+          <EntitySet Name="Parents" EntityType="Self.Parent" />
+          <AssociationSet Name="Admin_AddressId_FK" Association="Self.Admin_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Admins" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="Child_AddressId_FK" Association="Self.Child_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_AddressId_FK" Association="Self.Employee_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Institution_AddressId_FK" Association="Self.Institution_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Institutions" EntitySet="Institutions" />
+          </AssociationSet>
+          <AssociationSet Name="InstitutionAdmin_AddressId_FK" Association="Self.InstitutionAdmin_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="InstitutionAdmins" EntitySet="InstitutionAdmins" />
+          </AssociationSet>
+          <AssociationSet Name="Parent_AddressId_FK" Association="Self.Parent_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="Child_DepartmentId_FK" Association="Self.Child_DepartmentId_FK">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="Child_InstitutionId_FK" Association="Self.Child_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_ChildId_FK" Association="Self.DayRegistration_ChildId_FK">
+            <End Role="Childs" EntitySet="Childs" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckInEmployeeId_FK" Association="Self.DayRegistration_CheckInEmployeeId_FK">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckInParentId_FK" Association="Self.DayRegistration_CheckInParentId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckOutEmployeeId_FK" Association="Self.DayRegistration_CheckOutEmployeeId_FK">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckOutParantId_FK" Association="Self.DayRegistration_CheckOutParantId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_ExpectedParentId_FK" Association="Self.DayRegistration_ExpectedParentId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_InstitutionId_FK" Association="Self.DayRegistration_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="Department_InstitutionId_FK" Association="Self.Department_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_DepartmentId_FK" Association="Self.Employee_DepartmentId_FK">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_InstitutionId_FK" Association="Self.Employee_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="InstitutionAdmin_InstitutionId_FK" Association="Self.InstitutionAdmin_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="InstitutionAdmins" EntitySet="InstitutionAdmins" />
+          </AssociationSet>
+          <AssociationSet Name="Parent_InstitutionId_FK" Association="Self.Parent_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="ParentChild" Association="Self.ParentChild">
+            <End Role="Childs" EntitySet="Childs" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <FunctionImport Name="SP_delete_Admin">
+            <Parameter Name="input_AdminId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_delete_Child">
+            <Parameter Name="input_ChildId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_delete_DayRegistration">
+            <Parameter Name="input_DayRegistrationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_delete_Department">
+            <Parameter Name="input_DepartmentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_delete_Employee">
+            <Parameter Name="input_EmployeeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_delete_Institution">
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_delete_InstitutionAdmin">
+            <Parameter Name="input_InstitutionAdminId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_delete_Parent">
+            <Parameter Name="input_ParentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insert_Admin">
+            <Parameter Name="input_FirstName" Mode="In" Type="String" />
+            <Parameter Name="input_LastName" Mode="In" Type="String" />
+            <Parameter Name="input_AppUserId" Mode="In" Type="String" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="Int32" />
+            <Parameter Name="input_Email" Mode="In" Type="String" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insert_Child">
+            <Parameter Name="input_FirstName" Mode="In" Type="String" />
+            <Parameter Name="input_LastName" Mode="In" Type="String" />
+            <Parameter Name="input_Birthday" Mode="In" Type="DateTime" />
+            <Parameter Name="input_DepartmentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insert_DayRegistration">
+            <Parameter Name="input_CheckInTime" Mode="In" Type="DateTime" />
+            <Parameter Name="input_CheckOutTime" Mode="In" Type="DateTime" />
+            <Parameter Name="input_ExpectedCheckOutTime" Mode="In" Type="DateTime" />
+            <Parameter Name="input_ChildId" Mode="In" Type="Int32" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_ExpectedCheckOutParentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_CheckInParentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_CheckInEmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="input_CheckOutParentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_CheckOutEmployeeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insert_Department">
+            <Parameter Name="input_DepartmentName" Mode="In" Type="String" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="Int32" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insert_Employee">
+            <Parameter Name="input_FirstName" Mode="In" Type="String" />
+            <Parameter Name="input_LastName" Mode="In" Type="String" />
+            <Parameter Name="input_AppUserId" Mode="In" Type="String" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_DepartmentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="Int32" />
+            <Parameter Name="input_Email" Mode="In" Type="String" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insert_Institution">
+            <Parameter Name="input_InstitutionName" Mode="In" Type="String" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="Int32" />
+            <Parameter Name="input_Email" Mode="In" Type="String" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insert_InstitutionAdmin">
+            <Parameter Name="input_FirstName" Mode="In" Type="String" />
+            <Parameter Name="input_LastName" Mode="In" Type="String" />
+            <Parameter Name="input_AppUserId" Mode="In" Type="String" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="Int32" />
+            <Parameter Name="input_Email" Mode="In" Type="String" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insert_Parent">
+            <Parameter Name="input_FirstName" Mode="In" Type="String" />
+            <Parameter Name="input_LastName" Mode="In" Type="String" />
+            <Parameter Name="input_Email" Mode="In" Type="String" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="input_AppUserId" Mode="In" Type="Int32" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Insert_ParentChild">
+            <Parameter Name="input_ChildId" Mode="In" Type="Int32" />
+            <Parameter Name="input_ParentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Address" ReturnType="Collection(DayCareAppDbModel.SP_Read_Address_Result)">
+            <Parameter Name="input_AddressId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Admin">
+            <Parameter Name="input_AdminId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Admin_AppuserId">
+            <Parameter Name="input_AppUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Child" ReturnType="Collection(DayCareAppDbModel.SP_Read_Child_Result)">
+            <Parameter Name="input_ChildId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Child_InstitutionId" ReturnType="Collection(DayCareAppDbModel.SP_Read_Child_InstitutionId_Result)">
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Child_Parent" ReturnType="Collection(DayCareAppDbModel.SP_Read_Child_Parent_Result)">
+            <Parameter Name="input_ParentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_DayRegistration" ReturnType="Collection(DayCareAppDbModel.SP_Read_DayRegistration_Result)">
+            <Parameter Name="input_DayRegistrationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Department" ReturnType="Collection(DayCareAppDbModel.SP_Read_Department_Result)">
+            <Parameter Name="input_DepartmentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Department_InstitutionId" ReturnType="Collection(DayCareAppDbModel.SP_Read_Department_InstitutionId_Result)">
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Employee" ReturnType="Collection(DayCareAppDbModel.SP_Read_Employee_Result)">
+            <Parameter Name="input_EmployeeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Employee_AppUserId" ReturnType="Collection(DayCareAppDbModel.SP_Read_Employee_AppUserId_Result)">
+            <Parameter Name="input_AppUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Institution" ReturnType="Collection(DayCareAppDbModel.SP_Read_Institution_Result)">
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Institution_All" ReturnType="Collection(DayCareAppDbModel.SP_Read_Institution_All_Result)" />
+          <FunctionImport Name="SP_Read_InstitutionAdmin" ReturnType="Collection(DayCareAppDbModel.SP_Read_InstitutionAdmin_Result)">
+            <Parameter Name="input_InstitutionAdminId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_InstitutionAdmin_All" ReturnType="Collection(DayCareAppDbModel.SP_Read_InstitutionAdmin_All_Result)" />
+          <FunctionImport Name="SP_Read_InstitutionAdmin_AppUserId" ReturnType="Collection(DayCareAppDbModel.SP_Read_InstitutionAdmin_AppUserId_Result)">
+            <Parameter Name="input_AppUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Parent" ReturnType="Collection(DayCareAppDbModel.SP_Read_Parent_Result)">
+            <Parameter Name="input_ParentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Parent_AppUserId" ReturnType="Collection(DayCareAppDbModel.SP_Read_Parent_AppUserId_Result)">
+            <Parameter Name="input_AppUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Parent_ChildId" ReturnType="Collection(DayCareAppDbModel.SP_Read_Parent_ChildId_Result)">
+            <Parameter Name="input_ChildId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Read_Parent_InstitutionId" ReturnType="Collection(DayCareAppDbModel.SP_Read_Parent_InstitutionId_Result)">
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Update_Admin">
+            <Parameter Name="input_AdminId" Mode="In" Type="Int32" />
+            <Parameter Name="input_FirstName" Mode="In" Type="String" />
+            <Parameter Name="input_LastName" Mode="In" Type="String" />
+            <Parameter Name="input_AppUserId" Mode="In" Type="String" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="Int32" />
+            <Parameter Name="input_Email" Mode="In" Type="String" />
+            <Parameter Name="input_AddressId" Mode="In" Type="Int32" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Update_Child">
+            <Parameter Name="input_ChildId" Mode="In" Type="Int32" />
+            <Parameter Name="input_FirstName" Mode="In" Type="String" />
+            <Parameter Name="input_LastName" Mode="In" Type="String" />
+            <Parameter Name="input_Birthday" Mode="In" Type="DateTime" />
+            <Parameter Name="input_DepartmentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Update_DayRegistration">
+            <Parameter Name="input_DayRegistrationId" Mode="In" Type="Int32" />
+            <Parameter Name="input_CheckInTime" Mode="In" Type="DateTime" />
+            <Parameter Name="input_CheckOutTime" Mode="In" Type="DateTime" />
+            <Parameter Name="input_ExpectedCheckOutTime" Mode="In" Type="DateTime" />
+            <Parameter Name="input_ChildId" Mode="In" Type="Int32" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_ExpectedCheckOutParentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_CheckInParentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_CheckInEmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="input_CheckOutParentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_CheckOutEmployeeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Update_Department">
+            <Parameter Name="input_DepartmentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_DepartmentName" Mode="In" Type="String" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="Int32" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Update_Employee">
+            <Parameter Name="input_EmployeeId" Mode="In" Type="Int32" />
+            <Parameter Name="input_FirstName" Mode="In" Type="String" />
+            <Parameter Name="input_LastName" Mode="In" Type="String" />
+            <Parameter Name="input_AppUserId" Mode="In" Type="String" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_DepartmentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="Int32" />
+            <Parameter Name="input_Email" Mode="In" Type="String" />
+            <Parameter Name="input_AddressId" Mode="In" Type="Int32" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Update_Institution">
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_InstitutionName" Mode="In" Type="String" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="Int32" />
+            <Parameter Name="input_Email" Mode="In" Type="String" />
+            <Parameter Name="input_AddressId" Mode="In" Type="Int32" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Update_InstitutionAdmin">
+            <Parameter Name="input_InstitutionAdminId" Mode="In" Type="Int32" />
+            <Parameter Name="input_FirstName" Mode="In" Type="String" />
+            <Parameter Name="input_LastName" Mode="In" Type="String" />
+            <Parameter Name="input_AppUserId" Mode="In" Type="String" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="Int32" />
+            <Parameter Name="input_Email" Mode="In" Type="String" />
+            <Parameter Name="input_AddressId" Mode="In" Type="Int32" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Update_Parent">
+            <Parameter Name="input_ParentId" Mode="In" Type="Int32" />
+            <Parameter Name="input_FirstName" Mode="In" Type="String" />
+            <Parameter Name="input_LastName" Mode="In" Type="String" />
+            <Parameter Name="input_Email" Mode="In" Type="String" />
+            <Parameter Name="input_PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="input_AppUserId" Mode="In" Type="Int32" />
+            <Parameter Name="input_InstitutionId" Mode="In" Type="Int32" />
+            <Parameter Name="input_StreetName" Mode="In" Type="String" />
+            <Parameter Name="input_PostCode" Mode="In" Type="Int32" />
+            <Parameter Name="input_City" Mode="In" Type="String" />
+            <Parameter Name="input_Country" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_Read_Address_Result">
+          <Property Type="Int32" Name="AddressId" Nullable="false" />
+          <Property Type="String" Name="StreetName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="PostCode" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Country" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Child_Result">
+          <Property Type="Int32" Name="ChildId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="Birthday" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="FK_DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Child_InstitutionId_Result">
+          <Property Type="Int32" Name="ChildId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="Birthday" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="FK_DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Child_Parent_Result">
+          <Property Type="Int32" Name="ChildId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="Birthday" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="FK_DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_DayRegistration_Result">
+          <Property Type="Int32" Name="DayRegistrationId" Nullable="false" />
+          <Property Type="DateTime" Name="CheckInTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="CheckOutTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ExpectedCheckOutTime" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="FK_ChildId" Nullable="false" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="FK_ExpectedCheckOutParentId" Nullable="false" />
+          <Property Type="Int32" Name="FK_CheckInParentId" Nullable="false" />
+          <Property Type="Int32" Name="FK_CheckInEmployeeId" Nullable="false" />
+          <Property Type="Int32" Name="FK_CheckOutParentId" Nullable="true" />
+          <Property Type="Int32" Name="FK_CheckOutEmployeeId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Department_Result">
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" />
+          <Property Type="String" Name="DepartmentName" Nullable="false" MaxLength="30" />
+          <Property Type="Int32" Name="PhoneNumber" Nullable="false" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Department_InstitutionId_Result">
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" />
+          <Property Type="String" Name="DepartmentName" Nullable="false" MaxLength="30" />
+          <Property Type="Int32" Name="PhoneNumber" Nullable="false" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Employee_Result">
+          <Property Type="Int32" Name="EmployeeId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="FK_ApplicationUserId" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="FK_DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="PhoneNumber" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Employee_AppUserId_Result">
+          <Property Type="Int32" Name="EmployeeId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="FK_ApplicationUserId" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="FK_DepartmentId" Nullable="false" />
+          <Property Type="Int32" Name="PhoneNumber" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Institution_Result">
+          <Property Type="Int32" Name="InstitutionId" Nullable="false" />
+          <Property Type="String" Name="InstitutionName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="PhoneNumber" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Institution_All_Result">
+          <Property Type="Int32" Name="InstitutionId" Nullable="false" />
+          <Property Type="String" Name="InstitutionName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="PhoneNumber" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_InstitutionAdmin_Result">
+          <Property Type="Int32" Name="InstitutionAdminId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FK_ApplicationUserId" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="PhoneNumber" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_InstitutionAdmin_All_Result">
+          <Property Type="Int32" Name="InstitutionAdminId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FK_ApplicationUserId" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="PhoneNumber" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_InstitutionAdmin_AppUserId_Result">
+          <Property Type="Int32" Name="InstitutionAdminId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FK_ApplicationUserId" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="PhoneNumber" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Parent_Result">
+          <Property Type="Int32" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FK_ApplicationUserId" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Parent_AppUserId_Result">
+          <Property Type="Int32" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FK_ApplicationUserId" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Parent_ChildId_Result">
+          <Property Type="Int32" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FK_ApplicationUserId" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SP_Read_Parent_InstitutionId_Result">
+          <Property Type="Int32" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FK_ApplicationUserId" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="FK_InstitutionId" Nullable="false" />
+          <Property Type="Int32" Name="FK_AddressId" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DayCareAppDbModelStoreContainer" CdmEntityContainer="dayCareAppDbEntities">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="DayCareAppDbModel.Address">
+              <MappingFragment StoreEntitySet="Addresses">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="DayCareAppDbModel.Admin">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Childs">
+            <EntityTypeMapping TypeName="DayCareAppDbModel.Child">
+              <MappingFragment StoreEntitySet="Childs">
+                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="FK_DepartmentId" ColumnName="FK_DepartmentId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DayRegistrations">
+            <EntityTypeMapping TypeName="DayCareAppDbModel.DayRegistration">
+              <MappingFragment StoreEntitySet="DayRegistrations">
+                <ScalarProperty Name="DayRegistrationId" ColumnName="DayRegistrationId" />
+                <ScalarProperty Name="CheckInTime" ColumnName="CheckInTime" />
+                <ScalarProperty Name="CheckOutTime" ColumnName="CheckOutTime" />
+                <ScalarProperty Name="ExpectedCheckOutTime" ColumnName="ExpectedCheckOutTime" />
+                <ScalarProperty Name="FK_ChildId" ColumnName="FK_ChildId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_ExpectedCheckOutParentId" ColumnName="FK_ExpectedCheckOutParentId" />
+                <ScalarProperty Name="FK_CheckInParentId" ColumnName="FK_CheckInParentId" />
+                <ScalarProperty Name="FK_CheckInEmployeeId" ColumnName="FK_CheckInEmployeeId" />
+                <ScalarProperty Name="FK_CheckOutParentId" ColumnName="FK_CheckOutParentId" />
+                <ScalarProperty Name="FK_CheckOutEmployeeId" ColumnName="FK_CheckOutEmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="DayCareAppDbModel.Department">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="DayCareAppDbModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_DepartmentId" ColumnName="FK_DepartmentId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstitutionAdmins">
+            <EntityTypeMapping TypeName="DayCareAppDbModel.InstitutionAdmin">
+              <MappingFragment StoreEntitySet="InstitutionAdmins">
+                <ScalarProperty Name="InstitutionAdminId" ColumnName="InstitutionAdminId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Institutions">
+            <EntityTypeMapping TypeName="DayCareAppDbModel.Institution">
+              <MappingFragment StoreEntitySet="Institutions">
+                <ScalarProperty Name="InstitutionId" ColumnName="InstitutionId" />
+                <ScalarProperty Name="InstitutionName" ColumnName="InstitutionName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parents">
+            <EntityTypeMapping TypeName="DayCareAppDbModel.Parent">
+              <MappingFragment StoreEntitySet="Parents">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ParentChild" TypeName="DayCareAppDbModel.ParentChild" StoreEntitySet="ParentChild">
+            <EndProperty Name="Childs">
+              <ScalarProperty Name="ChildId" ColumnName="FK_ChildId" />
+            </EndProperty>
+            <EndProperty Name="Parents">
+              <ScalarProperty Name="ParentId" ColumnName="FK_ParentId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="SP_delete_Admin" FunctionName="DayCareAppDbModel.Store.SP_delete_Admin" />
+          <FunctionImportMapping FunctionImportName="SP_delete_Child" FunctionName="DayCareAppDbModel.Store.SP_delete_Child" />
+          <FunctionImportMapping FunctionImportName="SP_delete_DayRegistration" FunctionName="DayCareAppDbModel.Store.SP_delete_DayRegistration" />
+          <FunctionImportMapping FunctionImportName="SP_delete_Department" FunctionName="DayCareAppDbModel.Store.SP_delete_Department" />
+          <FunctionImportMapping FunctionImportName="SP_delete_Employee" FunctionName="DayCareAppDbModel.Store.SP_delete_Employee" />
+          <FunctionImportMapping FunctionImportName="SP_delete_Institution" FunctionName="DayCareAppDbModel.Store.SP_delete_Institution" />
+          <FunctionImportMapping FunctionImportName="SP_delete_InstitutionAdmin" FunctionName="DayCareAppDbModel.Store.SP_delete_InstitutionAdmin" />
+          <FunctionImportMapping FunctionImportName="SP_delete_Parent" FunctionName="DayCareAppDbModel.Store.SP_delete_Parent" />
+          <FunctionImportMapping FunctionImportName="SP_Insert_Admin" FunctionName="DayCareAppDbModel.Store.SP_Insert_Admin" />
+          <FunctionImportMapping FunctionImportName="SP_Insert_Child" FunctionName="DayCareAppDbModel.Store.SP_Insert_Child" />
+          <FunctionImportMapping FunctionImportName="SP_Insert_DayRegistration" FunctionName="DayCareAppDbModel.Store.SP_Insert_DayRegistration" />
+          <FunctionImportMapping FunctionImportName="SP_Insert_Department" FunctionName="DayCareAppDbModel.Store.SP_Insert_Department" />
+          <FunctionImportMapping FunctionImportName="SP_Insert_Employee" FunctionName="DayCareAppDbModel.Store.SP_Insert_Employee" />
+          <FunctionImportMapping FunctionImportName="SP_Insert_Institution" FunctionName="DayCareAppDbModel.Store.SP_Insert_Institution" />
+          <FunctionImportMapping FunctionImportName="SP_Insert_InstitutionAdmin" FunctionName="DayCareAppDbModel.Store.SP_Insert_InstitutionAdmin" />
+          <FunctionImportMapping FunctionImportName="SP_Insert_Parent" FunctionName="DayCareAppDbModel.Store.SP_Insert_Parent" />
+          <FunctionImportMapping FunctionImportName="SP_Insert_ParentChild" FunctionName="DayCareAppDbModel.Store.SP_Insert_ParentChild" />
+          <FunctionImportMapping FunctionImportName="SP_Read_Address" FunctionName="DayCareAppDbModel.Store.SP_Read_Address">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Address_Result">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Admin" FunctionName="DayCareAppDbModel.Store.SP_Read_Admin" />
+          <FunctionImportMapping FunctionImportName="SP_Read_Admin_AppuserId" FunctionName="DayCareAppDbModel.Store.SP_Read_Admin_AppuserId" />
+          <FunctionImportMapping FunctionImportName="SP_Read_Child" FunctionName="DayCareAppDbModel.Store.SP_Read_Child">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Child_Result">
+                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="FK_DepartmentId" ColumnName="FK_DepartmentId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Child_InstitutionId" FunctionName="DayCareAppDbModel.Store.SP_Read_Child_InstitutionId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Child_InstitutionId_Result">
+                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="FK_DepartmentId" ColumnName="FK_DepartmentId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Child_Parent" FunctionName="DayCareAppDbModel.Store.SP_Read_Child_Parent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Child_Parent_Result">
+                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="FK_DepartmentId" ColumnName="FK_DepartmentId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_DayRegistration" FunctionName="DayCareAppDbModel.Store.SP_Read_DayRegistration">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_DayRegistration_Result">
+                <ScalarProperty Name="DayRegistrationId" ColumnName="DayRegistrationId" />
+                <ScalarProperty Name="CheckInTime" ColumnName="CheckInTime" />
+                <ScalarProperty Name="CheckOutTime" ColumnName="CheckOutTime" />
+                <ScalarProperty Name="ExpectedCheckOutTime" ColumnName="ExpectedCheckOutTime" />
+                <ScalarProperty Name="FK_ChildId" ColumnName="FK_ChildId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_ExpectedCheckOutParentId" ColumnName="FK_ExpectedCheckOutParentId" />
+                <ScalarProperty Name="FK_CheckInParentId" ColumnName="FK_CheckInParentId" />
+                <ScalarProperty Name="FK_CheckInEmployeeId" ColumnName="FK_CheckInEmployeeId" />
+                <ScalarProperty Name="FK_CheckOutParentId" ColumnName="FK_CheckOutParentId" />
+                <ScalarProperty Name="FK_CheckOutEmployeeId" ColumnName="FK_CheckOutEmployeeId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Department" FunctionName="DayCareAppDbModel.Store.SP_Read_Department">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Department_Result">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Department_InstitutionId" FunctionName="DayCareAppDbModel.Store.SP_Read_Department_InstitutionId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Department_InstitutionId_Result">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Employee" FunctionName="DayCareAppDbModel.Store.SP_Read_Employee">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Employee_Result">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_DepartmentId" ColumnName="FK_DepartmentId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Employee_AppUserId" FunctionName="DayCareAppDbModel.Store.SP_Read_Employee_AppUserId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Employee_AppUserId_Result">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_DepartmentId" ColumnName="FK_DepartmentId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Institution" FunctionName="DayCareAppDbModel.Store.SP_Read_Institution">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Institution_Result">
+                <ScalarProperty Name="InstitutionId" ColumnName="InstitutionId" />
+                <ScalarProperty Name="InstitutionName" ColumnName="InstitutionName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Institution_All" FunctionName="DayCareAppDbModel.Store.SP_Read_Institution_All">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Institution_All_Result">
+                <ScalarProperty Name="InstitutionId" ColumnName="InstitutionId" />
+                <ScalarProperty Name="InstitutionName" ColumnName="InstitutionName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_InstitutionAdmin" FunctionName="DayCareAppDbModel.Store.SP_Read_InstitutionAdmin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_InstitutionAdmin_Result">
+                <ScalarProperty Name="InstitutionAdminId" ColumnName="InstitutionAdminId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_InstitutionAdmin_All" FunctionName="DayCareAppDbModel.Store.SP_Read_InstitutionAdmin_All">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_InstitutionAdmin_All_Result">
+                <ScalarProperty Name="InstitutionAdminId" ColumnName="InstitutionAdminId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_InstitutionAdmin_AppUserId" FunctionName="DayCareAppDbModel.Store.SP_Read_InstitutionAdmin_AppUserId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_InstitutionAdmin_AppUserId_Result">
+                <ScalarProperty Name="InstitutionAdminId" ColumnName="InstitutionAdminId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Parent" FunctionName="DayCareAppDbModel.Store.SP_Read_Parent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Parent_Result">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Parent_AppUserId" FunctionName="DayCareAppDbModel.Store.SP_Read_Parent_AppUserId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Parent_AppUserId_Result">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Parent_ChildId" FunctionName="DayCareAppDbModel.Store.SP_Read_Parent_ChildId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Parent_ChildId_Result">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Read_Parent_InstitutionId" FunctionName="DayCareAppDbModel.Store.SP_Read_Parent_InstitutionId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DayCareAppDbModel.SP_Read_Parent_InstitutionId_Result">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Update_Admin" FunctionName="DayCareAppDbModel.Store.SP_Update_Admin" />
+          <FunctionImportMapping FunctionImportName="SP_Update_Child" FunctionName="DayCareAppDbModel.Store.SP_Update_Child" />
+          <FunctionImportMapping FunctionImportName="SP_Update_DayRegistration" FunctionName="DayCareAppDbModel.Store.SP_Update_DayRegistration" />
+          <FunctionImportMapping FunctionImportName="SP_Update_Department" FunctionName="DayCareAppDbModel.Store.SP_Update_Department" />
+          <FunctionImportMapping FunctionImportName="SP_Update_Employee" FunctionName="DayCareAppDbModel.Store.SP_Update_Employee" />
+          <FunctionImportMapping FunctionImportName="SP_Update_Institution" FunctionName="DayCareAppDbModel.Store.SP_Update_Institution" />
+          <FunctionImportMapping FunctionImportName="SP_Update_InstitutionAdmin" FunctionName="DayCareAppDbModel.Store.SP_Update_InstitutionAdmin" />
+          <FunctionImportMapping FunctionImportName="SP_Update_Parent" FunctionName="DayCareAppDbModel.Store.SP_Update_Parent" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

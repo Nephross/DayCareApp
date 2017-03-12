@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayCareApp.Tests", "DayCare
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayCareApp.Web", "DayCareApp.Web\DayCareApp.Web.csproj", "{40274CA1-0E86-49F5-8CF8-7F84A14B5650}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayCareApp.Data", "DayCareApp.Data\DayCareApp.Data.csproj", "{1354C499-E3C6-4F9F-97E3-0AFACF8D9918}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{40274CA1-0E86-49F5-8CF8-7F84A14B5650}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40274CA1-0E86-49F5-8CF8-7F84A14B5650}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40274CA1-0E86-49F5-8CF8-7F84A14B5650}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1354C499-E3C6-4F9F-97E3-0AFACF8D9918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1354C499-E3C6-4F9F-97E3-0AFACF8D9918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1354C499-E3C6-4F9F-97E3-0AFACF8D9918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1354C499-E3C6-4F9F-97E3-0AFACF8D9918}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

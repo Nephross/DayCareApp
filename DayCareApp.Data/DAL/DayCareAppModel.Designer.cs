@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Nephross\Dropbox\KEA Software DEV\2. semester\Project\DayCareApp\DayCareApp.Web\Entities\ModelClasses.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Nephross\Dropbox\KEA Software DEV\2. semester\Project\DayCareApp\DayCareApp.Data\DAL\DayCareAppModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

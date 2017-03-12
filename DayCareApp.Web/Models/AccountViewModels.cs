@@ -1,4 +1,4 @@
-﻿using DayCareApp.Web.Entities;
+﻿using DayCareApp.Data.DAL;
 using DayCareApp.Web.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

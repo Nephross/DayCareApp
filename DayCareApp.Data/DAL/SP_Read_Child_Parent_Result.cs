@@ -7,21 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DayCareApp.Web.Entities
+namespace DayCareApp.Data.DAL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Admin
+    public partial class SP_Read_Child_Parent_Result
     {
-        public int AdminId { get; set; }
+        public int ChildId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Nullable<int> PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string ApplicationUserId { get; set; }
+        public Nullable<System.DateTime> Birthday { get; set; }
+        public int FK_DepartmentId { get; set; }
+        public int FK_InstitutionId { get; set; }
         public int FK_AddressId { get; set; }
-    
-        public virtual Addresses Addresses { get; set; }
     }
 }

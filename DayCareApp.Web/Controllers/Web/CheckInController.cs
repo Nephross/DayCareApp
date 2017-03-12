@@ -1,4 +1,4 @@
-﻿using DayCareApp.Web.Entities;
+﻿using DayCareApp.Data.DAL;
 using DayCareApp.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -51,7 +51,7 @@ namespace DayCareApp.Web.Controllers.Web
             {
                 var userId = User.Identity.GetUserId();
 
-                    int institutionId = _employeeRepository.SingleOrDefault(x => x.ApplicationUserId == userId).FK_InstitutionId;
+                    int institutionId = _employeeRepository.SingleOrDefault(x => x.FK_ApplicationUserId == userId).FK_InstitutionId;
                     var model = _childRepository.GetAll();
                     var modelEmpl =
                     from r in model

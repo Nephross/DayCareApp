@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
-using DayCareApp.Web.Entities;
+using DayCareApp.Data.DAL;
 using DayCareApp.Web.DataContext.Repositories;
 using DayCareApp.Web.DataContext.Persistence;
 using Microsoft.AspNet.Identity.Owin;
@@ -100,7 +100,7 @@ namespace DayCareApp.Web.Controllers.Web
                     var userManager = new UserManager<ApplicationUser>(userStore);
                     await UserManager.AddToRoleAsync(user.Id, "Parent");
 
-                    model.Parent.ApplicationUserId = user.Id;
+                    model.Parent.FK_ApplicationUserId = user.Id;
                     model.Parent.Email = user.Email;
 
                     FileHandler fileHandler = new FileHandler();
@@ -208,16 +208,16 @@ namespace DayCareApp.Web.Controllers.Web
 
             if (ModelState.IsValid)
             {
-                if (parent.ApplicationUserId == null)
+                if (parent.FK_ApplicationUserId == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 var userStore = new UserStore<ApplicationUser>(new DayCareAppDB());
                 var userManager = new UserManager<ApplicationUser>(userStore);
 
-                var user = await userManager.FindByIdAsync(parent.ApplicationUserId);
+                var user = await userManager.FindByIdAsync(parent.FK_ApplicationUserId);
                 var logins = user.Logins;
-                var rolesForUser = await UserManager.GetRolesAsync(parent.ApplicationUserId);
+                var rolesForUser = await UserManager.GetRolesAsync(parent.FK_ApplicationUserId);
 
                 using (var transaction = DayCareAppDB.Create().Database.BeginTransaction())
                 {

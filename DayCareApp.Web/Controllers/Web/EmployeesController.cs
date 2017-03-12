@@ -7,8 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DayCareApp.Web.DataContext;
-using DayCareApp.Web.Entities;
 using DayCareApp.Web.Models;
+using DayCareApp.Data.DAL;
 using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -107,7 +107,7 @@ namespace DayCareApp.Web.Controllers.Web
                     var userManager = new UserManager<ApplicationUser>(userStore);
                     await userManager.AddToRoleAsync(user.Id, "Employee");
 
-                    model.Employee.ApplicationUserId = user.Id;
+                    model.Employee.FK_ApplicationUserId = user.Id;
                     _EmployeeRepository.Add(model.Employee);
                     _unitOfWork.Complete();
 
@@ -192,16 +192,16 @@ namespace DayCareApp.Web.Controllers.Web
 
             if (ModelState.IsValid)
             {
-                if (employee.ApplicationUserId == null)
+                if (employee.FK_ApplicationUserId == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
                 var userStore = new UserStore<ApplicationUser>(new DayCareAppDB());
                 var userManager = new UserManager<ApplicationUser>(userStore);
 
-                var user = await userManager.FindByIdAsync(employee.ApplicationUserId);
+                var user = await userManager.FindByIdAsync(employee.FK_ApplicationUserId);
                 var logins = user.Logins;
-                var rolesForUser = await UserManager.GetRolesAsync(employee.ApplicationUserId);
+                var rolesForUser = await UserManager.GetRolesAsync(employee.FK_ApplicationUserId);
 
                 using (var transaction = DayCareAppDB.Create().Database.BeginTransaction())
                 {

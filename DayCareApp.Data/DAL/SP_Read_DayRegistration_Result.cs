@@ -7,12 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DayCareApp.Web.Entities
+namespace DayCareApp.Data.DAL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class DayRegistration
+    public partial class SP_Read_DayRegistration_Result
     {
         public int DayRegistrationId { get; set; }
         public Nullable<System.DateTime> CheckInTime { get; set; }
@@ -25,13 +24,5 @@ namespace DayCareApp.Web.Entities
         public int FK_CheckInEmployeeId { get; set; }
         public Nullable<int> FK_CheckOutParentId { get; set; }
         public Nullable<int> FK_CheckOutEmployeeId { get; set; }
-    
-        public virtual Child Child { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual Parent Parent { get; set; }
-        public virtual Employee Employee1 { get; set; }
-        public virtual Parent Parent1 { get; set; }
-        public virtual Parent Parent2 { get; set; }
-        public virtual Institution Institution { get; set; }
     }
 }
