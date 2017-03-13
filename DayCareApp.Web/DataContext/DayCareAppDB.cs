@@ -20,6 +20,7 @@ namespace DayCareApp.Web.DataContext
         public DbSet<InstitutionAdmin> InstitutionAdmins { get; set; }
         public DbSet<Parent> Parents { get; set; }
 
+
         public DayCareAppDB()
             : base("RemoteConnection") 
         {

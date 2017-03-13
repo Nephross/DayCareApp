@@ -178,6 +178,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Web\DayRegisterController.cs" />
     <Compile Include="Controllers\Web\InstitutionManagerController.cs" />
     <Compile Include="Controllers\Web\AdminController.cs" />
     <Compile Include="Controllers\Web\CheckInController.cs" />
@@ -330,6 +331,9 @@
     <Content Include="Views\Shared\EditorTemplates\FileUploadPacket.cshtml" />
     <Content Include="Views\CheckIn\Delete.cshtml" />
     <Content Include="Views\CheckIn\IndexPictures.cshtml" />
+    <Content Include="Views\Shared\_DayReg.cshtml" />
+    <Content Include="Views\DayRegister\Index.cshtml" />
+    <Content Include="Views\Parents\Reg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />

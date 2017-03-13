@@ -52,6 +52,10 @@ namespace DayCareApp.Web.Controllers.Web
             }
         }
 
+        public ActionResult Reg()
+        {
+            return View();
+        }
 
         // GET: Parents
         public ActionResult Index()
