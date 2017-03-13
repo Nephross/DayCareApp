@@ -1,0 +1,1146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dayCareAPPDBModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Addresses">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="int" Nullable="false" />
+          <Property Name="StreetName" Type="varchar" MaxLength="50" />
+          <Property Name="PostCode" Type="int" />
+          <Property Name="City" Type="varchar" MaxLength="30" />
+          <Property Name="Country" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="FK_ApplicationUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Childs">
+          <Key>
+            <PropertyRef Name="ChildId" />
+          </Key>
+          <Property Name="ChildId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="FK_DepartmentId" Type="int" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DayRegistrations">
+          <Key>
+            <PropertyRef Name="DayRegistrationId" />
+          </Key>
+          <Property Name="DayRegistrationId" Type="int" Nullable="false" />
+          <Property Name="CheckInTime" Type="datetime" />
+          <Property Name="CheckOutTime" Type="datetime" />
+          <Property Name="ExpectedCheckOutTime" Type="datetime" />
+          <Property Name="FK_ChildId" Type="int" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+          <Property Name="FK_ExpectedCheckOutParentId" Type="int" Nullable="false" />
+          <Property Name="FK_CheckInParentId" Type="int" Nullable="false" />
+          <Property Name="FK_CheckInEmployeeId" Type="int" Nullable="false" />
+          <Property Name="FK_CheckOutParentId" Type="int" />
+          <Property Name="FK_CheckOutEmployeeId" Type="int" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="int" Nullable="false" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="FK_ApplicationUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FK_DepartmentId" Type="int" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InstitutionAdmins">
+          <Key>
+            <PropertyRef Name="InstitutionAdminId" />
+          </Key>
+          <Property Name="InstitutionAdminId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="FK_ApplicationUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Institutions">
+          <Key>
+            <PropertyRef Name="InstitutionId" />
+          </Key>
+          <Property Name="InstitutionId" Type="int" Nullable="false" />
+          <Property Name="InstitutionName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'dayCareAPPDB.dbo.ParentChild' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ParentChild">
+          <Key>
+            <PropertyRef Name="FK_ChildId" />
+            <PropertyRef Name="FK_ParentId" />
+          </Key>
+          <Property Name="FK_ChildId" Type="int" Nullable="false" />
+          <Property Name="FK_ParentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Parents">
+          <Key>
+            <PropertyRef Name="ParentId" />
+          </Key>
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="FK_ApplicationUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="int" Nullable="false" />
+          <Property Name="FK_AddressId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="Admin_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="Admins" Type="Self.Admins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Admins">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Childs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_ChildId_FK">
+          <End Role="Childs" Type="Self.Childs" Multiplicity="1" />
+          <End Role="ParentChild" Type="Self.ParentChild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Childs">
+              <PropertyRef Name="ChildId" />
+            </Principal>
+            <Dependent Role="ParentChild">
+              <PropertyRef Name="FK_ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_DepartmentId_FK">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Childs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Childs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckInEmployeeId_FK">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckInEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckInParentId_FK">
+          <End Role="Parents" Type="Self.Parents" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckInParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckOutEmployeeId_FK">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckOutEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckOutParantId_FK">
+          <End Role="Parents" Type="Self.Parents" Multiplicity="0..1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckOutParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_ChildId_FK">
+          <End Role="Childs" Type="Self.Childs" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Childs">
+              <PropertyRef Name="ChildId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_ExpectedParentId_FK">
+          <End Role="Parents" Type="Self.Parents" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_ExpectedCheckOutParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistrations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Department_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="Departments" Type="Self.Departments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Departments">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_DepartmentId_FK">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Institution_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Institutions">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InstitutionAdmin_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="InstitutionAdmins" Type="Self.InstitutionAdmins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="InstitutionAdmins">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InstitutionAdmin_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="InstitutionAdmins" Type="Self.InstitutionAdmins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="InstitutionAdmins">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Parent_AddressId_FK">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Parent_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institutions" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ParentChild_ParentId_FK">
+          <End Role="Parents" Type="Self.Parents" Multiplicity="1" />
+          <End Role="ParentChild" Type="Self.ParentChild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="ParentChild">
+              <PropertyRef Name="FK_ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dayCareAPPDBModel1StoreContainer">
+          <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Childs" EntityType="Self.Childs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DayRegistrations" EntityType="Self.DayRegistrations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InstitutionAdmins" EntityType="Self.InstitutionAdmins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Institutions" EntityType="Self.Institutions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parents" EntityType="Self.Parents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParentChild" EntityType="Self.ParentChild" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ParentChild].[FK_ChildId] AS [FK_ChildId], 
+    [ParentChild].[FK_ParentId] AS [FK_ParentId]
+    FROM [dbo].[ParentChild] AS [ParentChild]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="Admin_AddressId_FK" Association="Self.Admin_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Admins" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="Child_AddressId_FK" Association="Self.Child_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="Child_ChildId_FK" Association="Self.Child_ChildId_FK">
+            <End Role="Childs" EntitySet="Childs" />
+            <End Role="ParentChild" EntitySet="ParentChild" />
+          </AssociationSet>
+          <AssociationSet Name="Child_DepartmentId_FK" Association="Self.Child_DepartmentId_FK">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="Child_InstitutionId_FK" Association="Self.Child_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckInEmployeeId_FK" Association="Self.DayRegistration_CheckInEmployeeId_FK">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckInParentId_FK" Association="Self.DayRegistration_CheckInParentId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckOutEmployeeId_FK" Association="Self.DayRegistration_CheckOutEmployeeId_FK">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckOutParantId_FK" Association="Self.DayRegistration_CheckOutParantId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_ChildId_FK" Association="Self.DayRegistration_ChildId_FK">
+            <End Role="Childs" EntitySet="Childs" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_ExpectedParentId_FK" Association="Self.DayRegistration_ExpectedParentId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_InstitutionId_FK" Association="Self.DayRegistration_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="Department_InstitutionId_FK" Association="Self.Department_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_AddressId_FK" Association="Self.Employee_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_DepartmentId_FK" Association="Self.Employee_DepartmentId_FK">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_InstitutionId_FK" Association="Self.Employee_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Institution_AddressId_FK" Association="Self.Institution_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Institutions" EntitySet="Institutions" />
+          </AssociationSet>
+          <AssociationSet Name="InstitutionAdmin_AddressId_FK" Association="Self.InstitutionAdmin_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="InstitutionAdmins" EntitySet="InstitutionAdmins" />
+          </AssociationSet>
+          <AssociationSet Name="InstitutionAdmin_InstitutionId_FK" Association="Self.InstitutionAdmin_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="InstitutionAdmins" EntitySet="InstitutionAdmins" />
+          </AssociationSet>
+          <AssociationSet Name="Parent_AddressId_FK" Association="Self.Parent_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="Parent_InstitutionId_FK" Association="Self.Parent_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="ParentChild_ParentId_FK" Association="Self.ParentChild_ParentId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="ParentChild" EntitySet="ParentChild" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dayCareAPPDBModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="Int32" Nullable="false" />
+          <Property Name="StreetName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostCode" Type="Int32" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Admins" Relationship="Self.Admin_AddressId_FK" FromRole="Addresses" ToRole="Admins" />
+          <NavigationProperty Name="Childs" Relationship="Self.Child_AddressId_FK" FromRole="Addresses" ToRole="Childs" />
+          <NavigationProperty Name="Employees" Relationship="Self.Employee_AddressId_FK" FromRole="Addresses" ToRole="Employees" />
+          <NavigationProperty Name="Institutions" Relationship="Self.Institution_AddressId_FK" FromRole="Addresses" ToRole="Institutions" />
+          <NavigationProperty Name="InstitutionAdmins" Relationship="Self.InstitutionAdmin_AddressId_FK" FromRole="Addresses" ToRole="InstitutionAdmins" />
+          <NavigationProperty Name="Parents" Relationship="Self.Parent_AddressId_FK" FromRole="Addresses" ToRole="Parents" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ApplicationUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Admin_AddressId_FK" FromRole="Admins" ToRole="Addresses" />
+        </EntityType>
+        <EntityType Name="Child">
+          <Key>
+            <PropertyRef Name="ChildId" />
+          </Key>
+          <Property Name="ChildId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="FK_DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Child_AddressId_FK" FromRole="Childs" ToRole="Addresses" />
+          <NavigationProperty Name="Department" Relationship="Self.Child_DepartmentId_FK" FromRole="Childs" ToRole="Departments" />
+          <NavigationProperty Name="Institution" Relationship="Self.Child_InstitutionId_FK" FromRole="Childs" ToRole="Institutions" />
+          <NavigationProperty Name="DayRegistrations" Relationship="Self.DayRegistration_ChildId_FK" FromRole="Childs" ToRole="DayRegistrations" />
+          <NavigationProperty Name="Parents" Relationship="Self.ParentChild" FromRole="Childs" ToRole="Parents" />
+        </EntityType>
+        <EntityType Name="DayRegistration">
+          <Key>
+            <PropertyRef Name="DayRegistrationId" />
+          </Key>
+          <Property Name="DayRegistrationId" Type="Int32" Nullable="false" />
+          <Property Name="CheckInTime" Type="DateTime" Precision="3" />
+          <Property Name="CheckOutTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpectedCheckOutTime" Type="DateTime" Precision="3" />
+          <Property Name="FK_ChildId" Type="Int32" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="FK_ExpectedCheckOutParentId" Type="Int32" Nullable="false" />
+          <Property Name="FK_CheckInParentId" Type="Int32" Nullable="false" />
+          <Property Name="FK_CheckInEmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="FK_CheckOutParentId" Type="Int32" />
+          <Property Name="FK_CheckOutEmployeeId" Type="Int32" />
+          <NavigationProperty Name="Child" Relationship="Self.DayRegistration_ChildId_FK" FromRole="DayRegistrations" ToRole="Childs" />
+          <NavigationProperty Name="Employee" Relationship="Self.DayRegistration_CheckInEmployeeId_FK" FromRole="DayRegistrations" ToRole="Employees" />
+          <NavigationProperty Name="Parent" Relationship="Self.DayRegistration_CheckInParentId_FK" FromRole="DayRegistrations" ToRole="Parents" />
+          <NavigationProperty Name="Employee1" Relationship="Self.DayRegistration_CheckOutEmployeeId_FK" FromRole="DayRegistrations" ToRole="Employees" />
+          <NavigationProperty Name="Parent1" Relationship="Self.DayRegistration_CheckOutParantId_FK" FromRole="DayRegistrations" ToRole="Parents" />
+          <NavigationProperty Name="Parent2" Relationship="Self.DayRegistration_ExpectedParentId_FK" FromRole="DayRegistrations" ToRole="Parents" />
+          <NavigationProperty Name="Institution" Relationship="Self.DayRegistration_InstitutionId_FK" FromRole="DayRegistrations" ToRole="Institutions" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Childs" Relationship="Self.Child_DepartmentId_FK" FromRole="Departments" ToRole="Childs" />
+          <NavigationProperty Name="Institution" Relationship="Self.Department_InstitutionId_FK" FromRole="Departments" ToRole="Institutions" />
+          <NavigationProperty Name="Employees" Relationship="Self.Employee_DepartmentId_FK" FromRole="Departments" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ApplicationUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FK_DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Employee_AddressId_FK" FromRole="Employees" ToRole="Addresses" />
+          <NavigationProperty Name="DayRegistrations" Relationship="Self.DayRegistration_CheckInEmployeeId_FK" FromRole="Employees" ToRole="DayRegistrations" />
+          <NavigationProperty Name="DayRegistrations1" Relationship="Self.DayRegistration_CheckOutEmployeeId_FK" FromRole="Employees" ToRole="DayRegistrations" />
+          <NavigationProperty Name="Department" Relationship="Self.Employee_DepartmentId_FK" FromRole="Employees" ToRole="Departments" />
+          <NavigationProperty Name="Institution" Relationship="Self.Employee_InstitutionId_FK" FromRole="Employees" ToRole="Institutions" />
+        </EntityType>
+        <EntityType Name="InstitutionAdmin">
+          <Key>
+            <PropertyRef Name="InstitutionAdminId" />
+          </Key>
+          <Property Name="InstitutionAdminId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ApplicationUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.InstitutionAdmin_AddressId_FK" FromRole="InstitutionAdmins" ToRole="Addresses" />
+          <NavigationProperty Name="Institution" Relationship="Self.InstitutionAdmin_InstitutionId_FK" FromRole="InstitutionAdmins" ToRole="Institutions" />
+        </EntityType>
+        <EntityType Name="Institution">
+          <Key>
+            <PropertyRef Name="InstitutionId" />
+          </Key>
+          <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="InstitutionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Institution_AddressId_FK" FromRole="Institutions" ToRole="Addresses" />
+          <NavigationProperty Name="Childs" Relationship="Self.Child_InstitutionId_FK" FromRole="Institutions" ToRole="Childs" />
+          <NavigationProperty Name="DayRegistrations" Relationship="Self.DayRegistration_InstitutionId_FK" FromRole="Institutions" ToRole="DayRegistrations" />
+          <NavigationProperty Name="Departments" Relationship="Self.Department_InstitutionId_FK" FromRole="Institutions" ToRole="Departments" />
+          <NavigationProperty Name="Employees" Relationship="Self.Employee_InstitutionId_FK" FromRole="Institutions" ToRole="Employees" />
+          <NavigationProperty Name="InstitutionAdmins" Relationship="Self.InstitutionAdmin_InstitutionId_FK" FromRole="Institutions" ToRole="InstitutionAdmins" />
+          <NavigationProperty Name="Parents" Relationship="Self.Parent_InstitutionId_FK" FromRole="Institutions" ToRole="Parents" />
+        </EntityType>
+        <EntityType Name="Parent">
+          <Key>
+            <PropertyRef Name="ParentId" />
+          </Key>
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ApplicationUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FK_InstitutionId" Type="Int32" Nullable="false" />
+          <Property Name="FK_AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.Parent_AddressId_FK" FromRole="Parents" ToRole="Addresses" />
+          <NavigationProperty Name="DayRegistrations" Relationship="Self.DayRegistration_CheckInParentId_FK" FromRole="Parents" ToRole="DayRegistrations" />
+          <NavigationProperty Name="DayRegistrations1" Relationship="Self.DayRegistration_CheckOutParantId_FK" FromRole="Parents" ToRole="DayRegistrations" />
+          <NavigationProperty Name="DayRegistrations2" Relationship="Self.DayRegistration_ExpectedParentId_FK" FromRole="Parents" ToRole="DayRegistrations" />
+          <NavigationProperty Name="Institution" Relationship="Self.Parent_InstitutionId_FK" FromRole="Parents" ToRole="Institutions" />
+          <NavigationProperty Name="Childs" Relationship="Self.ParentChild" FromRole="Parents" ToRole="Childs" />
+        </EntityType>
+        <Association Name="Admin_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="Admins" Type="Self.Admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Admins">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Institution_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Institutions">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InstitutionAdmin_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="InstitutionAdmins" Type="Self.InstitutionAdmin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="InstitutionAdmins">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Parent_AddressId_FK">
+          <End Role="Addresses" Type="Self.Address" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="FK_AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_DepartmentId_FK">
+          <End Role="Departments" Type="Self.Department" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Child_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="Childs" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Childs">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_ChildId_FK">
+          <End Role="Childs" Type="Self.Child" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Childs">
+              <PropertyRef Name="ChildId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckInEmployeeId_FK">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckInEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckInParentId_FK">
+          <End Role="Parents" Type="Self.Parent" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckInParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckOutEmployeeId_FK">
+          <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckOutEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_CheckOutParantId_FK">
+          <End Role="Parents" Type="Self.Parent" Multiplicity="0..1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_CheckOutParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_ExpectedParentId_FK">
+          <End Role="Parents" Type="Self.Parent" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Parents">
+              <PropertyRef Name="ParentId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_ExpectedCheckOutParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DayRegistration_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="DayRegistrations" Type="Self.DayRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="DayRegistrations">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Department_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="Departments" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Departments">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_DepartmentId_FK">
+          <End Role="Departments" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Employee_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="InstitutionAdmin_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="InstitutionAdmins" Type="Self.InstitutionAdmin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="InstitutionAdmins">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Parent_InstitutionId_FK">
+          <End Role="Institutions" Type="Self.Institution" Multiplicity="1" />
+          <End Role="Parents" Type="Self.Parent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institutions">
+              <PropertyRef Name="InstitutionId" />
+            </Principal>
+            <Dependent Role="Parents">
+              <PropertyRef Name="FK_InstitutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ParentChild">
+          <End Role="Childs" Type="Self.Child" Multiplicity="*" />
+          <End Role="Parents" Type="Self.Parent" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="dayCareAPPDBEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Childs" EntityType="Self.Child" />
+          <EntitySet Name="DayRegistrations" EntityType="Self.DayRegistration" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="InstitutionAdmins" EntityType="Self.InstitutionAdmin" />
+          <EntitySet Name="Institutions" EntityType="Self.Institution" />
+          <EntitySet Name="Parents" EntityType="Self.Parent" />
+          <AssociationSet Name="Admin_AddressId_FK" Association="Self.Admin_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Admins" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="Child_AddressId_FK" Association="Self.Child_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_AddressId_FK" Association="Self.Employee_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Institution_AddressId_FK" Association="Self.Institution_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Institutions" EntitySet="Institutions" />
+          </AssociationSet>
+          <AssociationSet Name="InstitutionAdmin_AddressId_FK" Association="Self.InstitutionAdmin_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="InstitutionAdmins" EntitySet="InstitutionAdmins" />
+          </AssociationSet>
+          <AssociationSet Name="Parent_AddressId_FK" Association="Self.Parent_AddressId_FK">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="Child_DepartmentId_FK" Association="Self.Child_DepartmentId_FK">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="Child_InstitutionId_FK" Association="Self.Child_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Childs" EntitySet="Childs" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_ChildId_FK" Association="Self.DayRegistration_ChildId_FK">
+            <End Role="Childs" EntitySet="Childs" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckInEmployeeId_FK" Association="Self.DayRegistration_CheckInEmployeeId_FK">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckInParentId_FK" Association="Self.DayRegistration_CheckInParentId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckOutEmployeeId_FK" Association="Self.DayRegistration_CheckOutEmployeeId_FK">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_CheckOutParantId_FK" Association="Self.DayRegistration_CheckOutParantId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_ExpectedParentId_FK" Association="Self.DayRegistration_ExpectedParentId_FK">
+            <End Role="Parents" EntitySet="Parents" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="DayRegistration_InstitutionId_FK" Association="Self.DayRegistration_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="DayRegistrations" EntitySet="DayRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="Department_InstitutionId_FK" Association="Self.Department_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_DepartmentId_FK" Association="Self.Employee_DepartmentId_FK">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="Employee_InstitutionId_FK" Association="Self.Employee_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="InstitutionAdmin_InstitutionId_FK" Association="Self.InstitutionAdmin_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="InstitutionAdmins" EntitySet="InstitutionAdmins" />
+          </AssociationSet>
+          <AssociationSet Name="Parent_InstitutionId_FK" Association="Self.Parent_InstitutionId_FK">
+            <End Role="Institutions" EntitySet="Institutions" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+          <AssociationSet Name="ParentChild" Association="Self.ParentChild">
+            <End Role="Childs" EntitySet="Childs" />
+            <End Role="Parents" EntitySet="Parents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dayCareAPPDBModel1StoreContainer" CdmEntityContainer="dayCareAPPDBEntities2">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel1.Address">
+              <MappingFragment StoreEntitySet="Addresses">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel1.Admin">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Childs">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel1.Child">
+              <MappingFragment StoreEntitySet="Childs">
+                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="FK_DepartmentId" ColumnName="FK_DepartmentId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DayRegistrations">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel1.DayRegistration">
+              <MappingFragment StoreEntitySet="DayRegistrations">
+                <ScalarProperty Name="DayRegistrationId" ColumnName="DayRegistrationId" />
+                <ScalarProperty Name="CheckInTime" ColumnName="CheckInTime" />
+                <ScalarProperty Name="CheckOutTime" ColumnName="CheckOutTime" />
+                <ScalarProperty Name="ExpectedCheckOutTime" ColumnName="ExpectedCheckOutTime" />
+                <ScalarProperty Name="FK_ChildId" ColumnName="FK_ChildId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_ExpectedCheckOutParentId" ColumnName="FK_ExpectedCheckOutParentId" />
+                <ScalarProperty Name="FK_CheckInParentId" ColumnName="FK_CheckInParentId" />
+                <ScalarProperty Name="FK_CheckInEmployeeId" ColumnName="FK_CheckInEmployeeId" />
+                <ScalarProperty Name="FK_CheckOutParentId" ColumnName="FK_CheckOutParentId" />
+                <ScalarProperty Name="FK_CheckOutEmployeeId" ColumnName="FK_CheckOutEmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel1.Department">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel1.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_DepartmentId" ColumnName="FK_DepartmentId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstitutionAdmins">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel1.InstitutionAdmin">
+              <MappingFragment StoreEntitySet="InstitutionAdmins">
+                <ScalarProperty Name="InstitutionAdminId" ColumnName="InstitutionAdminId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Institutions">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel1.Institution">
+              <MappingFragment StoreEntitySet="Institutions">
+                <ScalarProperty Name="InstitutionId" ColumnName="InstitutionId" />
+                <ScalarProperty Name="InstitutionName" ColumnName="InstitutionName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parents">
+            <EntityTypeMapping TypeName="dayCareAPPDBModel1.Parent">
+              <MappingFragment StoreEntitySet="Parents">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FK_ApplicationUserId" ColumnName="FK_ApplicationUserId" />
+                <ScalarProperty Name="FK_InstitutionId" ColumnName="FK_InstitutionId" />
+                <ScalarProperty Name="FK_AddressId" ColumnName="FK_AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ParentChild" TypeName="dayCareAPPDBModel1.ParentChild" StoreEntitySet="ParentChild">
+            <EndProperty Name="Childs">
+              <ScalarProperty Name="ChildId" ColumnName="FK_ChildId" />
+            </EndProperty>
+            <EndProperty Name="Parents">
+              <ScalarProperty Name="ParentId" ColumnName="FK_ParentId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

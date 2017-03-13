@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8108efc621c941eba65c8b2b16534358" Name="Diagram1">
+        <EntityTypeShape EntityType="dayCareAPPDBModel.Address" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dayCareAPPDBModel.Child" Width="1.5" PointX="7.5" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dayCareAPPDBModel.DayRegistration" Width="1.5" PointX="12.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dayCareAPPDBModel.Department" Width="1.5" PointX="5.25" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dayCareAPPDBModel.Employee" Width="1.5" PointX="10.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dayCareAPPDBModel.InstitutionAdmin" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="dayCareAPPDBModel.Institution" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="dayCareAPPDBModel.Parent" Width="1.5" PointX="12.75" PointY="11.5" IsExpanded="true" />
+        <AssociationConnector Association="dayCareAPPDBModel.Child_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.Employee_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.Institution_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.InstitutionAdmin_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.Parent_AddressId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.Child_DepartmentId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.Child_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.DayRegistration_ChildId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.DayRegistration_CheckInEmployeeId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.DayRegistration_CheckInParentId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.DayRegistration_CheckOutEmployeeId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.DayRegistration_CheckOutParantId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.DayRegistration_ExpectedParentId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.DayRegistration_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.Department_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.Employee_DepartmentId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.Employee_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.InstitutionAdmin_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.Parent_InstitutionId_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="dayCareAPPDBModel.ParentChild" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
